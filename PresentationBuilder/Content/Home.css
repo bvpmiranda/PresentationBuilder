@@ -9,6 +9,7 @@
 	height: 100%;
 	margin: 0px;
 	min-height: 100%;
+	min-width: 800px;
 	padding: 0px;
 }
 
@@ -196,12 +197,12 @@ input[type=email], input[type=password], input[type=text]
 
 	.leftColumn .signUp
 	{
-		font-size: 22px;
+		font-size: 19px;
 	}
 
 		.leftColumn img
 		{
-			height: 59px;
+			height: 259px;
 		}
 
 			.leftColumn img.about

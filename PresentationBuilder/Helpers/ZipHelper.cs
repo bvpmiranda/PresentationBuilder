@@ -12,20 +12,6 @@ namespace PresentationBuilder.Helpers
 {
 	public class ZipHelper
 	{
-		static string path()
-		{
-			string path = HttpContext.Current.Server.MapPath("~/");
-
-			if (path.EndsWith("\\"))
-			{
-				path = path.Substring(0, path.Length - 1);
-			}
-
-			path = path.Substring(0, path.LastIndexOf("\\")) + "\\PresentationBuilderDocuments\\";
-
-			return path;
-		}
-
 		public static HttpResponseMessage zipPresentation(int PresentationId)
 		{
 			HttpResponseMessage response = new System.Net.Http.HttpResponseMessage(HttpStatusCode.OK);
@@ -38,7 +24,7 @@ namespace PresentationBuilder.Helpers
 
 			byte[] fileBytes;
 
-			string path = ZipHelper.path() + presentation.PresentationId.ToString() + "\\";
+			string path = PathHelper.path() + presentation.PresentationId.ToString() + "\\";
 
 			foreach (var page in presentation.PresentationPages)
 			{
@@ -135,7 +121,7 @@ namespace PresentationBuilder.Helpers
 				context.Presentations.Add(presentation);
 				context.SaveChanges();
 
-				string path = ZipHelper.path() + presentation.PresentationId.ToString() + "\\";
+				string path = PathHelper.path() + presentation.PresentationId.ToString() + "\\";
 
 				System.IO.Directory.CreateDirectory(path);
 
