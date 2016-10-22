@@ -29,6 +29,7 @@ namespace PresentationBuilder
 
 			bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
 					  "~/Scripts/jquery.blockUI.js",
+					  "~/Scripts/jquery.matchHeight.js",
 					  "~/Scripts/navigation.js",
 					  "~/Scripts/scripts.js",
 					  "~/Scripts/presentation.js",

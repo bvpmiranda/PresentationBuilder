@@ -20,11 +20,18 @@ adjustLayout = function ()
 			adjustContent();
 		}
 
+		if (typeof adjustLayoutContent === 'function')
+		{
+			adjustLayoutContent();
+		}
+
 		adjustingLayout = false;
 	}
 }
 
 adjustContent = function () { }
+
+adjustLayoutContent = function () { }
 
 block = function (element, options)
 {
