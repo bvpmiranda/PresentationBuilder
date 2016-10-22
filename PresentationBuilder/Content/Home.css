@@ -20,8 +20,6 @@
 	background: -moz-linear-gradient(right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(to right, #de663c, #db8937); /* Standard syntax */
 	color: #fff;
-	padding: 30px !important;
-	font-size: 52px;
 }
 
 .rightColumn
@@ -64,7 +62,7 @@
 		cursor: default;
 	}
 
-	
+
 .btn-signIn
 {
 	background: #e37535; /* For browsers that do not support gradients */
@@ -79,7 +77,6 @@
 .txt
 {
 	color: #a1a1a1;
-	font-size: 32px;
 }
 
 .txt-Sign
@@ -88,13 +85,13 @@
 	font-size: 44px;
 }
 
-.txt-Sign.selected
-{
+	.txt-Sign.selected
+	{
 		border-bottom: 2px solid #df673b;
 		color: #fff;
 		cursor: default;
 		text-decoration: none;
-}
+	}
 
 	.txt-Sign:hover
 	{
@@ -107,8 +104,188 @@
 	margin-bottom: 20px;
 }
 
-.login input[type=email], .login input[type=password], .login input[type=password]
+input[type=email], input[type=password], input[type=text]
 {
 	background-color: #1b2a3b !important;
 	color: #fff !important;
+}
+
+.navigationOn
+{
+	font-size: 14px; /* This controls the size. */
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #b1b1b1;
+	background-color: #b1b1b1;
+	border-radius: 14px;
+}
+
+.navigationOff
+{
+	font-size: 14px; /* This controls the size. */
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #b1b1b1;
+	border-radius: 14px;
+}
+
+@media (max-width: 768px)
+{
+	.signButtons
+	{
+		display: none;
+	}
+
+	.txt
+	{
+		font-size: 22px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 34px;
+	}
+
+	.leftColumn
+	{
+		padding: 5px !important;
+		font-size: 22px;
+	}
+
+	.leftColumn.signUp
+	{
+		font-size: 22px;
+	}
+	
+		.leftColumn img
+		{
+			height: 59px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 22px;
+			}
+}
+
+@media (min-width: 768px) and (max-width: 992px)
+{
+	.signButtons
+	{
+		display: block;
+		text-align: right;
+	}
+
+	.txt
+	{
+		font-size: 22px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 34px;
+	}
+
+	.leftColumn
+	{
+		padding: 10px !important;
+		font-size: 32px;
+	}
+
+	.leftColumn .signUp
+	{
+		font-size: 22px;
+	}
+
+		.leftColumn img
+		{
+			height: 59px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 22px;
+			}
+}
+
+@media (min-width: 992px) and (max-width: 1200px)
+{
+	.signButtons
+	{
+		display: block;
+		text-align: right;
+	}
+
+	.txt
+	{
+		font-size: 32px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 44px;
+	}
+
+	.leftColumn
+	{
+		padding: 20px !important;
+		font-size: 42px;
+	}
+
+	.leftColumn .signUp
+	{
+		font-size: 22px;
+	}
+
+		.leftColumn img
+		{
+			height: 259px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 32px;
+			}
+}
+
+@media (min-width: 1200px)
+{
+	.signButtons
+	{
+		display: block;
+		text-align: right;
+	}
+
+	.txt
+	{
+		font-size: 32px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 44px;
+	}
+
+	.leftColumn
+	{
+		padding: 30px !important;
+		font-size: 52px;
+	}
+
+	.leftColumn .signUp
+	{
+		font-size: 22px;
+	}
+
+		.leftColumn img
+		{
+			height: 259px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 42px;
+			}
 }

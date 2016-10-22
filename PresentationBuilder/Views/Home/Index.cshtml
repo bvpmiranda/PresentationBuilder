@@ -9,16 +9,33 @@
 
 @section leftPane
 {
-    <center>
-        Presentation
-        <br />
-        Builder
-    </center>
+    <div class="row">
+        <div class="col-sm-1 col-md-12  col-lg-12">
+            <img src="~/Images/aboutUs.png" class="about" />
+        </div>
+        <div class="col-sm-2 col-md-12 col-lg-12 ">
+            <center>
+                <img src="~/Images/presentationBuilder.png" />
+            </center>
+        </div>
+        <div class="col-sm-9 col-md-12 col-lg-12">
+            <center>
+                Presentation Builder
+            </center>
+        </div>
+        <div class="col-sm-9 col-md-12 col-lg-12">
+            <center>
+                <span class="navigationOff"></span>
+                <span class="navigationOn"></span>
+                <span class="navigationOn"></span>
+            </center>
+        </div>
+    </div>
 }
 
-<div class="row">
-    <div class="col-xs-8"></div>
-    <div class="col-xs-4">
+<div class="row signButtons">
+    <div class="col-sm-6 col-md-6 col-lg-8"></div>
+    <div class="col-sm-6 col-md-6 col-lg-4">
         <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign In" />
         <input type="button" class="btn btn-sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;" value="Sign Up" />
     </div>
@@ -27,6 +44,7 @@
     <div class="col-xs-12">
         <a href="#" class="txt-Sign selected" onclick="return false;">Sign In</a>
         or
+        @Html.ActionLink("Account", "Index", "Home")
         <a href="#" class="txt-Sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;">Sign Up</a>
     </div>
 </div>

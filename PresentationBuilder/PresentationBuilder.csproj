@@ -242,6 +242,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\aboutUs.png" />
+    <Content Include="Images\bootstrap-social.png" />
+    <Content Include="Images\login_facebook.png" />
+    <Content Include="Images\login_google.png" />
+    <Content Include="Images\login_twitter.png" />
+    <Content Include="Images\presentationBuilder.png" />
     <Content Include="Ionic.Zip.xml" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
@@ -330,6 +336,18 @@
     <Content Include="Views\Shared\HomeAjax.cshtml" />
     <Content Include="Views\Shared\Internal.cshtml" />
     <Content Include="Views\Shared\InternalAjax.cshtml" />
+    <Content Include="Views\Account - Copy\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account - Copy\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account - Copy\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account - Copy\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account - Copy\ForgotPassword.cshtml" />
+    <Content Include="Views\Account - Copy\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account - Copy\Login.cshtml" />
+    <Content Include="Views\Account - Copy\Register.cshtml" />
+    <Content Include="Views\Account - Copy\ResetPassword.cshtml" />
+    <Content Include="Views\Account - Copy\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account - Copy\SendCode.cshtml" />
+    <Content Include="Views\Account - Copy\VerifyCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
