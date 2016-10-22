@@ -217,6 +217,7 @@
     <Compile Include="Models\PresentationPage.cs">
       <DependentUpon>PresentationBuilderModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UploadReturn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
