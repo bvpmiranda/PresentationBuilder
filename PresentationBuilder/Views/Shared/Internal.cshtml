@@ -3,15 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/homeCss")
     @Scripts.Render("~/bundles/modernizr")
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
-    <div id="body" class="container body-content" ng-app>
-        <div class="row shadow">
+    <div id="body" class="container-fluid body-content">
+        <div class="row">
             <div class="col-md-6 leftColumn">
                 @RenderSection("leftPane")
             </div>
@@ -24,7 +22,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/scripts")
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 
     <span id="AntiForgeryToken">@Html.AntiForgeryToken()</span>
 
@@ -34,18 +31,7 @@
 
         Navigation.div = $("#body");
         Navigation.baseUrl = baseUrl;
-        Navigation.title = "Presentation Builder";
-
-        $(function ()
-        {
-            $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
-
-        });
-
-        adjustLayoutContent = function ()
-        {
-            $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height());
-        }
+        Navigation.title = "Application Name";
     </script>
 </body>
 </html>

@@ -4,23 +4,26 @@
     ViewBag.Title = "Presentation Builder";
 }
 
+@section leftPane
+{
+
+}
+
 <div class="row">
-    <div class="col-md-6 leftColumn">
-        asd
+    <div class="col-xs-8"></div>
+    <div class="col-xs-4">
+        <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign In" />
+        <input type="button" class="btn btn-sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;" value="Sign Up" />
     </div>
-    <div class="col-md-6 rightColumn">
-        asd
+</div>
+<div class="row txt">
+    <div class="col-xs-12">
+        <a href="#" class="txt-Sign selected" onclick="return false;">Sign In</a>
+        or
+        <a href="#" class="txt-Sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;">Sign Up</a>
     </div>
 </div>
 
-
-<input type="file" id="uploadZip" name="file" style="visibility: hidden;" />
-
-<script>
-    window.onload = function (e)
-    {
-        Presentations.fileUpload = $("#uploadZip");
-
-        Presentations.bind();
-    }
-</script>
+<div class="row" ng-controller="SignIn">
+    {{title}}
+</div>
