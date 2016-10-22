@@ -58,11 +58,11 @@ namespace PresentationBuilder
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1008147802171-s1e8439aihusbaagq4v708qu0fc8ut3r.apps.googleusercontent.com",
+                ClientSecret = "e-bpjleKpnqcSIHy1JUx5DbZ"
+            });
         }
     }
 }
