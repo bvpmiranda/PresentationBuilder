@@ -1,4 +1,4 @@
-﻿var Presentations = {
+var Presentations = {
 
 	download: function (id)
 	{
@@ -7,12 +7,12 @@
 			$('<form>').attr({
 				method: 'POST',
 				id: 'download-form',
-				action: urlBase + "api/PresentationsAPI/download/" + id
+				action: "api/PresentationsAPI/download/" + id
 			}).appendTo('body');
 		}
 		else
 		{
-			$('#download-form').attr('action', urlBase + "api/PresentationsAPI/download/" + id);
+			$('#download-form').attr('action', "api/PresentationsAPI/download/" + id);
 			$('#download-form').html('');
 		}
 
