@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en-ca" ng-app>
+@*<html lang="en-ca" ng-app="PresentationBuilder"> *@
+<html lang="en-ca">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
-    <div id="body" class="container body-content">
+    <div id="body" class="container body-content" style="display: none;">
         <div class="row shadow">
             <div class="col-md-6 leftColumn">
                 @RenderSection("leftPane")
@@ -22,9 +23,10 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/scripts")
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
 
     <span id="AntiForgeryToken">@Html.AntiForgeryToken()</span>
 
@@ -38,13 +40,28 @@
 
         $(function ()
         {
-            $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
+            $("#body").show();
 
+            $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height() / 2);
+
+            if ($(window).width() >= 992)
+            {
+                $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
+            }
         });
 
         adjustLayoutContent = function ()
         {
-            $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height());
+            $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height() / 2);
+
+            if ($(window).width() < 992)
+            {
+                $("#body .row > .leftColumn, #body .row > .rightColumn").height('auto');
+            }
+            else
+            {
+                $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
+            }
         }
     </script>
 </body>

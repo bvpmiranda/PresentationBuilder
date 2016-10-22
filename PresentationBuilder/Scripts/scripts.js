@@ -84,3 +84,10 @@ $.blockUI.defaults.overlayCSS = {
 	opacity: 0.0,
 	cursor: 'wait'
 }
+
+$.ajaxSetup({
+	beforeSend: function (xhr)
+	{
+		xhr.setRequestHeader("X-XSRF-Token", csrfToken);
+	}
+});

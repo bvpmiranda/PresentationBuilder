@@ -70,7 +70,7 @@ namespace PresentationBuilder.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+				return View(model);
             }
 
             // This doesn't count login failures towards account lockout
@@ -87,7 +87,7 @@ namespace PresentationBuilder.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+					return View(model);
             }
         }
 

@@ -9,7 +9,7 @@ namespace PresentationBuilder.Models
 	{
 		Success = 0,
 		InvalidFileType = 1,
-		Error = 3
+		Error = 2
 	}
 
 	public class UploadReturn
