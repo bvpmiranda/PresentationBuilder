@@ -10,12 +10,10 @@ namespace PresentationBuilder.APIs
 {
 	public class PresentationsAPIController : ApiController
 	{
-
 		[HttpPost]
 		public HttpResponseMessage download(int id)
 		{
 			return ZipPresentation.zipPresentation(id);
 		}
-
 	}
 }
