@@ -1,0 +1,1 @@
+This folder's purpose is to store all the images and sounds so they can only be acessed by the owner.
