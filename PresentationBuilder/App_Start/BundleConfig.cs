@@ -28,6 +28,8 @@ namespace PresentationBuilder
 					  "~/Scripts/respond.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+					  "~/Scripts/jquery.blockUI.js",
+					  "~/Scripts/navigation.js",
 					  "~/Scripts/scripts.js",
 					  "~/Scripts/presentation.js",
                       "~/Scripts/pdf.js"));

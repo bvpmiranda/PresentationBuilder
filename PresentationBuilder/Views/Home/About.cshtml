@@ -1,4 +1,6 @@
 ﻿@{
+    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Layout.cshtml" : "~/Views/Shared/LayoutAjax.cshtml");
+
     ViewBag.Title = "About";
 }
 <h2>@ViewBag.Title.</h2>
