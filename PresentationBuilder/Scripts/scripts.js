@@ -15,29 +15,16 @@ adjustLayout = function ()
 	{
 		adjustingLayout = true;
 
-		if (!window.isMobileOrTablet())
+		if (typeof adjustContent === 'function')
 		{
-			$(window).scrollTop(0);
-		}
-
-		ajustaBody();
-		ajustaBarraTitulo();
-		ajustaConteudo();
-		ajustaRodape();
-
-		if (typeof ajustaConteudoInterno === 'function')
-		{
-			ajustaConteudoInterno();
+			adjustContent();
 		}
 
 		adjustingLayout = false;
 	}
 }
 
-adjustBody = function ()
-{
-
-}
+adjustContent = function () { }
 
 block = function (element, options)
 {
@@ -66,4 +53,27 @@ unblock = function (element)
 	{
 		element.unblock();
 	}
+}
+
+$(window).load(function ()
+{
+	adjustLayout();
+});
+
+$(window).resize(function ()
+{
+	adjustLayout();
+});
+
+$(window).scroll(function ()
+{
+	adjustLayout();
+});
+
+$.blockUI.defaults.message = null;
+
+$.blockUI.defaults.overlayCSS = {
+	backgroundColor: '#000',
+	opacity: 0.0,
+	cursor: 'wait'
 }

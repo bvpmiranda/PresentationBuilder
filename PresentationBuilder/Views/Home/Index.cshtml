@@ -7,19 +7,55 @@
 <div class="row">
     <div class="col-md-6 leftColumn">
         asd
+        <br />
+        asd
+        <br />
+        as
+        <br />
+        das
+        <br />
+        da
+        <br />
+        sd
+        <br />
+        as
+        <br />
+        dsa
+        <br />
+        ed
     </div>
     <div class="col-md-6 rightColumn">
         asd
     </div>
 </div>
 
-
-<input type="file" id="uploadZip" name="file" style="visibility: hidden;" />
+<input type="file" id="uploadZip" name="file" style="display: none;" />
 
 <script>
+
     window.onload = function (e)
     {
         Presentations.fileUpload = $("#uploadZip");
+
+        var leftColumn = $(".leftColumn");
+        var rightColumn = $(".rightColumn");
+
+        leftColumn.parents(".row").css('margin', 0);
+        rightColumn.parents(".row").css('margin', 0);
+
+        if (leftColumn.height() > rightColumn.height())
+        {
+            rightColumn.height(leftColumn.height());
+        }
+        else
+        {
+            leftColumn.height(rightColumn.height());
+        }
+
+        adjustContent = function ()
+        {
+            
+        }
 
         Presentations.bind();
     }
