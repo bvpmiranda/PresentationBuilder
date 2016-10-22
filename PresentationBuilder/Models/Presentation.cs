@@ -21,13 +21,13 @@ namespace PresentationBuilder.Models
         }
     
         public int PresentationId { get; set; }
-        public int AuthorId { get; set; }
+        public string UserId { get; set; }
         public string Name { get; set; }
         public System.DateTime Date { get; set; }
         public string Description { get; set; }
     
-        public virtual Author Author { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PresentationPage> PresentationPages { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

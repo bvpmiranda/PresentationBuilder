@@ -25,8 +25,8 @@ namespace PresentationBuilder.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<PresentationPage> PresentationPages { get; set; }
         public virtual DbSet<Presentation> Presentations { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }

@@ -151,16 +151,10 @@ namespace PresentationBuilder.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+				var user = new ApplicationUser { UserName = model.FirstName + " " + model.LastName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-					var context = new PresentationBuilder.Models.PresentationBuilderEntities();
-
-					context.Authors.Add(new Author { AspNetUserId = user.Id, FirstName = model.FirstName, LastName = model.LastName });
-
-					await context.SaveChangesAsync();
-					
 					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
 

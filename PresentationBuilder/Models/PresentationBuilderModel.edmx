@@ -5,14 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="PresentationBuilderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Authors">
+        <EntityType Name="AspNetUsers">
           <Key>
-            <PropertyRef Name="AuthorId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="AuthorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AspNetUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="PresentationPages">
           <Key>
@@ -31,7 +41,7 @@
             <PropertyRef Name="PresentationId" />
           </Key>
           <Property Name="PresentationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AuthorId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
@@ -58,20 +68,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Presentations_Authors">
-          <End Role="Authors" Type="Self.Authors" Multiplicity="1" />
+        <Association Name="FK_Presentations_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Presentations" Type="Self.Presentations" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Authors">
-              <PropertyRef Name="AuthorId" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Presentations">
-              <PropertyRef Name="AuthorId" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="PresentationBuilderModelStoreContainer">
-          <EntitySet Name="Authors" EntityType="Self.Authors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PresentationPages" EntityType="Self.PresentationPages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Presentations" EntityType="Self.Presentations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -79,8 +89,8 @@
             <End Role="Presentations" EntitySet="Presentations" />
             <End Role="PresentationPages" EntitySet="PresentationPages" />
           </AssociationSet>
-          <AssociationSet Name="FK_Presentations_Authors" Association="Self.FK_Presentations_Authors">
-            <End Role="Authors" EntitySet="Authors" />
+          <AssociationSet Name="FK_Presentations_AspNetUsers" Association="Self.FK_Presentations_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Presentations" EntitySet="Presentations" />
           </AssociationSet>
         </EntityContainer>
@@ -88,16 +98,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PresentationBuilderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Author">
-          <Key>
-            <PropertyRef Name="AuthorId" />
-          </Key>
-          <Property Name="AuthorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AspNetUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Presentations" Relationship="Self.FK_Presentations_Authors" FromRole="Authors" ToRole="Presentations" />
-        </EntityType>
         <EntityType Name="PresentationPage">
           <Key>
             <PropertyRef Name="PresentationPageId" />
@@ -116,25 +116,13 @@
             <PropertyRef Name="PresentationId" />
           </Key>
           <Property Name="PresentationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Author" Relationship="Self.FK_Presentations_Authors" FromRole="Presentations" ToRole="Authors" />
           <NavigationProperty Name="PresentationPages" Relationship="Self.FK_PresentationPages_Presentations" FromRole="Presentations" ToRole="PresentationPages" />
+          <NavigationProperty Name="AspNetUser" Relationship="PresentationBuilderModel.FK_Presentations_AspNetUsers" FromRole="Presentation" ToRole="AspNetUser" />
         </EntityType>
-        <Association Name="FK_Presentations_Authors">
-          <End Role="Authors" Type="Self.Author" Multiplicity="1" />
-          <End Role="Presentations" Type="Self.Presentation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Authors">
-              <PropertyRef Name="AuthorId" />
-            </Principal>
-            <Dependent Role="Presentations">
-              <PropertyRef Name="AuthorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PresentationPages_Presentations">
           <End Role="Presentations" Type="Self.Presentation" Multiplicity="1" />
           <End Role="PresentationPages" Type="Self.PresentationPage" Multiplicity="*" />
@@ -148,34 +136,56 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="PresentationBuilderEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Authors" EntityType="Self.Author" />
           <EntitySet Name="PresentationPages" EntityType="Self.PresentationPage" />
           <EntitySet Name="Presentations" EntityType="Self.Presentation" />
-          <AssociationSet Name="FK_Presentations_Authors" Association="Self.FK_Presentations_Authors">
-            <End Role="Authors" EntitySet="Authors" />
-            <End Role="Presentations" EntitySet="Presentations" />
-          </AssociationSet>
           <AssociationSet Name="FK_PresentationPages_Presentations" Association="Self.FK_PresentationPages_Presentations">
             <End Role="Presentations" EntitySet="Presentations" />
             <End Role="PresentationPages" EntitySet="PresentationPages" />
           </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="PresentationBuilderModel.AspNetUser" />
+          <AssociationSet Name="FK_Presentations_AspNetUsers" Association="PresentationBuilderModel.FK_Presentations_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Presentation" EntitySet="Presentations" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Presentations" Relationship="PresentationBuilderModel.FK_Presentations_AspNetUsers" FromRole="AspNetUser" ToRole="Presentation" />
+        </EntityType>
+        <Association Name="FK_Presentations_AspNetUsers">
+          <End Type="PresentationBuilderModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="PresentationBuilderModel.Presentation" Role="Presentation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Presentation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PresentationBuilderModelStoreContainer" CdmEntityContainer="PresentationBuilderEntities">
-          <EntitySetMapping Name="Authors">
-            <EntityTypeMapping TypeName="PresentationBuilderModel.Author">
-              <MappingFragment StoreEntitySet="Authors">
-                <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
-                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PresentationPages">
             <EntityTypeMapping TypeName="PresentationBuilderModel.PresentationPage">
               <MappingFragment StoreEntitySet="PresentationPages">
@@ -192,11 +202,31 @@
           <EntitySetMapping Name="Presentations">
             <EntityTypeMapping TypeName="PresentationBuilderModel.Presentation">
               <MappingFragment StoreEntitySet="Presentations">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="PresentationId" ColumnName="PresentationId" />
-                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="PresentationBuilderModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
