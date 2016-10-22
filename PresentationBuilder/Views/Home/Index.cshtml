@@ -5,17 +5,37 @@
     Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Home.cshtml" : "~/Views/Shared/HomeAjax.cshtml");
 
     ViewBag.Title = "Presentation Builder";
-    ViewBag.ReturnUrl = "Manage/ChangePassword";
 }
 
 @section leftPane
 {
-
+    <div class="row">
+        <div class="col-sm-1 col-md-12  col-lg-12">
+            <img src="~/Images/aboutUs.png" class="about" />
+        </div>
+        <div class="col-sm-2 col-md-12 col-lg-12 ">
+            <center>
+                <img src="~/Images/presentationBuilder.png" />
+            </center>
+        </div>
+        <div class="col-sm-9 col-md-12 col-lg-12">
+            <center>
+                Presentation Builder
+            </center>
+        </div>
+        <div class="col-sm-9 col-md-12 col-lg-12">
+            <center>
+                <span class="navigationOff"></span>
+                <span class="navigationOn"></span>
+                <span class="navigationOn"></span>
+            </center>
+        </div>
+    </div>
 }
 
-<div class="row">
-    <div class="col-xs-8"></div>
-    <div class="col-xs-4">
+<div class="row signButtons">
+    <div class="col-sm-6 col-md-6 col-lg-8"></div>
+    <div class="col-sm-6 col-md-6 col-lg-4">
         <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign In" />
         <input type="button" class="btn btn-sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;" value="Sign Up" />
     </div>
@@ -24,6 +44,7 @@
     <div class="col-xs-12">
         <a href="#" class="txt-Sign selected" onclick="return false;">Sign In</a>
         or
+        @Html.ActionLink("Account", "Index", "Home")
         <a href="#" class="txt-Sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;">Sign Up</a>
     </div>
 </div>
@@ -32,28 +53,33 @@
 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <div class="row">
+    <div class="login">
         <div class="row">
             <div class="col-lg-12">
-                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control"})
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                </div>
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                </div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @placeholder = "Your e-mail goes here" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <button type="submit" class="btn btn-signIn">Sign In</button>
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Your password goes here" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-block btn-signIn">Sign in</button>
             </div>
         </div>
     </div>

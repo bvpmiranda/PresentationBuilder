@@ -16,7 +16,7 @@ namespace PresentationBuilder.Controllers
 			}
 			else
 			{
-				return View();
+				return RedirectToAction("Login", "Account");
 			}
 		}
 

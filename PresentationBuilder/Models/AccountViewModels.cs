@@ -6,7 +6,7 @@ namespace PresentationBuilder.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "E-mail")]
+        [Display(Name = "E-MAIL")]
         public string Email { get; set; }
     }
 
@@ -49,13 +49,13 @@ namespace PresentationBuilder.Models
     public class LoginViewModel
     {
 		[Required]
-        [Display(Name = "Email")]
+		[Display(Name = "E-MAIL")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "PASSWORD")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]

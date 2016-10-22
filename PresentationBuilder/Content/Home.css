@@ -19,7 +19,7 @@
 	background: -o-linear-gradient(right, #de663c, #db8937); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(to right, #de663c, #db8937); /* Standard syntax */
-	padding: 30px !important;
+	color: #fff;
 }
 
 .rightColumn
@@ -62,10 +62,21 @@
 		cursor: default;
 	}
 
+
+.btn-signIn
+{
+	background: #e37535; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(top, #db8a36, #ea6234); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(bottom, #db8a36, #ea6234); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(bottom, #db8a36, #ea6234); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to bottom, #db8a36, #ea6234); /* Standard syntax */
+	border-color: #1b2a3b;
+	color: #fff;
+}
+
 .txt
 {
 	color: #a1a1a1;
-	font-size: 32px;
 }
 
 .txt-Sign
@@ -74,16 +85,207 @@
 	font-size: 44px;
 }
 
-.txt-Sign.selected
-{
+	.txt-Sign.selected
+	{
 		border-bottom: 2px solid #df673b;
 		color: #fff;
 		cursor: default;
 		text-decoration: none;
-}
+	}
 
 	.txt-Sign:hover
 	{
 		color: #fff;
 		text-decoration: none;
 	}
+
+.login > .row
+{
+	margin-bottom: 20px;
+}
+
+input[type=email], input[type=password], input[type=text]
+{
+	background-color: #1b2a3b !important;
+	color: #fff !important;
+}
+
+.navigationOn
+{
+	font-size: 14px; /* This controls the size. */
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #b1b1b1;
+	background-color: #b1b1b1;
+	border-radius: 14px;
+}
+
+.navigationOff
+{
+	font-size: 14px; /* This controls the size. */
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #b1b1b1;
+	border-radius: 14px;
+}
+
+@media (max-width: 768px)
+{
+	.signButtons
+	{
+		display: none;
+	}
+
+	.txt
+	{
+		font-size: 22px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 34px;
+	}
+
+	.leftColumn
+	{
+		padding: 5px !important;
+		font-size: 22px;
+	}
+
+	.leftColumn.signUp
+	{
+		font-size: 22px;
+	}
+	
+		.leftColumn img
+		{
+			height: 59px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 22px;
+			}
+}
+
+@media (min-width: 768px) and (max-width: 992px)
+{
+	.signButtons
+	{
+		display: block;
+		text-align: right;
+	}
+
+	.txt
+	{
+		font-size: 22px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 34px;
+	}
+
+	.leftColumn
+	{
+		padding: 10px !important;
+		font-size: 32px;
+	}
+
+	.leftColumn .signUp
+	{
+		font-size: 22px;
+	}
+
+		.leftColumn img
+		{
+			height: 59px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 22px;
+			}
+}
+
+@media (min-width: 992px) and (max-width: 1200px)
+{
+	.signButtons
+	{
+		display: block;
+		text-align: right;
+	}
+
+	.txt
+	{
+		font-size: 32px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 44px;
+	}
+
+	.leftColumn
+	{
+		padding: 20px !important;
+		font-size: 42px;
+	}
+
+	.leftColumn .signUp
+	{
+		font-size: 22px;
+	}
+
+		.leftColumn img
+		{
+			height: 259px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 32px;
+			}
+}
+
+@media (min-width: 1200px)
+{
+	.signButtons
+	{
+		display: block;
+		text-align: right;
+	}
+
+	.txt
+	{
+		font-size: 32px;
+	}
+
+	.txt-Sign
+	{
+		font-size: 44px;
+	}
+
+	.leftColumn
+	{
+		padding: 30px !important;
+		font-size: 52px;
+	}
+
+	.leftColumn .signUp
+	{
+		font-size: 22px;
+	}
+
+		.leftColumn img
+		{
+			height: 259px;
+		}
+
+			.leftColumn img.about
+			{
+				height: 42px;
+			}
+}
