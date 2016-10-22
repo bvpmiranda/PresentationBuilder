@@ -1,0 +1,2 @@
+﻿var urlBase;
+var csrfToken;

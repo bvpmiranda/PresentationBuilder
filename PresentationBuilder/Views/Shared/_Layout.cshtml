@@ -40,5 +40,34 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    @*<span id="AntiForgeryToken">@Html.AntiForgeryToken</span>*@
+
+    <script>
+        urlBase = "@Url.Content("~/")";
+        //csrfToken = $("#AntiForgeryToken [name=__RequestVerificationToken]").val();
+
+        //Navegacao.div = $("#body");
+        //Navegacao.urlBase = urlBase;
+        //Navegacao.tituloSistema = "SGC";
+
+        //RotinasMVC.gridPageSize = 100;
+
+        //$("#dfNotificacao").dialog({
+        //    autoOpen: false,
+        //    height: 72,
+        //    width: 600,
+        //    resizable: false,
+        //    modal: true
+        //});
+
+        //$("#dfNotificacaoErro").dialog({
+        //    autoOpen: false,
+        //    height: 72,
+        //    width: 600,
+        //    resizable: false,
+        //    modal: true
+        //});
+    </script>
 </body>
 </html>
