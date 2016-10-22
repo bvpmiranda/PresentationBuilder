@@ -40,15 +40,18 @@ namespace PresentationBuilder.Helpers
 
 			foreach (var page in Presentation.PresentationPages)
 			{
-				fileBytes = System.IO.File.ReadAllBytes(path + page.ImagePath);
-
-				zip.AddEntry(page.ImagePath, fileBytes);
-
-				if (page.SoundPath != null)
+				if (!page.Hidden)
 				{
-					fileBytes = System.IO.File.ReadAllBytes(path + page.SoundPath);
+					fileBytes = System.IO.File.ReadAllBytes(path + page.ImagePath);
 
-					zip.AddEntry(page.SoundPath, fileBytes);
+					zip.AddEntry(page.ImagePath, fileBytes);
+
+					if (page.SoundPath != null)
+					{
+						fileBytes = System.IO.File.ReadAllBytes(path + page.SoundPath);
+
+						zip.AddEntry(page.SoundPath, fileBytes);
+					}
 				}
 			}
 
@@ -59,6 +62,8 @@ namespace PresentationBuilder.Helpers
 				name = Presentation.Name,
 				description = Presentation.Description,
 				page = (from p in Presentation.PresentationPages
+						where !p.Hidden
+						orderby p.Order
 						select new
 						{
 							order = p.Order,
