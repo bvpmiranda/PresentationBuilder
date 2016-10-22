@@ -1,6 +1,12 @@
 ﻿var baseUrl;
 var csrfToken;
 
+uploadStatus = {
+	success: 0,
+	invalidFileType: 1,
+	error: 3
+}
+
 block = function (element, options)
 {
 	if (options === undefined || options === null)
