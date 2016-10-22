@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="sound.ashx.cs" Class="PresentationBuilder.image" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="sound.ashx.cs" Class="PresentationBuilder.sound" %>

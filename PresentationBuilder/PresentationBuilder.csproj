@@ -201,11 +201,12 @@
     <Compile Include="Helpers\PdfHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\ZipHelper.cs" />
-    <Compile Include="sound.ashx.cs">
-      <DependentUpon>sound.ashx</DependentUpon>
-    </Compile>
     <Compile Include="image.ashx.cs">
       <DependentUpon>image.ashx</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="sound.ashx.cs">
+      <DependentUpon>sound.ashx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs">
@@ -255,6 +256,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="image.ashx" />
     <Content Include="Images\aboutUs.png" />
     <Content Include="Images\bootstrap-social.png" />
     <Content Include="Images\dev.png" />
@@ -285,7 +287,6 @@
       <DependentUpon>PresentationBuilderModel.edmx</DependentUpon>
       <LastGenOutput>PresentationBuilderModel.cs</LastGenOutput>
     </Content>
-    <Content Include="image.ashx" />
     <Content Include="sound.ashx" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
