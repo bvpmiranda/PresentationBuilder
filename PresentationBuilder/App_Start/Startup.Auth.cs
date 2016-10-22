@@ -54,15 +54,15 @@ namespace PresentationBuilder
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "942345369203203",
+               appSecret: "d6a8d9d3b2e94f8c4fa3e1e0acb92e9b");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1008147802171-s1e8439aihusbaagq4v708qu0fc8ut3r.apps.googleusercontent.com",
+                ClientSecret = "e-bpjleKpnqcSIHy1JUx5DbZ"
+            });
         }
     }
 }
