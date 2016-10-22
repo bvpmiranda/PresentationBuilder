@@ -29,7 +29,8 @@ namespace PresentationBuilder
 
 			bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
 					  "~/Scripts/scripts.js",
-					  "~/Scripts/presentation.js"));
+					  "~/Scripts/presentation.js",
+                      "~/Scripts/pdf.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
