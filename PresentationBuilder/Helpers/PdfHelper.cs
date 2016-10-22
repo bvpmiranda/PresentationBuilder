@@ -1,28 +1,49 @@
-﻿using System.Web;
-using PdfSharp.Pdf;
-using PdfSharp.Pdf.IO;
+﻿using GhostscriptSharp;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
 
 namespace PresentationBuilder.Helpers
 {
     public class PdfHelper
     {
-        public static bool slpit()
-        {           
-            //inputDocument.PageCount
 
-            string path = HttpContext.Current.Server.MapPath("~/");
+        /// <summary>
+        /// Split PDF file into images with File pattern name OUTPUT{0}.jpg Total Page to export to image = 100;
+        /// </summary>
+        /// <param name="path">PDF path source</param>
+        /// <param name="output">Images PDF output</param>
+        /// <returns></returns>
+        public static void splitToImages(string path, string outputPath)
+        {
+            splitToImages(path, outputPath, "OUTPUT%d.jpg", 100);
+        }
 
-            if (path.EndsWith("\\"))
+
+        /// <summary>
+        /// Split PDF file into images
+        /// </summary>
+        /// <param name="path">PDF path source</param>
+        /// <param name="output">Images PDF output</param>
+        /// <param name="filename">File pattern name OUTPUT{0}.jpg</param>
+        /// <param name="multipleFilePageCount">Total Page to export to image</param>
+        /// <returns></returns>
+        public static void splitToImages(string path, string outputPath, string filename = "OUTPUT%d.jpg", int multipleFilePageCount = 100)
+        {
+            try
             {
-                path = path.Substring(0, path.Length - 1);
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);                
+
+                GhostscriptWrapper.GeneratePageThumbs(path, Path.Combine(outputPath, filename), 1, multipleFilePageCount, 100, 100);
             }
-
-            path = path.Substring(0, path.LastIndexOf("\\")) + "\\PresentationBuilderDocuments\\";
-
-            var pdfName = path + "Teste.pdf";
-            PdfDocument inputDocument = PdfReader.Open(pdfName, PdfDocumentOpenMode.ReadOnly);
-
-            return false;
+            catch (Exception exc)
+            {
+               
+                //throw;
+            }
         }
     }
 }
