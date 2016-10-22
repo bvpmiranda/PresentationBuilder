@@ -155,7 +155,15 @@ namespace PresentationBuilder.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+					var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+					context.Authors.Add(new Author { AspNetUserId = user.Id, FirstName = model.FirstName, LastName = model.LastName });
+
+					await context.SaveChangesAsync();
+					
+					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
