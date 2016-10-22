@@ -2,7 +2,7 @@
 @model LoginViewModel
 
 @{
-    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Home.cshtml" : "~/Views/Shared/HomeAjax.cshtml");
+    Layout = "~/Views/Shared/Home.cshtml";
 
     ViewBag.Title = "Presentation Builder";
 }
@@ -11,7 +11,7 @@
 {
     <div class="row">
         <div class="col-sm-1 col-md-12  col-lg-12">
-            <img src="~/Images/aboutUs.png" class="about" />
+            <a href="@Url.Action("About", "Home")"><img src="~/Images/aboutUs.png" class="about" /></a>
         </div>
         <div class="col-sm-2 col-md-12 col-lg-12 text-center">
             <img src="~/Images/presentationBuilder.png" />
@@ -31,14 +31,14 @@
     <div class="col-sm-6 col-md-6 col-lg-8"></div>
     <div class="col-sm-6 col-md-6 col-lg-4">
         <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign In" />
-        @Html.ActionLink("Sign Up", "Register", "Account", new { @class = "btn btn-sign" })
+        @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "btn btn-sign" })
     </div>
 </div>
 <div class="row txt">
     <div class="col-xs-12">
         <a href="#" class="txt-Sign selected" onclick="return false;">Sign In</a>
         or
-        @Html.ActionLink("Sign Up", "Register", "Account", new { @class = "txt-Sign" })
+        @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "txt-Sign" })
     </div>
 </div>
 <br />
