@@ -16,8 +16,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44357</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -50,6 +49,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -192,12 +199,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PdfHelper.cs" />
+    <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\ZipHelper.cs" />
+    <Compile Include="image.ashx.cs">
+      <DependentUpon>image.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>PresentationBuilderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JsonError.cs" />
+    <Compile Include="Models\JsonReturn.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Presentation.cs">
       <DependentUpon>PresentationBuilderModel.tt</DependentUpon>
@@ -237,7 +252,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\aboutUs.png" />
+    <Content Include="Images\bootstrap-social.png" />
+    <Content Include="Images\login_facebook.png" />
+    <Content Include="Images\login_google.png" />
+    <Content Include="Images\login_twitter.png" />
+    <Content Include="Images\presentationBuilder.png" />
     <Content Include="Ionic.Zip.xml" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\PresentationBuilderModel.edmx">
@@ -257,6 +281,7 @@
       <DependentUpon>PresentationBuilderModel.edmx</DependentUpon>
       <LastGenOutput>PresentationBuilderModel.cs</LastGenOutput>
     </Content>
+    <Content Include="image.ashx" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
@@ -631,7 +656,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\scripts.js" />
-    <Content Include="Scripts\SignIn.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -675,8 +699,20 @@
     <Content Include="Views\Presentations\Index.cshtml" />
     <Content Include="Views\Presentations\Presentation.cshtml" />
     <Content Include="Views\Shared\Home.cshtml" />
-    <Content Include="Views\Shared\HomeAjax.cshtml" />
     <Content Include="Views\Shared\Internal.cshtml" />
+    <Content Include="Views\Shared\InternalAjax.cshtml" />
+    <Content Include="Views\Account - Copy\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account - Copy\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account - Copy\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account - Copy\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account - Copy\ForgotPassword.cshtml" />
+    <Content Include="Views\Account - Copy\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account - Copy\Login.cshtml" />
+    <Content Include="Views\Account - Copy\Register.cshtml" />
+    <Content Include="Views\Account - Copy\ResetPassword.cshtml" />
+    <Content Include="Views\Account - Copy\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account - Copy\SendCode.cshtml" />
+    <Content Include="Views\Account - Copy\VerifyCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -709,7 +745,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51159</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51159/</IISUrl>
+          <IISUrl>https://localhost:44357/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -6,8 +6,18 @@ namespace PresentationBuilder.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "USER NAME")]
+        public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "E-MAIL")]
         public string Email { get; set; }
+
+        [Display(Name = "FIRST NAME")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "LAST NAME")]
+        public string LastName { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -42,20 +52,20 @@ namespace PresentationBuilder.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "E-MAIL")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
 		[Required]
-        [Display(Name = "Email")]
+		[Display(Name = "E-MAIL")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "PASSWORD")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -65,28 +75,28 @@ namespace PresentationBuilder.Models
     public class RegisterViewModel
     {
 		[Required]
-		[Display(Name = "First Name")]
+		[Display(Name = "FIRST NAME")]
 		[MaxLength(50)]
 		public string FirstName { get; set; }
 
 		[Required]
-		[Display(Name = "Last Name")]
+		[Display(Name = "LAST NAME")]
 		[MaxLength(50)]
 		public string LastName { get; set; }
 
 		[Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "E-MAIL")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "PASSWORD")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "CONFIRM PASSWORD")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
@@ -95,17 +105,17 @@ namespace PresentationBuilder.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "E-MAIL")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "PASSWORD")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "CONFIRM PASSWORD")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
@@ -116,7 +126,7 @@ namespace PresentationBuilder.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "E-MAIL")]
         public string Email { get; set; }
     }
 }

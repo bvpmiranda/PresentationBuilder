@@ -1,9 +1,43 @@
-﻿@{
-    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Layout.cshtml" : "~/Views/Shared/LayoutAjax.cshtml");
+﻿@using PresentationBuilder.Models
+@model LoginViewModel
 
-    ViewBag.Title = "About";
+@{
+    Layout = "~/Views/Shared/Home.cshtml";
+
+    ViewBag.Title = "Presentation Builder";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+@section leftPane
+{
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <img src="~/Images/presentationBuilder.png" />
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            Who are we?
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <span class="navigationOn"></span>
+            <span class="navigationOn"></span>
+            <span class="navigationOff"></span>
+        </div>
+    </div>
+}
+
+<div class="row signButtons">
+    <div class="col-sm-4 col-md-6 col-lg-8"></div>
+    <div class="col-sm-8 col-md-6 col-lg-4">
+        @Html.ActionLink("Sign In", "Login", "Account", null, new { @class = "btn btn-sign" })
+        @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "btn btn-sign" })
+    </div>
+</div>
+<div class="row txt">
+    <div class="col-xs-12">
+        <a href="#" class="txt-Sign selected" onclick="return false;">About Us</a>
+    </div>
+</div>
+<br />
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin elit lorem, luctus a placerat eget, dignissim dignissim nunc. Nam laoreet lacus sed tortor lobortis, a pretium ante feugiat. Nullam eget quam sit amet sapien aliquet mattis. Donec at enim dolor. Nunc ultricies odio vitae massa aliquet, id luctus sapien sodales. Fusce et imperdiet enim. Mauris cursus ante et ligula maximus, sed ornare libero eleifend. Aenean varius ut felis ut efficitur. Vivamus sed lacinia neque, ut iaculis sem. Nullam scelerisque purus eu feugiat congue. In hac habitasse platea dictumst. Nam tempor arcu eu quam auctor, id scelerisque tortor volutpat. Nunc pretium viverra magna, id pretium ex posuere in. Nullam id purus diam.
+<br />
+Aliquam tempus ullamcorper felis ut sagittis. Proin fermentum iaculis lectus at convallis. Integer vel quam erat. Fusce libero risus, hendrerit sed nunc vel, iaculis blandit nibh. Nulla in neque pharetra, consequat purus vel, pulvinar orci. Sed mollis sollicitudin dui nec mattis. Cras faucibus aliquet tellus ac iaculis. Duis vitae imperdiet erat. Sed non sodales elit, eu sodales metus.

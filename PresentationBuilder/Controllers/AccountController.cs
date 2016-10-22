@@ -70,7 +70,7 @@ namespace PresentationBuilder.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+				return View(model);
             }
 
             // This doesn't count login failures towards account lockout
@@ -79,6 +79,11 @@ namespace PresentationBuilder.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+					var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+					var userId = (from u in context.AspNetUsers where u.UserName == model.Email select u.Id).First();
+					Session.Add("userId", userId);
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -87,7 +92,7 @@ namespace PresentationBuilder.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+					return View(model);
             }
         }
 
@@ -158,6 +163,7 @@ namespace PresentationBuilder.Controllers
 					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
 
+					Session.Add("userId", user.Id);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -345,7 +351,12 @@ namespace PresentationBuilder.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel {
+                        Email = loginInfo.Email,
+                        FirstName = loginInfo.ExternalIdentity.Name.Substring(0, loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
+                        LastName = loginInfo.ExternalIdentity.Name.Substring(loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
+                        UserName = loginInfo.DefaultUserName
+                    });
             }
         }
 
@@ -369,7 +380,13 @@ namespace PresentationBuilder.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    EmailConfirmed = true 
+                };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -394,6 +411,7 @@ namespace PresentationBuilder.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+			Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 

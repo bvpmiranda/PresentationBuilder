@@ -38,7 +38,7 @@ namespace PresentationBuilder.Helpers
 
 			byte[] fileBytes;
 
-			string path = ZipHelper.path() + presentation.PresentationId.ToString() + "\\";
+			string path = PathHelper.path() + presentation.PresentationId.ToString() + "\\";
 
 			foreach (var page in presentation.PresentationPages)
 			{
@@ -135,7 +135,7 @@ namespace PresentationBuilder.Helpers
 				context.Presentations.Add(presentation);
 				context.SaveChanges();
 
-				string path = ZipHelper.path() + presentation.PresentationId.ToString() + "\\";
+				string path = PathHelper.path() + presentation.PresentationId.ToString() + "\\";
 
 				System.IO.Directory.CreateDirectory(path);
 

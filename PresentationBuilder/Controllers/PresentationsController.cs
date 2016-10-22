@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PresentationBuilder.Controllers
@@ -18,7 +17,7 @@ namespace PresentationBuilder.Controllers
 		}
 
 		[Authorize]
-        public ActionResult Presentation(int id)
+		public ActionResult Presentation(int id)
 		{
             var context = new PresentationBuilderEntities();
 
@@ -34,13 +33,13 @@ namespace PresentationBuilder.Controllers
 		{
 			var uploadReturn = new UploadReturn();
 
-			var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+			var context = new PresentationBuilderEntities();
 
 			var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
 			try
 			{
-				var Presentation = PresentationBuilder.Helpers.ZipHelper.unzipPresentation(Request.Files[0], UserId);
+				var Presentation = Helpers.ZipHelper.unzipPresentation(Request.Files[0], UserId);
 
 				uploadReturn.data = new Presentation
 				{
@@ -125,15 +124,15 @@ namespace PresentationBuilder.Controllers
                         return Json(new { Message = presentation.PresentationId });
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                uploadReturn.uploadStatus = uploadStatus.Error;
-                uploadReturn.message = ex.Message;
-            }
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
 
 
-            return Json(uploadReturn, "text/plain");
-        }
+			return Json(uploadReturn, "text/plain");
+		}
 	}
 }
