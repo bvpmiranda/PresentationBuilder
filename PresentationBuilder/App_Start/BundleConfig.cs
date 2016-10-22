@@ -27,6 +27,9 @@ namespace PresentationBuilder
                       "~/Scripts/bootstrap.js",
 					  "~/Scripts/respond.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+					  "~/Scripts/angular.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
 					  "~/Scripts/jquery.blockUI.js",
 					  "~/Scripts/jquery.matchHeight.js",
