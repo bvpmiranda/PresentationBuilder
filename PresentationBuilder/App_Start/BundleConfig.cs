@@ -32,6 +32,7 @@ namespace PresentationBuilder
 					  "~/Scripts/jquery.matchHeight.js",
 					  "~/Scripts/navigation.js",
 					  "~/Scripts/scripts.js",
+					  "~/Scripts/SignIn.js",
 					  "~/Scripts/presentation.js",
                       "~/Scripts/pdf.js"));
 
