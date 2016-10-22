@@ -2,9 +2,9 @@
 @model LoginViewModel
 
 @{
-    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Home.cshtml" : "~/Views/Shared/HomeAjax.cshtml");
+    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Layout.cshtml" : "~/Views/Shared/LayoutAjax.cshtml");
 
-    ViewBag.Title = "Presentation Builder";
+    ViewBag.Title = "Home Page";
 }
 
 @section leftPane
@@ -39,6 +39,10 @@
         <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign In" />
         <input type="button" class="btn btn-sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;" value="Sign Up" />
     </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
 </div>
 <div class="row txt">
     <div class="col-xs-12">

@@ -13,10 +13,10 @@
 <body>
     <div id="body" class="container body-content" style="display: none;">
         <div class="row shadow">
-            <div class="col-md-6 leftColumn">
+            <div class="col-sm-6 col-md-6 col-lg-6 leftColumn">
                 @RenderSection("leftPane")
             </div>
-            <div class="col-md-6 rightColumn">
+            <div class="col-sm-6 col-md-6 col-lg-6 rightColumn">
                 @RenderBody()
             </div>
         </div>
@@ -44,24 +44,14 @@
 
             $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height() / 2);
 
-            if ($(window).width() >= 992)
-            {
-                $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
-            }
+            $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
         });
 
         adjustLayoutContent = function ()
         {
             $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height() / 2);
 
-            if ($(window).width() < 992)
-            {
-                $("#body .row > .leftColumn, #body .row > .rightColumn").height('auto');
-            }
-            else
-            {
-                $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
-            }
+            $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
         }
     </script>
 </body>

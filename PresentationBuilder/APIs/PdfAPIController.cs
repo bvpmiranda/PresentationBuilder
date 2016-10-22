@@ -14,8 +14,8 @@ namespace PresentationBuilder.APIs
         [HttpPost]
         public HttpResponseMessage split(int id)
         {
-			//if (PdfHelper.splitToImages())
-			//	return new HttpResponseMessage(HttpStatusCode.OK);
+            //if (PdfHelper.slpit())
+            //    return new HttpResponseMessage(HttpStatusCode.OK);
 
             return new HttpResponseMessage(HttpStatusCode.NoContent);
         }

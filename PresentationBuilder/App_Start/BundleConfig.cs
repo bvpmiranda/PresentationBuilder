@@ -36,14 +36,17 @@ namespace PresentationBuilder
 					  "~/Scripts/navigation.js",
 					  "~/Scripts/scripts.js",
 					  "~/Scripts/presentation.js",
-                      "~/Scripts/pdf.js"));
+                      "~/Scripts/pdf.js",
+                        "~/Scripts/dropzone/dropzone.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/site.css",
                       "~/Content/bootstrap-social.css",
                       "~/Content/bootstrap-social.scss",
                       "~/Content/font-awesome.css",
-                      "~/Content/site.css"));
+                      "~/Content/basic.css",
+                      "~/Content/dropzone.css"));
 
 			bundles.Add(new StyleBundle("~/Content/homeCss").Include(
                       "~/Content/bootstrap.css",
@@ -51,6 +54,9 @@ namespace PresentationBuilder
                       "~/Content/bootstrap-social.scss",
                       "~/Content/font-awesome.css",
                       "~/Content/home.css"));
+
+        
+
         }
     }
 }
