@@ -16,7 +16,7 @@ namespace PresentationBuilder.Helpers
 		{
 			var context = new PresentationBuilderEntities();
 
-			var presentation = (from p in context.Presentations.Include("Author").Include("PresentationPages") where p.PresentationId == PresentationId select p).First();
+			var presentation = (from p in context.Presentations.Include("AspNetUser").Include("PresentationPages") where p.PresentationId == PresentationId select p).First();
 
 			return zipPresentation(presentation);
 		}
@@ -57,7 +57,7 @@ namespace PresentationBuilder.Helpers
 
 			var manifest = new
 			{
-				author = Presentation.Author.FirstName + " " + Presentation.Author.LastName,
+				author = Presentation.AspNetUser.FirstName + " " + Presentation.AspNetUser.LastName,
 				date = Presentation.Date,
 				name = Presentation.Name,
 				description = Presentation.Description,

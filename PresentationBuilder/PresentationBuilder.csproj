@@ -190,7 +190,7 @@
     <Compile Include="Helpers\PdfHelper.cs" />
     <Compile Include="Helpers\ZipPresentation.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Author.cs">
+    <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>PresentationBuilderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
