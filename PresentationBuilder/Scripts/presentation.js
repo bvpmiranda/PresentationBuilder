@@ -17,5 +17,10 @@ var Presentations = {
 		}
 
 		$('#download-form').submit();
+	},
+
+	upload: function(e)
+	{
+		$("#uploadZipForm").submit();
 	}
 }

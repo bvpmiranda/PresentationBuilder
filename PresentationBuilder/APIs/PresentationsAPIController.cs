@@ -13,7 +13,7 @@ namespace PresentationBuilder.APIs
 		[HttpPost]
 		public HttpResponseMessage download(int id)
 		{
-			return ZipPresentation.zipPresentation(id);
+			return ZipHelper.zipPresentation(id);
 		}
 	}
 }
