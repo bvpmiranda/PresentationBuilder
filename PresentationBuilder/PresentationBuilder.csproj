@@ -245,6 +245,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\basic.css" />
     <Content Include="Content\basic.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -287,6 +288,7 @@
       <DependentUpon>PresentationBuilderModel.edmx</DependentUpon>
       <LastGenOutput>PresentationBuilderModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\bootstrap-social.scss" />
     <Content Include="sound.ashx" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
