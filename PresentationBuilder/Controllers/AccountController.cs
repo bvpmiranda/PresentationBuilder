@@ -79,6 +79,11 @@ namespace PresentationBuilder.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+					var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+					var userId = (from u in context.AspNetUsers where u.UserName == model.Email select u.Id).First();
+					Session.Add("userId", userId);
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -158,6 +163,7 @@ namespace PresentationBuilder.Controllers
 					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
 
+					Session.Add("userId", user.Id);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -405,6 +411,7 @@ namespace PresentationBuilder.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+			Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 

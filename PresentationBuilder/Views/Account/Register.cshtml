@@ -10,16 +10,16 @@
 @section leftPane
 {
     <div class="row signUp">
-        <div class="col-sm-1 col-md-12  col-lg-12">
+        <div class="col-sm-12 col-md-12  col-lg-12">
             <a href="@Url.Action("About", "Home")"><img src="~/Images/aboutUs.png" class="about" /></a>
         </div>
-        <div class="col-sm-7 col-md-12  col-lg-12 text-center">
+        <div class="col-sm-12 col-md-12  col-lg-12 text-center">
             Create your account, it's quick and easy.
         </div>
-        <div class="col-sm-2 col-md-12 col-lg-12 text-center">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
             <img src="~/Images/presentationBuilder.png" />
         </div>
-        <div class="col-sm-2 col-md-12 col-lg-12 text-center">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
             <span class="navigationOn"></span>
             <span class="navigationOff"></span>
             <span class="navigationOn"></span>
@@ -28,8 +28,8 @@
 }
 
 <div class="row signButtons">
-    <div class="col-sm-6 col-md-6 col-lg-8"></div>
-    <div class="col-sm-6 col-md-6 col-lg-4">        
+    <div class="col-sm-4 col-md-6 col-lg-8"></div>
+    <div class="col-sm-8 col-md-6 col-lg-4">        
         @Html.ActionLink("Sign In", "Login", "Account", null, new { @class = "btn btn-sign" })
         <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign Up" />   
     </div>
