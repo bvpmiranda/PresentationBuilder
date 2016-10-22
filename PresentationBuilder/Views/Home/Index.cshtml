@@ -1,11 +1,8 @@
 ﻿@{
+    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Layout.cshtml" : "~/Views/Shared/LayoutAjax.cshtml");
+
     ViewBag.Title = "Home Page";
 }
-
-@section scripts {
-    @Scripts.Render("~/bundles/scripts")
-}
-
 
 <div class="jumbotron">
     <h1>ASP.NET</h1>
