@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -17,19 +16,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="#" class="navbar-brand" onclick="Navigation.navigate('Home/Index', 'Home Page'); return false;">Application Name</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a href="#" onclick="Navigation.navigate('Home/Index', 'Home Page'); return false;">Home</a></li>
+                    <li><a href="#" onclick="Navigation.navigate('Home/About', 'About'); return false;">About</a></li>
+                    <li><a href="#" onclick="Navigation.navigate('Home/Contact', 'Contact'); return false;">Contact</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div id="body" class="container body-content">
         @RenderBody()
         <hr />
         <footer>
@@ -39,6 +38,17 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/scripts")
+
+    <span id="AntiForgeryToken">@Html.AntiForgeryToken()</span>
+
+    <script>
+        baseUrl = "@Url.Content("~/")";
+        csrfToken = $("#AntiForgeryToken [name=__RequestVerificationToken]").val();
+
+        Navigation.div = $("#body");
+        Navigation.baseUrl = baseUrl;
+        Navigation.title = "Application Name";
+    </script>
 </body>
 </html>
