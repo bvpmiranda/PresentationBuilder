@@ -48,7 +48,7 @@ namespace PresentationBuilder.Models
 
     public class LoginViewModel
     {
-        [Required]
+		[Required]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
@@ -64,7 +64,17 @@ namespace PresentationBuilder.Models
 
     public class RegisterViewModel
     {
-        [Required]
+		[Required]
+		[Display(Name = "First Name")]
+		[MaxLength(50)]
+		public string FirstName { get; set; }
+
+		[Required]
+		[Display(Name = "Last Name")]
+		[MaxLength(50)]
+		public string LastName { get; set; }
+
+		[Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
