@@ -8,8 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div id="body" class="container body-content">
-        <div class="row shadow">
+    <div id="body" class="container-fluid body-content">
+        <div class="row">
             <div class="col-md-6 leftColumn">
                 @RenderSection("leftPane")
             </div>
@@ -31,18 +31,7 @@
 
         Navigation.div = $("#body");
         Navigation.baseUrl = baseUrl;
-        Navigation.title = "Presentation Builder";
-
-        $(function ()
-        {
-            $("#body .row > .leftColumn, #body .row > .rightColumn").matchHeight();
-
-        });
-
-        adjustLayoutContent = function ()
-        {
-            $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height());
-        }
+        Navigation.title = "Application Name";
     </script>
 </body>
 </html>

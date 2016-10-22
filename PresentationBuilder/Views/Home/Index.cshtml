@@ -4,23 +4,16 @@
     ViewBag.Title = "Presentation Builder";
 }
 
+@section leftPane
+{
+    ola
+}
+
 <div class="row">
-    <div class="col-md-6 leftColumn">
-        asd
-    </div>
-    <div class="col-md-6 rightColumn">
-        asd
+    <div class="col-xs-8"></div>
+    <div class="col-xs-4">
+        <input type="button" class="btn btn-signIn" value="Sign In" />
+        <input type="button" class="btn btn-signUp" value="Sign Up" />
     </div>
 </div>
-
-
-<input type="file" id="uploadZip" name="file" style="visibility: hidden;" />
-
-<script>
-    window.onload = function (e)
-    {
-        Presentations.fileUpload = $("#uploadZip");
-
-        Presentations.bind();
-    }
-</script>
+<div class="row"

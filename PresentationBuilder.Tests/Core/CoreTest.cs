@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using PresentationBuilder.Core.Util;
+//using PresentationBuilder.Core.Util;
 using GhostscriptSharp;
 using System.IO;
 
@@ -15,7 +15,7 @@ namespace PracticalDeveloperTest.Tests
         [TestMethod]
         public void Example4()
         {
-            PDF.splitPDF1();
+            //PDF.splitPDF1();
            
             //Assert.IsTrue(valueTotal == 12.50M, "The sale total is wrong  - " + valueTotal.ToString());
         }

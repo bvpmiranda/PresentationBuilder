@@ -1,0 +1,63 @@
+﻿html, body
+{
+	background: #5A5A5A; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(left top, #545454, #606060); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(bottom right, #545454, #606060); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(bottom right, #545454, #606060); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to bottom right, #545454, #606060); /* Standard syntax */
+	min-height: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.leftColumn
+{
+	background: #de7736; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(left, #de663c, #db8937); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(right, #de663c, #db8937); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #de663c, #db8937); /* Standard syntax */
+	padding: 30px !important;
+}
+
+.rightColumn
+{
+	background: #1f2f41;
+	color: #fff;
+	padding: 30px !important;
+}
+
+.shadow
+{
+	box-shadow: 0px 0px 40px;
+}
+
+.btn-signIn
+{
+	border-color: #ed6e19;
+	border-radius: 0px;
+	background-color: #ed6e19;
+	color: #fff;
+	margin: 0px;
+}
+
+	.btn-signIn:hover
+	{
+		color: #a1a1a1;
+	}
+
+
+.btn-signUp
+{
+	border-color: #1b2a3b;
+	border-radius: 0px;
+	background-color: #1b2a3b;
+	color: #a1a1a1;
+	margin: 0px;
+}
+
+	.btn-signUp:hover
+	{
+		color: #fff;
+	}
