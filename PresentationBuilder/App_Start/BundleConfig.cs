@@ -40,10 +40,16 @@ namespace PresentationBuilder
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-social.css",
+                      "~/Content/bootstrap-social.scss",
+                      "~/Content/font-awesome.css",
                       "~/Content/site.css"));
 
 			bundles.Add(new StyleBundle("~/Content/homeCss").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-social.css",
+                      "~/Content/bootstrap-social.scss",
+                      "~/Content/font-awesome.css",
                       "~/Content/home.css"));
         }
     }
