@@ -54,9 +54,9 @@ namespace PresentationBuilder
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "942345369203203",
+               appSecret: "d6a8d9d3b2e94f8c4fa3e1e0acb92e9b");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
