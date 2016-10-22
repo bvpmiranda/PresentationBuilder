@@ -92,74 +92,83 @@ namespace PresentationBuilder.Helpers
 			return response;
 		}
 
-		public static int unzipPresentation(Stream stream, string UserId)
+		public static Presentation unzipPresentation(HttpPostedFileBase file, string UserId)
 		{
-			Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
-
-			Ionic.Zip.ZipEntry entry;
-
-			entry = (from e in zip.Entries where e.FileName == "manifest.json" select e).FirstOrDefault();
-
-			if (entry == null)
+			if (file.ContentType == "application/x-zip-compressed")
 			{
-				throw new Exception("Manifest Missing");
-			}
+				Stream stream = file.InputStream;
 
-			MemoryStream msManifest = new MemoryStream();
-			StreamReader srManifest;
-			string manifestString;
-			PresentationManifest manifest;
+				Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(stream);
 
-			entry.Extract(msManifest);
-			msManifest.Position = 0;
+				Ionic.Zip.ZipEntry entry;
 
-			srManifest = new StreamReader(msManifest);
-			manifestString = srManifest.ReadToEnd();
+				entry = (from e in zip.Entries where e.FileName == "manifest.json" select e).FirstOrDefault();
 
-			manifest = JsonConvert.DeserializeObject<PresentationManifest>(manifestString);
-
-			Presentation presentation = new Presentation
-			{
-				UserId = UserId,
-				Date = manifest.date,
-				Name = manifest.name,
-				Description = manifest.description
-			};
-
-			var context = new PresentationBuilder.Models.PresentationBuilderEntities();
-
-			context.Presentations.Add(presentation);
-			context.SaveChanges();
-
-			string path = ZipHelper.path() + presentation.PresentationId.ToString() + "\\";
-
-			System.IO.Directory.CreateDirectory(path);
-
-			foreach (var page in manifest.pages)
-			{
-				presentation.PresentationPages.Add(new PresentationPage
+				if (entry == null)
 				{
-					Order = page.order,
-					ImagePath = page.image,
-					SoundPath = page.sound,
-					SoundLength = page.soundLength
-				});
-
-				entry = (from e in zip.Entries where e.FileName == page.image select e).First();
-				entry.Extract(path );
-
-				if (!String.IsNullOrWhiteSpace(page.sound))
-				{
-					entry = (from e in zip.Entries where e.FileName == page.sound select e).First();
-					entry.Extract(path + page.sound);
+					throw new Exception("Manifest Missing");
 				}
+
+				MemoryStream msManifest = new MemoryStream();
+				StreamReader srManifest;
+				string manifestString;
+				PresentationManifest manifest;
+
+				entry.Extract(msManifest);
+				msManifest.Position = 0;
+
+				srManifest = new StreamReader(msManifest);
+				manifestString = srManifest.ReadToEnd();
+
+				manifest = JsonConvert.DeserializeObject<PresentationManifest>(manifestString);
+
+				Presentation presentation = new Presentation
+				{
+					UserId = UserId,
+					Date = manifest.date,
+					Name = manifest.name,
+					Description = manifest.description
+				};
+
+				var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+				context.Presentations.Add(presentation);
+				context.SaveChanges();
+
+				string path = ZipHelper.path() + presentation.PresentationId.ToString() + "\\";
+
+				System.IO.Directory.CreateDirectory(path);
+
+				foreach (var page in manifest.pages)
+				{
+					presentation.PresentationPages.Add(new PresentationPage
+					{
+						Order = page.order,
+						ImagePath = page.image,
+						SoundPath = page.sound,
+						SoundLength = page.soundLength
+					});
+
+					entry = (from e in zip.Entries where e.FileName == page.image select e).First();
+					entry.Extract(path);
+
+					if (!String.IsNullOrWhiteSpace(page.sound))
+					{
+						entry = (from e in zip.Entries where e.FileName == page.sound select e).First();
+						entry.Extract(path + page.sound);
+					}
+				}
+
+				context.SaveChanges();
+
+				zip = null;
+
+				return presentation;
 			}
-
-			context.SaveChanges();
-
-			zip = null;
-
-			return presentation.PresentationId;
+			else
+			{
+				throw new Exception("Invalid File");
+			}
 		}
 	}
 }
