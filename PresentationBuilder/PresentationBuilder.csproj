@@ -241,6 +241,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Ionic.Zip.xml" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\PresentationBuilderModel.edmx">
@@ -261,6 +264,7 @@
       <LastGenOutput>PresentationBuilderModel.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -324,6 +328,7 @@
     <Content Include="Views\Shared\Home.cshtml" />
     <Content Include="Views\Shared\HomeAjax.cshtml" />
     <Content Include="Views\Shared\Internal.cshtml" />
+    <Content Include="Views\Shared\InternalAjax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
