@@ -12,7 +12,7 @@ namespace PresentationBuilder.Helpers
 {
 	public class ZipHelper
 	{
-		static string path()
+		public static string path()
 		{
 			string path = HttpContext.Current.Server.MapPath("~/");
 

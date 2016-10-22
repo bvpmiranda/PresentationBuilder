@@ -29,14 +29,26 @@ namespace PresentationBuilder
 
 			bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
 					  "~/Scripts/jquery.blockUI.js",
+					  "~/Scripts/jquery.matchHeight.js",
 					  "~/Scripts/navigation.js",
 					  "~/Scripts/scripts.js",
+					  "~/Scripts/SignIn.js",
 					  "~/Scripts/presentation.js",
-                      "~/Scripts/pdf.js"));
+                      "~/Scripts/pdf.js",
+                        "~/Scripts/dropzone/dropzone.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/basic.css",
+                      "~/Content/dropzone.css"));
+
+			bundles.Add(new StyleBundle("~/Content/homeCss").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/home.css"));
+
+        
+
         }
     }
 }

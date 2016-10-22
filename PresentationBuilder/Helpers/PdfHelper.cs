@@ -10,6 +10,20 @@ namespace PresentationBuilder.Helpers
     public class PdfHelper
     {
 
+        public static string pathTemp()
+        {
+            string path = HttpContext.Current.Server.MapPath("~/");
+
+            if (path.EndsWith("\\"))
+            {
+                path = path.Substring(0, path.Length - 1);
+            }
+
+            path = path.Substring(0, path.LastIndexOf("\\")) + "\\PresentationBuilderDocuments\\ImageTemp\\";
+
+            return path;
+        }
+
         /// <summary>
         /// Split PDF file into images with File pattern name OUTPUT{0}.jpg Total Page to export to image = 100;
         /// </summary>
@@ -18,7 +32,7 @@ namespace PresentationBuilder.Helpers
         /// <returns></returns>
         public static void splitToImages(string path, string outputPath)
         {
-            splitToImages(path, outputPath, "OUTPUT%d.jpg", 100);
+            splitToImages(path, outputPath, "OUTPUT%d.jpg", 3);
         }
 
 
@@ -34,8 +48,8 @@ namespace PresentationBuilder.Helpers
         {
             try
             {
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);                
+                if (!Directory.Exists(outputPath))
+                    Directory.CreateDirectory(outputPath);                
 
                 GhostscriptWrapper.GeneratePageThumbs(path, Path.Combine(outputPath, filename), 1, multipleFilePageCount, 100, 100);
             }

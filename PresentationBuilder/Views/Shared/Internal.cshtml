@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en-ca">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/homeCss")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="body" class="container-fluid body-content">
+        <div class="row">
+            <div class="col-md-6 leftColumn">
+                @RenderSection("leftPane")
+            </div>
+            <div class="col-md-6 rightColumn">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/scripts")
+
+    <span id="AntiForgeryToken">@Html.AntiForgeryToken()</span>
+
+    <script>
+        baseUrl = "@Url.Content("~/")";
+        csrfToken = $("#AntiForgeryToken [name=__RequestVerificationToken]").val();
+
+        Navigation.div = $("#body");
+        Navigation.baseUrl = baseUrl;
+        Navigation.title = "Application Name";
+    </script>
+</body>
+</html>
