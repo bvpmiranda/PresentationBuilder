@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PresentationBuilder.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,13 +7,13 @@ using System.Web.Mvc;
 
 namespace PresentationBuilder.Controllers
 {
-    public class PresentationsController : Controller
-    {
+	public class PresentationsController : Controller
+	{
 		[Authorize]
-        public ActionResult Index()
-        {
-            return View();
-        }
+		public ActionResult Index()
+		{
+			return View();
+		}
 
 		[Authorize]
 		public ActionResult Presentation(int id)
@@ -22,16 +23,31 @@ namespace PresentationBuilder.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public ActionResult UploadZip(HttpPostedFileBase file)
+		public ActionResult UploadZipAsync()
 		{
+			var uploadReturn = new UploadReturn();
+
 			var context = new PresentationBuilder.Models.PresentationBuilderEntities();
 
 			var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
+			try
+			{
+				var Presentation = PresentationBuilder.Helpers.ZipHelper.unzipPresentation(Request.Files[0], UserId);
 
-			int id = PresentationBuilder.Helpers.ZipHelper.unzipPresentation(file.InputStream, UserId);
+				uploadReturn.data = new Presentation
+				{
+					PresentationId = Presentation.PresentationId,
+					Name = Presentation.Name
+				};
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
 
-			return RedirectToAction("Presentation", new { id = id });
+			return Json(uploadReturn, "text/plain");
 		}
-    }
+	}
 }
