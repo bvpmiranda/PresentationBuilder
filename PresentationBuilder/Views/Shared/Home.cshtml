@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en-ca" ng-app="PresentationBuilder">
+@*<html lang="en-ca" ng-app="PresentationBuilder"> *@
+<html lang="en-ca">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
-    <div id="body" class="container body-content">
+    <div id="body" class="container body-content" style="display: none;">
         <div class="row shadow">
             <div class="col-md-6 leftColumn">
                 @RenderSection("leftPane")
@@ -25,6 +26,7 @@
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/bundles/jqueryval")
 
     <span id="AntiForgeryToken">@Html.AntiForgeryToken()</span>
 
@@ -44,7 +46,8 @@
 
         adjustLayoutContent = function ()
         {
-            $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height());
+            $("#body").show();
+            $("#body .row:first").css('margin-top', $("body").height() / 2 - $("#body .row:first").height() / 2);
         }
     </script>
 </body>
