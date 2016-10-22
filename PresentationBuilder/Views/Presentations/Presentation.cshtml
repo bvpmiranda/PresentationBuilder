@@ -1,0 +1,9 @@
+﻿@model PresentationBuilder.Models.Presentation
+
+@{
+    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Layout.cshtml" : "~/Views/Shared/LayoutAjax.cshtml");
+
+    ViewBag.Title = "Presentation";
+}
+
+Presentation @Model.PresentationId

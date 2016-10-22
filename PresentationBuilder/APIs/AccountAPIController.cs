@@ -8,12 +8,14 @@ using System.Web.Http;
 
 namespace PresentationBuilder.APIs
 {
-	public class PresentationsAPIController : ApiController
+	public class AccountAPIController : ApiController
 	{
+
 		[HttpPost]
 		public HttpResponseMessage download(int id)
 		{
 			return ZipHelper.zipPresentation(id);
 		}
+
 	}
 }

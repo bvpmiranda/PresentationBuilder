@@ -16,7 +16,8 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -177,6 +178,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIs\AccountAPIController.cs" />
     <Compile Include="APIs\PdfAPIController.cs" />
     <Compile Include="APIs\PresentationsAPIController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -194,9 +196,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PdfHelper.cs" />
-    <Compile Include="Helpers\ZipPresentation.cs" />
+    <Compile Include="Helpers\ZipHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Author.cs">
+    <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>PresentationBuilderModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -219,6 +221,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PresentationBuilderModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PresentationManifest.cs" />
     <Compile Include="Models\PresentationPage.cs">
       <DependentUpon>PresentationBuilderModel.tt</DependentUpon>
     </Compile>
@@ -309,6 +312,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\LayoutAjax.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
+    <Content Include="Views\Presentations\Index.cshtml" />
+    <Content Include="Views\Presentations\Presentation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
