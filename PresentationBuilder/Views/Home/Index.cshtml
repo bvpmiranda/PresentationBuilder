@@ -6,14 +6,24 @@
 
 @section leftPane
 {
-    ola
+
 }
 
 <div class="row">
     <div class="col-xs-8"></div>
     <div class="col-xs-4">
-        <input type="button" class="btn btn-signIn" value="Sign In" />
-        <input type="button" class="btn btn-signUp" value="Sign Up" />
+        <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign In" />
+        <input type="button" class="btn btn-sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;" value="Sign Up" />
     </div>
 </div>
-<div class="row"
+<div class="row txt">
+    <div class="col-xs-12">
+        <a href="#" class="txt-Sign selected" onclick="return false;">Sign In</a>
+        or
+        <a href="#" class="txt-Sign" onclick="Navigation.navigate('Account/Register', 'Sign Up'); return false;">Sign Up</a>
+    </div>
+</div>
+
+<div class="row" ng-controller="SignIn">
+    {{title}}
+</div>

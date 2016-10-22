@@ -5,9 +5,10 @@
 	background: -o-linear-gradient(bottom right, #545454, #606060); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(bottom right, #545454, #606060); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(to bottom right, #545454, #606060); /* Standard syntax */
-	min-height: 100%;
+	font-family: 'Roboto', sans-serif;
 	height: 100%;
 	margin: 0px;
+	min-height: 100%;
 	padding: 0px;
 }
 
@@ -33,31 +34,56 @@
 	box-shadow: 0px 0px 40px;
 }
 
-.btn-signIn
+
+.btn-sign
 {
-	border-color: #ed6e19;
-	border-radius: 0px;
-	background-color: #ed6e19;
-	color: #fff;
-	margin: 0px;
-}
-
-	.btn-signIn:hover
-	{
-		color: #a1a1a1;
-	}
-
-
-.btn-signUp
-{
+	background-color: #1b2a3b;
 	border-color: #1b2a3b;
 	border-radius: 0px;
-	background-color: #1b2a3b;
 	color: #a1a1a1;
 	margin: 0px;
 }
 
-	.btn-signUp:hover
+	.btn-sign:hover
 	{
 		color: #fff;
+	}
+
+	.btn-sign:active
+	{
+		color: #a1a1a1;
+	}
+
+	.btn-sign.selected
+	{
+		background-color: #ed6e19;
+		border-color: #ed6e19;
+		color: #fff;
+		cursor: default;
+	}
+
+.txt
+{
+	color: #a1a1a1;
+	font-size: 32px;
+}
+
+.txt-Sign
+{
+	color: #a1a1a1;
+	font-size: 44px;
+}
+
+.txt-Sign.selected
+{
+		border-bottom: 2px solid #df673b;
+		color: #fff;
+		cursor: default;
+		text-decoration: none;
+}
+
+	.txt-Sign:hover
+	{
+		color: #fff;
+		text-decoration: none;
 	}
