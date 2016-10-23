@@ -262,6 +262,8 @@
     <Content Include="Images\aboutUs.png" />
     <Content Include="Images\bootstrap-social.png" />
     <Content Include="Images\dev.png" />
+    <Content Include="Images\download.png" />
+    <Content Include="Images\duplicate.png" />
     <Content Include="Images\login_facebook.png" />
     <Content Include="Images\login_google.png" />
     <Content Include="Images\login_twitter.png" />
