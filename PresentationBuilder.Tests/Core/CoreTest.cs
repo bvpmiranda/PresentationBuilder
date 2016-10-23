@@ -20,7 +20,7 @@ namespace PracticalDeveloperTest.Tests
         public class ZipHelperTests
         {
 
-            private readonly string TEST_FILE_LOCATION = @"E:\Pessoal\Livros\Armazenando dados com Redis - Casa do Codigo.pdf";
+            private readonly string TEST_FILE_LOCATION = @"E:\Pessoal\Livros\Pessoal.pdf";
             private readonly string SINGLE_FILE_LOCATION = @"E:\Pessoal\Livros\img\output.jpg";
             private readonly string MULTIPLE_FILE_LOCATION = @"E:\Pessoal\Livros\img\output%d.jpg";
             private readonly string OUTPUT_FOLDER = @"E:\Pessoal\Livros\img\";
