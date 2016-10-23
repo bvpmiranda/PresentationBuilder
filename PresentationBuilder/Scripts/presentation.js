@@ -1,13 +1,13 @@
 
 var Presentations = {
 
-    
+
 
 	fileUpload: null,
 
 	bind: function ()
 	{
-	 
+
 		Presentations.fileUpload.on('change', function (e)
 		{
 			var files = e.target.files;
@@ -78,7 +78,37 @@ var Presentations = {
 		$('#download-form').submit();
 	},
 
-	upload: function(e)
+	delete: function (id)
+	{
+		block();
+
+		$.ajax({
+			type: "POST",
+			url: baseUrl + "api/PresentationsAPI/delete/" + id,
+			cache: false,
+			contentType: 'application/json; charset=utf-8',
+		}).success(function (data, textStatus, jqXHR)
+		{
+			unblock();
+
+			if (data.isValid)
+			{
+				window.location.reload();
+			}
+			else
+			{
+				alert(data.messages[0]);
+			}
+			
+		}).error(function (jqXHR, textStatus, errorThrown)
+		{
+			unblock();
+
+			alert('There was an error deleting the presentation');
+		});
+	},
+
+	upload: function (e)
 	{
 		$("#uploadZipForm").submit();
 	}
