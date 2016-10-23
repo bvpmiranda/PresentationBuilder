@@ -32,7 +32,7 @@
 <br />
 
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-sm-4 col-md-3 col-lg-3">
         <div class="importBox">
             <img src="~/Images/pdf.png" />
             <span class="title">Import a .pdf file</span>
@@ -41,21 +41,21 @@
         </div>
     </div>
 
-    <div class="col-lg-1"></div>
+    <div class="col-sm-2 col-md-1 col-lg-1"></div>
 
-    <div class="col-lg-3">
+    <div class="col-sm-4 col-md-3 col-lg-3">
         <div class="importBox">
             <img src="~/Images/pdf.png" />
             <span class="title">Import a .zip file</span>
         </div>
     </div>
 
-    <div class="col-lg-1"></div>
+    <div class="col-sm-2 col-md-1 col-lg-1"></div>
 
     @{
         foreach (var presentation in Model)
         {
-            <div class="col-lg-3">
+            <div class="col-sm-4 col-md-3 col-lg-3">
                 <div class="presentationBox">
                     <div class="gradient"></div>
                     <div class="name">
@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-1"></div>
+            <div class="col-sm-2 col-md-1 col-lg-1"></div>
         }
     }
 </div>
