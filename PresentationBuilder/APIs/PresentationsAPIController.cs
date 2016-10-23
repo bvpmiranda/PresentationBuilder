@@ -75,6 +75,32 @@ namespace PresentationBuilder.APIs
 		}
 
 		[HttpPost]
+		public Models.JsonReturn deleteAudio(int id)
+		{
+			var jsonReturn = new Models.JsonReturn();
+
+			try
+			{
+				var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+				var presentationPage = (from p in context.PresentationPages where p.PresentationPageId == id select p).First();
+
+				System.IO.File.Delete(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), presentationPage.SoundPath));
+
+				presentationPage.SoundPath = null;
+
+				context.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				jsonReturn.isValid = false;
+				jsonReturn.messages.Add(ex.Message);
+			}
+
+			return jsonReturn;
+		}
+
+		[HttpPost]
 		public Models.JsonReturn save(PresentationBuilder.Models.Presentation model)
 		{
 			var jsonReturn = new Models.JsonReturn();
