@@ -25,7 +25,7 @@
             <h2>Presentation Description</h2>
         </div>
         <div class="col-md-12">
-            @Html.TextArea("editor", new { @class = "ckeditor", @id = "sampleEditor" })
+            @Html.TextAreaFor(m => m.Description, new { @class = "ckeditor", @id = "sampleEditor" })
         </div>
     </div>
 
