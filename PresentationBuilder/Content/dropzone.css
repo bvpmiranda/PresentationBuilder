@@ -242,9 +242,10 @@
     width: 220px;
     height: 270px;
     vertical-align: bottom;
-    background-image: url('../Images/pdf.png');
+    background-image: url('../Images/upload.png');
     background-repeat: no-repeat;
     background-position: center;
+	background-size: 200px;
 }
 
     .dropzone.dz-clickable {

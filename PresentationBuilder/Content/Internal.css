@@ -79,6 +79,29 @@ input[type=email], input[type=password], input[type=text]
 		color: #fff;
 	}
 
+.btn-save
+{
+	background: #e37535; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(top, #db8a36, #ea6234); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(bottom, #db8a36, #ea6234); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(bottom, #db8a36, #ea6234); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to bottom, #db8a36, #ea6234); /* Standard syntax */
+	border-color: #1b2a3b;
+	color: #fff;
+}
+
+	.btn-save:hover
+	{
+		color: #fff;
+	}
+
+	.btn-save:active
+	{
+		background-color: #ed6e19;
+		border-color: #ed6e19;
+		color: #fff;
+	}
+
 .logo
 {
 	background: #de7736; /* For browsers that do not support gradients */
@@ -143,6 +166,26 @@ input[type=email], input[type=password], input[type=text]
 	width: 220px;
 }
 
+	.presentationBox .preview
+	{
+		height: 160px;
+		position: relative;
+		margin: -160px 0px 0px 0px;
+		width: 220px;
+	}
+	
+	.presentationBox .preview:hover img
+	{
+		display: block;
+	}
+
+	.presentationBox .preview img
+	{
+		display: none;
+		height: 160px;
+		width: 220px;
+	}
+
 	.presentationBox .gradient
 	{
 		background: #de7736; /* For browsers that do not support gradients */
@@ -164,17 +207,17 @@ input[type=email], input[type=password], input[type=text]
 		width: 100%;
 	}
 
-	.presentationBox .blue .img
-	{
-		display: table-cell;
-		vertical-align: middle;
-	}
+		.presentationBox .blue .img
+		{
+			display: table-cell;
+			vertical-align: middle;
+		}
 
-	.presentationBox .blue img
-	{
-		max-height: 160px;
-		max-width: 100%;
-	}
+		.presentationBox .blue img
+		{
+			max-height: 160px;
+			max-width: 100%;
+		}
 
 	.presentationBox .name
 	{
