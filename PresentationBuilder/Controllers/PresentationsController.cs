@@ -42,9 +42,9 @@ namespace PresentationBuilder.Controllers
 			var context = new PresentationBuilderEntities();
 
 			var presentations = (from p in context.Presentations.Include("AspNetUser")
-								 where p.AspNetUser.UserName == User.Identity.Name
-								 orderby p.Name
-								 select p).ToList();
+									   where p.AspNetUser.UserName == User.Identity.Name
+									   orderby p.Name
+									   select p).ToList();
 
 			foreach (var p in presentations)
 			{
@@ -68,6 +68,16 @@ namespace PresentationBuilder.Controllers
 		}
 
 		[Authorize]
+        public ActionResult Preview(int id)
+        {
+            var context = new PresentationBuilderEntities();
+
+            var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
+
+            return View(presentation);
+        }
+
+        [Authorize]
 		[HttpPost]
 		public ActionResult SavePresentation(PresentationBuilder.Models.Presentation model)
 		{
@@ -83,16 +93,7 @@ namespace PresentationBuilder.Controllers
 			return View(model);
 		}
 
-		[Authorize]
-		public ActionResult Preview(int id)
-		{
-			var context = new PresentationBuilderEntities();
-
-			var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
-
-			return View(presentation);
-		}
-
+		
 		[Authorize]
 		[HttpPost]
 		public ActionResult UploadZipAsync()
@@ -122,8 +123,8 @@ namespace PresentationBuilder.Controllers
 			return Json(uploadReturn, "text/plain");
 		}
 
-        [Authorize]
-        [HttpPost]
+		[Authorize]
+		[HttpPost]
         [ValidateInput(false)]        
         public ActionResult AddPresentation(Presentation model)
         {
@@ -158,14 +159,49 @@ namespace PresentationBuilder.Controllers
 					HttpPostedFileBase file = Request.Files[fileName];
 					//Save file content goes here
 					fName = file.FileName;
+
+
+                    
 					if (file != null && file.ContentLength > 0)
 					{
-						var fileNameUpload = Path.GetFileName(file.FileName);
+                        var context = new PresentationBuilderEntities();
+                        bool isZipFile = false;
+                        var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
-						//Create Presentation
-						var context = new PresentationBuilderEntities();
+                        try
+                        {
+                            Ionic.Zip.ZipFile.Read(file.InputStream); //read the zip contents by passing the input stream
+                            isZipFile = true;
+                        }
+                        catch
+                        {
+                            isZipFile = false;
+                        }
 
-						var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
+                        if (isZipFile)
+                        {
+
+                            try
+                            {
+                                var Presentation = Helpers.ZipHelper.unzipPresentation(file, UserId);
+
+                                uploadReturn.data = new Presentation
+                                {
+                                    PresentationId = Presentation.PresentationId,
+                                    Name = Presentation.Name
+                                };
+                            }
+                            catch (Exception ex)
+                            {
+                                uploadReturn.uploadStatus = uploadStatus.Error;
+                                uploadReturn.message = ex.Message;
+                            }
+
+                            return Json(uploadReturn, "text/plain");
+                        }
+                        else
+                        {
+                            var fileNameUpload = Path.GetFileName(file.FileName);
 
 						Presentation presentation = new Presentation
 						{
@@ -193,6 +229,7 @@ namespace PresentationBuilder.Controllers
 
 						foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
 						{
+
 							presentation.PresentationPages.Add(new PresentationPage
 							{
 								Order = bOrder++,
@@ -210,6 +247,7 @@ namespace PresentationBuilder.Controllers
 					}
 				}
 			}
+            }
 			catch (Exception ex)
 			{
 				uploadReturn.uploadStatus = uploadStatus.Error;
@@ -322,7 +360,14 @@ namespace PresentationBuilder.Controllers
 
 				presentationPage.SoundPath = Request.Files[0].FileName;
 
-				Request.Files[0].SaveAs(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), Request.Files[0].FileName));
+				string path = System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), Request.Files[0].FileName);
+
+				Request.Files[0].SaveAs(path);
+
+				TagLib.File f = TagLib.File.Create(path, TagLib.ReadStyle.Average );
+				var duration = (int)f.Properties.Duration.TotalSeconds;
+
+				presentationPage.SoundLength = duration;
 
 				context.SaveChanges();
 
@@ -352,6 +397,41 @@ namespace PresentationBuilder.Controllers
 				presentationPage.ImagePath = Request.Files[0].FileName;
 
 				Request.Files[0].SaveAs(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), Request.Files[0].FileName));
+
+				context.SaveChanges();
+
+				return Json(new { Message = id });
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
+
+			return Json(uploadReturn, "text/plain");
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult AddPage(int id)
+		{
+			var uploadReturn = new UploadReturn();
+
+			try
+			{
+				var context = new PresentationBuilderEntities();
+
+				var presentationPage = (from pg in context.PresentationPages where pg.PresentationId == id orderby pg.Order descending select pg).FirstOrDefault();
+
+				var newPresentationPage = new PresentationPage { PresentationId = id,
+																 ImagePath = Request.Files[0].FileName,
+																 Order = (presentationPage == null ? Convert.ToByte(1) : ++presentationPage.Order),
+																 Hidden=false
+				};
+
+				context.PresentationPages.Add(newPresentationPage);
+
+				Request.Files[0].SaveAs(System.IO.Path.Combine(PathHelper.path(), id.ToString(), Request.Files[0].FileName));
 
 				context.SaveChanges();
 

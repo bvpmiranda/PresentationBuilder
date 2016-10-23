@@ -45,6 +45,11 @@
                 </div>
             }
                     }
+                    <a href="~/Presentations/Preview/@presentation.PresentationId">
+                        <div class="preview">
+                            <img src="~/Images/preview.png" />
+                        </div>
+                    </a>
                     <div class="name">
                         @presentation.Name
                         <br />
@@ -80,20 +85,15 @@
     }
 </div>
 
-
 @section scripts{
 
     <script type="text/javascript">
-        //$("#dropzoneDiv").on('click', function (e) {
-        //    $("#dropzoneForm").click();
-        //});
 
         //File Upload response from the server
         Dropzone.options.dropzoneForm = {
             uploadMultiple: false,
             acceptedFiles: ".pdf, application/zip",
             maxFiles: 1,
-            //previewTemplate: $("#dropzoneTemplate").html(),
             init: function ()
             {
                 this.on("maxfilesexceeded", function (data)

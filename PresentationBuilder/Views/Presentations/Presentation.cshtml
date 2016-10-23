@@ -61,6 +61,7 @@
                 background: #0088cc;
             }
 </style>
+
 @using (Html.BeginForm("AddPresentation", "Presentations", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="form-group">
@@ -72,7 +73,7 @@
             <div class="col-sm-12 col-md-12 col-lg-12">
                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text" })
                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-            </div>
+        </div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
@@ -81,58 +82,67 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                @Html.TextAreaFor(m => m.Description, new { @class = "ckeditor", @id = "sampleEditor" })
-            </div>
+            @Html.TextAreaFor(m => m.Description, new { @class = "ckeditor", @id = "sampleEditor" })
         </div>
+    </div>
     </div>
 
     <h2>PAGES</h2>
-    <div class="row">
+<div class="row">
         <ul id="sortable" class="thumbnails" style="padding: 0px 15px;">
-            @foreach (var presentation in @Model.PresentationPages.OrderBy(o => o.Order))
-            {
-                <id id="@(String.Format("presentationorder_{0}_{1}", presentation.PresentationPageId, presentation.Order))">
-                    <li>
-                        <div class="presentationPageBox">
-                            <div class="pageImage">
-                                <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" style="cursor: move; height: inherit;" />
-                            </div>
-                            <div class="buttons">
-                                @{
+        @foreach (var presentation in @Model.PresentationPages.OrderBy(o => o.Order))
+        {
+            <id id="@(String.Format("presentationorder_{0}_{1}", presentation.PresentationPageId, presentation.Order))">
+                <li>
+                    <div class="presentationPageBox">
+                        <div class="pageImage">
+                            <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" style="cursor: move; height: inherit;" />
+                        </div>
+                        <div class="buttons">
+                            @{
                 if (presentation.SoundPath == null || presentation.SoundPath.Trim().Length == 0)
                 {
-                    <div class="button addAudio" onclick="changeAudio(@(presentation.PresentationPageId));"></div>
+                                <div class="button addAudio" onclick="changeAudio(@(presentation.PresentationPageId));"></div>
                 }
                 else
                 {
-                    <div class="button audioPlayer">
-                        <div class="length">
-                            @presentation.SoundLength.Value.ToString("n0")  @(presentation.SoundLength.Value == 1 ? "second" : "seconds")
-                        </div>
-                        <div class="audioButtons">
-                            <div class="button changeAudio" onclick="changeAudio(@(presentation.PresentationPageId));"></div>
-                            <div class="button deleteAudio" onclick="Presentations.deleteAudio(@presentation.PresentationPageId);"></div>
-                        </div>
-                    </div>
+                                <div class="button audioPlayer">
+                                    <div class="length">
+                                        @presentation.SoundLength.Value.ToString("n0")  @(presentation.SoundLength.Value == 1 ? "second" : "seconds")
+                                </div>
+                                    <div class="audioButtons">
+                                        <div class="button changeAudio" onclick="changeAudio(@(presentation.PresentationPageId));"></div>
+                                        <div class="button deleteAudio" onclick="Presentations.deleteAudio(@presentation.PresentationPageId);"></div>
+                                </div>
+                                </div>
                 }
-                                }
-                                <div class="button changePage" onclick="changePage(@(presentation.PresentationPageId))"></div>
-                                <div class="button deletePage" onclick="Presentations.deletePage(@presentation.PresentationPageId);"></div>
+                            }
+                            <div class="button changePage" onclick="changePage(@(presentation.PresentationPageId))"></div>
+                            <div class="button deletePage" onclick="Presentations.deletePage(@presentation.PresentationPageId);"></div>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </id>
-            }
-        </ul>
-    </div>
+                </li>
+            </id>    
+        }
+    </ul>
+</div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Save Changes" />
-        </div>
+    <div class="row">
+        <div class="col-sm-3 col-md-3 col-lg-3"></div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <button type="submit" class="btn btn-block btn-save">Save</button>
     </div>
-
+</div>
 }
+
+<form action="~/Presentations/AddPage" method="post" enctype="multipart/form-data" class="dropzone" id="addPageForm">
+    <div class="fallback">
+        <input name="file" type="file" multiple />
+        <input type="submit" value="Upload" />
+    </div>
+</form>
+
+
 @section Scripts {
     <script type="text/javascript">
         $('document').ready(function ()
@@ -161,29 +171,15 @@
 
         function ChangeOrder(presentationPageIdValue, newOrderValue)
         {
-            //var data = 'presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue; // { presentationPageId: presentationPageIdValue, newOrder: newOrderValue };
-
-            //var newbaseUrl + 'Presentations/ChangeOrder',
-
-            var targeturl = '@Url.Action("ChangeOrder", "Presentations")?presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue;
+            var targeturl = '@Url.Action("ChangeOrder", "Presentations")?presentationPageId=' + presentationPageIdValue  + '&newOrder=' + newOrderValue;
 
             $.ajax({
                 type: "POST",
                 url: targeturl,
                 contentType: false,
-                processData: false,
-                success: function (result)
-                {
-                    //result = jQuery.parseJSON(result);
+                processData: false,                
+                success: function (result) {
 
-                    //if (result.uploadStatus === uploadStatus.success) {
-                    //    //Presentations.fileUpload = Presentations.fileUpload.replaceWith(Presentations.fileUpload.val('').clone(true));
-
-                    //    //Navigation.navigate('Presentations/Presentation/' + result.data.PresentationId, result.data.Name)
-                    //}
-                    //else {
-                    //    alert('Erro: ' + result.message);
-                    //}
                 },
                 error: function (xhr, status, p3, p4)
                 {
@@ -195,6 +191,31 @@
             });
 
         }
+
+        //File Upload response from the server
+        Dropzone.options.addPageForm = {
+            url: function ()
+            {
+                return baseUrl + "Presentations/AddPage/@Model.PresentationId"
+            },
+            uploadMultiple: false,
+            acceptedFiles: ".jpg,.bmp,.png,.tiff,.jpeg",
+            maxFiles: 1,
+            init: function ()
+            {
+                this.on("maxfilesexceeded", function (data)
+                {
+                    var res = eval('(' + data.xhr.responseText + ')');
+                });
+                this.on("complete", function (data)
+                {
+                    if (data.xhr.responseText != undefined)
+                    {
+                        window.location.reload();
+                    }
+                });
+            }
+        };
 
         //File Upload response from the server
         Dropzone.options.changeAudioForm = {
@@ -243,7 +264,7 @@
                         window.location.reload();
                     }
                 });
-            }
+        }
         };
 
         function changeAudio(id)
@@ -263,16 +284,18 @@
     </script>
 }
 
-<form action="~/Presentations/ChangePage" method="post" enctype="multipart/form-data" class="dropzone" id="changePageForm">
-    <div class="fallback">
-        <input name="file" type="file" multiple />
-        <input type="submit" value="Upload" />
-    </div>
-</form>
+<div style="display: none;">
+    <form action="~/Presentations/ChangePage" method="post" enctype="multipart/form-data" class="dropzone" id="changePageForm">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+            <input type="submit" value="Upload" />
+        </div>
+    </form>
 
-<form action="~/Presentations/ChangeAudio" method="post" enctype="multipart/form-data" class="dropzone" id="changeAudioForm">
-    <div class="fallback">
-        <input name="file" type="file" multiple />
-        <input type="submit" value="Upload" />
-    </div>
-</form>
+    <form action="~/Presentations/ChangeAudio" method="post" enctype="multipart/form-data" class="dropzone" id="changeAudioForm">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+            <input type="submit" value="Upload" />
+        </div>
+    </form>
+</div>
