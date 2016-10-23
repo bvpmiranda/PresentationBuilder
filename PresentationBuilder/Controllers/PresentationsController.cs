@@ -118,7 +118,39 @@ namespace PresentationBuilder.Controllers
 			return Json(uploadReturn, "text/plain");
 		}
 
-		[Authorize]
+        [Authorize]
+        [HttpPost]
+        [ValidateInput(false)]        
+        public ActionResult AddPresentation(Presentation model)
+        {
+            if (ModelState.IsValid)
+            {
+                var context = new PresentationBuilderEntities();
+
+                //context.Entry(model).State = System.Data.Entity.EntityState.Modified;
+
+                //context.SaveChanges();
+
+                Presentation p = context.Presentations.FirstOrDefault(x => x.PresentationId == model.PresentationId);
+                p.Description = model.Description;
+                p.Name = model.Name;
+                //        f.Name = NewName;
+                //        public int PresentationId { get; set; }
+                //public string UserId { get; set; }
+                //public string Name { get; set; }
+                //public System.DateTime Date { get; set; }
+
+                //public string Description { get; set; }
+
+                context.SaveChanges();
+
+                return RedirectToAction("Index", new { Message = "Presentation Saved !" });
+            }
+
+            return View(model);
+        }       
+
+        [Authorize]
 		[HttpPost]
 		public ActionResult SaveUploadedFile()
 		{
@@ -160,12 +192,9 @@ namespace PresentationBuilder.Controllers
 						if (!Directory.Exists(pathWork))
 							Directory.CreateDirectory(pathWork);
 
-
-
 						file.SaveAs(Path.Combine(pathWork, file.FileName));
 
 						PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
-
 
 						byte bOrder = 0;
 
@@ -236,13 +265,10 @@ namespace PresentationBuilder.Controllers
 		[HttpPost]
 		public ActionResult ChangeOrder(string presentationPageId, string newOrder)
 		{
-
 			var uploadReturn = new UploadReturn();
-
 
 			try
 			{
-
 				if (string.IsNullOrEmpty(presentationPageId))
 				{
 					uploadReturn.uploadStatus = uploadStatus.Error;
@@ -270,7 +296,6 @@ namespace PresentationBuilder.Controllers
 				uploadReturn.uploadStatus = uploadStatus.Error;
 				uploadReturn.message = ex.Message;
 			}
-
 
 			return Json(uploadReturn, "text/plain");
 		}

@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/Internal.cshtml";
 
-    ViewBag.Title = "Presentation";
+    ViewBag.Title = "Presentation Editor - " + Model.PresentationId;
 }
 
 @section topButtons
@@ -12,6 +12,7 @@
 }
 
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
 <style type="text/css">
     ul.thumbnails {
         overflow: auto;
@@ -57,13 +58,12 @@
             }
 </style>
 
-@using (Html.BeginForm("SavePresentation", "Presentation", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "presentationForm" }))
+@using (Html.BeginForm("AddPresentation", "Presentations", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    <div class="presentationDetails">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                NAME
-            </div>
+    <div class="form-group">
+        @Html.HiddenFor(m => m.PresentationId, new { @class = "form-control" })
+        <div class="col-md-12">
+            <h2>Presentation Name</h2>
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
@@ -82,7 +82,6 @@
             </div>
         </div>
     </div>
-}
 
 <h2>PAGES</h2>
 <div class="row">
@@ -128,12 +127,13 @@
     </ul>
 </div>
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" class="btn btn-default" value="Submit" onclick="document.getElementById('presentationForm').submit()" />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Save Changes" />
+        </div>
     </div>
-</div>
 
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -164,9 +164,7 @@
             });
         });
 
-
-        function ChangeOrder(presentationPageIdValue, newOrderValue)
-        {
+        function ChangeOrder(presentationPageIdValue, newOrderValue) {
             //var data = 'presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue; // { presentationPageId: presentationPageIdValue, newOrder: newOrderValue };
 
             //var newbaseUrl + 'Presentations/ChangeOrder',
@@ -178,8 +176,7 @@
                 url: targeturl,
                 contentType: false,
                 processData: false,
-                success: function (result)
-                {
+                success: function (result) {
                     //result = jQuery.parseJSON(result);
 
                     //if (result.uploadStatus === uploadStatus.success) {
