@@ -24,7 +24,7 @@ namespace PresentationBuilder
 				var userName = HttpContext.Current.User.Identity.Name;
 
 				var page = (from p in entities.PresentationPages
-							where p.PresentationId == PresentationPageId &&
+							where p.PresentationPageId == PresentationPageId &&
 								  p.Presentation.AspNetUser.UserName == userName &&
 								  p.SoundPath.Trim().Length > 0
 							select new

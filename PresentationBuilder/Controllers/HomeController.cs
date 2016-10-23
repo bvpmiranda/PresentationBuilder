@@ -12,7 +12,7 @@ namespace PresentationBuilder.Controllers
 		{
 			if (Request.IsAuthenticated)
 			{
-				return RedirectToAction("Index", "Manage");
+				return RedirectToAction("Index", "Presentations");
 			}
 			else
 			{

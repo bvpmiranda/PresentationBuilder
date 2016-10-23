@@ -14,18 +14,25 @@ namespace PresentationBuilder.Controllers
 		[Authorize]
 		public ActionResult Index()
 		{
-			return View();
+			var context = new PresentationBuilderEntities();
+
+			var presentations = (from p in context.Presentations.Include("AspNetUser")
+								 where p.AspNetUser.UserName == User.Identity.Name
+								 orderby p.Name
+								 select p).ToList();
+
+			return View(presentations);
 		}
 
 		[Authorize]
 		public ActionResult Presentation(int id)
 		{
-            var context = new PresentationBuilderEntities();
+			var context = new PresentationBuilderEntities();
 
-            var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
+			var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
 
 
-            return View(presentation);
+			return View(presentation);
 		}
 
 		[Authorize]
@@ -57,74 +64,73 @@ namespace PresentationBuilder.Controllers
 			return Json(uploadReturn, "text/plain");
 		}
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult SaveUploadedFile()
-        {
+		[Authorize]
+		[HttpPost]
+		public ActionResult SaveUploadedFile()
+		{
+			var uploadReturn = new UploadReturn();
 
-            var uploadReturn = new UploadReturn();
+			string fName = "";
 
-            string fName = "";
+			try
+			{
+				foreach (string fileName in Request.Files)
+				{
+					HttpPostedFileBase file = Request.Files[fileName];
+					//Save file content goes here
+					fName = file.FileName;
+					if (file != null && file.ContentLength > 0)
+					{
+						var fileNameUpload = Path.GetFileName(file.FileName);
 
-            try
-            {
-                foreach (string fileName in Request.Files)
-                {
-                    HttpPostedFileBase file = Request.Files[fileName];
-                    //Save file content goes here
-                    fName = file.FileName;
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        var fileNameUpload = Path.GetFileName(file.FileName);
+						//Create Presentation
+						var context = new PresentationBuilderEntities();
 
-                        //Create Presentation
-                        var context = new PresentationBuilderEntities();
+						var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
-                        var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
+						Presentation presentation = new Presentation
+						{
+							UserId = UserId,
+							Date = DateTime.Now,
+							Name = "New Presentation",
+							Description = null
+						};
 
-                        Presentation presentation = new Presentation
-                        {
-                            UserId = UserId,
-                            Date = DateTime.Now,
-                            Name = "New Presentation",
-                            Description = null
-                        };
+						context.Presentations.Add(presentation);
+						context.SaveChanges();
 
-                        context.Presentations.Add(presentation);
-                        context.SaveChanges();
+						uploadReturn.data = presentation;
 
-                        uploadReturn.data = presentation;
+						string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
 
-                        string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
-
-                        if (!Directory.Exists(pathWork))
-                            Directory.CreateDirectory(pathWork);
-
+						if (!Directory.Exists(pathWork))
+							Directory.CreateDirectory(pathWork);
 
 
-                        file.SaveAs(Path.Combine(pathWork, file.FileName));
 
-                        PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
+						file.SaveAs(Path.Combine(pathWork, file.FileName));
+
+						PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
 
 
-                        byte bOrder = 0;
+						byte bOrder = 0;
 
-                        foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
-                        {
-                            presentation.PresentationPages.Add(new PresentationPage
-                            {
-                                Order = bOrder++,
-                                ImagePath =  Path.GetFileName(filePresentaion),
-                                SoundPath = null,
-                                SoundLength = null
-                            });
-                        }
+						foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
+						{
+							presentation.PresentationPages.Add(new PresentationPage
+							{
+								Order = bOrder++,
+								ImagePath = Path.GetFileName(filePresentaion),
+								SoundPath = null,
+								SoundLength = null
+							});
+						}
 
-                        context.SaveChanges();
-                        
-                        return Json(new { Message = presentation.PresentationId });
-                    }
-                }
+						context.SaveChanges();
+
+						return Json(new { Message = presentation.PresentationId });
+					}
+				}
 			}
 			catch (Exception ex)
 			{

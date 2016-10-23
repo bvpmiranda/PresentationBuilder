@@ -245,13 +245,16 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\basic.css" />
     <Content Include="Content\basic.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dropzone.css" />
     <Content Include="Content\dropzone.min.css" />
+    <Content Include="Content\font-awesome.css" />
     <Content Include="Content\Home.css" />
+    <Content Include="Content\Internal.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -260,10 +263,14 @@
     <Content Include="Images\aboutUs.png" />
     <Content Include="Images\bootstrap-social.png" />
     <Content Include="Images\dev.png" />
+    <Content Include="Images\download.png" />
+    <Content Include="Images\duplicate.png" />
     <Content Include="Images\login_facebook.png" />
     <Content Include="Images\login_google.png" />
     <Content Include="Images\login_twitter.png" />
+    <Content Include="Images\pdf.png" />
     <Content Include="Images\presentationBuilder.png" />
+    <Content Include="Images\presentationBuilderSmall.png" />
     <Content Include="Ionic.Zip.xml" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
@@ -287,6 +294,7 @@
       <DependentUpon>PresentationBuilderModel.edmx</DependentUpon>
       <LastGenOutput>PresentationBuilderModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\bootstrap-social.scss" />
     <Content Include="sound.ashx" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />

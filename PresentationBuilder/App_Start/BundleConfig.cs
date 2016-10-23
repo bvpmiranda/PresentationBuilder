@@ -42,15 +42,27 @@ namespace PresentationBuilder
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
+                      "~/Content/bootstrap-social.css",
+                      //"~/Content/bootstrap-social.scss",
+                      "~/Content/font-awesome.css",
                       "~/Content/basic.css",
                       "~/Content/dropzone.css"));
 
 			bundles.Add(new StyleBundle("~/Content/homeCss").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/home.css"));
+                      "~/Content/bootstrap-social.css",
+                      //"~/Content/bootstrap-social.scss",
+                      "~/Content/font-awesome.css",
+					  "~/Content/home.css"));
 
-        
-
+			bundles.Add(new StyleBundle("~/Content/internalCss").Include(
+					  "~/Content/bootstrap.css",
+					  "~/Content/site.css",
+					  "~/Content/Internal.css",
+					  "~/Content/bootstrap-social.css",
+					  "~/Content/font-awesome.css",
+					  "~/Content/basic.css",
+					  "~/Content/dropzone.css"));
         }
     }
 }
