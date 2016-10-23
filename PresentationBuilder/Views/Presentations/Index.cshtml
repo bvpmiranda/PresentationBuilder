@@ -1,45 +1,82 @@
-﻿@{
-    //Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Internal.cshtml" : "~/Views/Shared/InternalAjax.cshtml");
+﻿@model List<PresentationBuilder.Models.Presentation>
+@{
+    Layout = "~/Views/Shared/Internal.cshtml";
 
     ViewBag.Title = "Presentations";
 }
 
-<div class="jumbotron">
-    <form action="~/Presentations/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-        <div class="fallback">
-            <input name="file" type="file" multiple />
-            <input type="submit" value="Upload" />
-        </div>
-    </form>
+<div class="row">
+
+    <div class="col-sm-1 col-md-3 col-lg-5"></div>
+    <div class="col-sm-4 col-md-3 col-lg-2">
+        @Html.ActionLink("Change Password", "Manage", "ChangePassword", null, new { @class = "btn btn-block btn-account" })
+    </div>
+    <div class="col-sm-5 col-md-4 col-lg-3">
+        @Html.ActionLink("Manage External Logins", "Manage", "ManageLogins", null, new { @class = "btn btn-block btn-account" })
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        @Html.ActionLink("Log Off", "Account", "LogOff", null, new { @class = "btn btn-block btn-account" })
+    </div>
 </div>
 
+<div class="title">Library</div>
+
+<div class="importBox">
+    <img src="~/Images/pdf.png" />
+    <span class="title">Import a .pdf file</span>
+    <br />
+    <span class="subTitle">(up to 20 pages)</span>
+</div>
+@{
+    foreach (var presentation in Model)
+    {
+
+    }
+}
+
+
+<form action="~/Presentations/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+    <div class="fallback">
+        <input name="file" type="file" multiple />
+        <input type="submit" value="Upload" />
+    </div>
+</form>
 
 @section scripts{
 
     <script type="text/javascript">
+        $("#dropzoneDiv").on('click', function (e)
+        {
+            $("#dropzoneForm").click();
+        });
 
         //File Upload response from the server
         Dropzone.options.dropzoneForm = {
-            uploadMultiple: false,             
+            uploadMultiple: false,
             acceptedFiles: ".pdf",
             maxFiles: 1,
-            init: function () {
-                this.on("maxfilesexceeded", function (data) {
+            previewTemplate: $("#dropzoneTemplate").html(),
+            init: function ()
+            {
+                this.on("maxfilesexceeded", function (data)
+                {
                     var res = eval('(' + data.xhr.responseText + ')');
 
                 });
-                this.on("complete", function (data) {
+                this.on("complete", function (data)
+                {
 
-                    if (data.xhr.responseText != undefined) {
+                    if (data.xhr.responseText != undefined)
+                    {
 
                         var PresentationId = JSON.parse(data.xhr.responseText)["Message"];
                         //  result = jQuery.parseJSON(result);
 
                         //Navigation.navigate(    'Presentations/Presentation/' + PresentationId, null)
 
-                        window.location = "Presentation/" + PresentationId
+                        window.location = baseUrl + "Presentations/Presentation/" + PresentationId;
                     }
-                });                
+                });
             }
         };
 
@@ -49,49 +86,49 @@
 
 @*@section scripts{
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
-        //File Upload response from the server
-        Dropzone.options.dropzoneForm = {
-            maxFiles: 1,
-            init: function () {
-                this.on("maxfilesexceeded", function (data) {
-                    var res = eval('(' + data.xhr.responseText + ')');
+            //File Upload response from the server
+            Dropzone.options.dropzoneForm = {
+                maxFiles: 1,
+                init: function () {
+                    this.on("maxfilesexceeded", function (data) {
+                        var res = eval('(' + data.xhr.responseText + ')');
 
-                });
-                this.on("complete", function (data) {
+                    });
+                    this.on("complete", function (data) {
 
-                    var res = eval('(' + data.xhr.responseText + ')');
+                        var res = eval('(' + data.xhr.responseText + ')');
 
-                    alert(res.Message);
+                        alert(res.Message);
 
-                });
-
-                this.on("addedfile", function (file) {
-
-                    // Create the remove button
-                    var removeButton = Dropzone.createElement("<button>Remove file</button>");
-
-
-                    // Capture the Dropzone instance as closure.
-                    var _this = this;
-
-                    // Listen to the click event
-                    removeButton.addEventListener("click", function (e) {
-                        // Make sure the button click doesn't submit the form:
-                        e.preventDefault();
-                        e.stopPropagation();
-                        // Remove the file preview.
-                        _this.removeFile(file);
-                        // If you want to the delete the file on the server as well,
-                        // you can do the AJAX request here.
                     });
 
-                    // Add the button to the file preview element.
-                    file.previewElement.appendChild(removeButton);
-                });
-            }
-        };
+                    this.on("addedfile", function (file) {
 
-    </script>
-}*@
+                        // Create the remove button
+                        var removeButton = Dropzone.createElement("<button>Remove file</button>");
+
+
+                        // Capture the Dropzone instance as closure.
+                        var _this = this;
+
+                        // Listen to the click event
+                        removeButton.addEventListener("click", function (e) {
+                            // Make sure the button click doesn't submit the form:
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // Remove the file preview.
+                            _this.removeFile(file);
+                            // If you want to the delete the file on the server as well,
+                            // you can do the AJAX request here.
+                        });
+
+                        // Add the button to the file preview element.
+                        file.previewElement.appendChild(removeButton);
+                    });
+                }
+            };
+
+        </script>
+    }*@
