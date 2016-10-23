@@ -1,15 +1,44 @@
 ﻿@model PresentationBuilder.Models.ManageLoginsViewModel
 @using Microsoft.Owin.Security
 @{
+    Layout = "~/Views/Shared/Home.cshtml";
     ViewBag.Title = "Manage your external logins";
 }
 
-<h2>@ViewBag.Title.</h2>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<p class="text-success">@ViewBag.StatusMessage</p>
+@section leftPane
+{
+    <div class="row signUp">
+        <div class="col-sm-12 col-md-12  col-lg-12">
+
+        </div>
+        <div class="col-sm-12 col-md-12  col-lg-12 text-center">
+            Manage your external logins here.
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <img src="~/Images/presentationBuilder.png" />
+        </div>
+    </div>
+}
+
+<div class="row signButtons">
+    <div class="col-sm-4 col-md-4 col-lg-4">
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        @Html.ActionLink("Manage Account", "Index", "Manage", null, new { @class = "btn btn-sign" })
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        @Html.ActionLink("My Presentations", "Index", "Presentations", null, new { @class = "btn btn-sign" })
+    </div>
+</div>
+
+<br />
+
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-    if (loginProviders.Count() == 0) {
+    if (loginProviders.Count() == 0)
+    {
         <div>
             <p>
                 There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
@@ -37,7 +66,9 @@
                                         <div>
                                             @Html.Hidden("loginProvider", account.LoginProvider)
                                             @Html.Hidden("providerKey", account.ProviderKey)
-                                            <input type="submit" class="btn btn-default" value="Remove" title="Remove this @account.LoginProvider login from your account" />
+                                            <button type="submit" class="btn btn-sm btn-del" value="Remove" title="Remove this @account.LoginProvider login from your account">
+                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            </button>
                                         </div>
                                     }
                                 }
@@ -56,15 +87,26 @@
             using (Html.BeginForm("LinkLogin", "Manage"))
             {
                 @Html.AntiForgeryToken()
-                <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in Model.OtherLogins)
-                    {
-                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
-                    }
-                </p>
+            <h4>Link your account to one of the provider(s) above</h4>
+            <hr />
+            <div id="socialLoginList">
+                    <p>
+                        @foreach (AuthenticationDescription p in Model.OtherLogins)
+                        {
+                            // Use the Caption property to create CSS classes for the button & icon
+                            string buttonClass = "btn-" + p.Caption.ToLower();
+                            string faClass = "fa-" + p.Caption.ToLower();
+
+                            <button type="submit" class="btn btn-lg @buttonClass" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" aria-label="@p.Caption" title="Log in using your @p.Caption account.">
+                                <i class="fa @faClass"></i>
+                                @p.AuthenticationType
+                            </button>
+                        }
+                    </p>
                 </div>
             }
         }
     }
 }
+
+<p class="text-success">@ViewBag.StatusMessage</p>
