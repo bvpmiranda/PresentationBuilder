@@ -2,6 +2,7 @@
 {
 	background: #1c2a3a; /* Standard syntax */
 	font-family: Myr, sans-serif;
+	color: #fff;
 	height: 100%;
 	margin: 0px;
 	min-height: 100%;
@@ -11,8 +12,14 @@
 
 body
 {
-	padding-top: 144px;
-	padding-bottom: 20px;
+	padding: 144px 15px 20px 15px;
+}
+
+input[type=email], input[type=password], input[type=text]
+{
+	background-color: #16202c !important;
+	border: #16202c !important;
+	color: #fff !important;
 }
 
 .navbar
@@ -44,12 +51,12 @@ body
 		border-bottom: 3px solid #e0673c;
 	}
 
-	.topButton.selected:hover
-	{
-		background-color: #141e28;
-		border-bottom: 3px solid #e0673c;
-	color: #fff;
-	}
+		.topButton.selected:hover
+		{
+			background-color: #141e28;
+			border-bottom: 3px solid #e0673c;
+			color: #fff;
+		}
 
 	.topButton .text
 	{
@@ -172,6 +179,118 @@ body
 			background-color: #df673b;
 			border-color: #df673b;
 			color: #fff;
+		}
+
+.presentationDetails > .row
+{
+	margin-bottom: 20px;
+}
+
+.presentationPageBox
+{
+	height: 275px;
+	width: 376px;
+	margin-bottom: 20px;
+}
+
+	.presentationPageBox .pageImage
+	{
+		background-color: #141e28;
+		height: 220px;
+		text-align: center;
+		width: inherit;
+	}
+
+		.presentationPageBox .pageImage img
+		{
+			max-height: 220px;
+			max-width: 370px;
+		}
+
+	.presentationPageBox .buttons
+	{
+		margin-top: 12px;
+		width: inherit;
+	}
+
+		.presentationPageBox .buttons .button
+		{
+			cursor: pointer;
+			margin-right: 5px;
+		}
+
+		.presentationPageBox .buttons .addAudio
+		{
+			background-image: url(../Images/addAudio.png);
+			float: left;
+			height: 39px;
+			width: 39px;
+		}
+
+		.presentationPageBox .buttons .audioPlayer
+		{
+			background-image: url(../Images/audioPlayer.png);
+			float: left;
+			height: 39px;
+			width: 287px;
+		}
+
+			.presentationPageBox .buttons .audioPlayer .length
+			{
+				color: #df673b;
+				height: 26px;
+				margin: 6px 0px 0px 39px;
+				padding-top: 3px;
+				text-align: center;
+				width: 240px;
+			}
+
+			.presentationPageBox .buttons .audioPlayer .audioButtons
+			{
+				background-color: green;
+				position: relative;
+				margin: -5px 0px 0px 245px;
+				width: 45px;
+			}
+
+				.presentationPageBox .buttons .audioPlayer .audioButtons .button
+				{
+					cursor: pointer;
+					margin-right: 0px;
+				}
+
+				.presentationPageBox .buttons .audioPlayer .audioButtons .deleteAudio
+				{
+					background-image: url(../Images/deleteAudio.png);
+					float: left;
+					height: 20px;
+					width: 20px;
+				}
+
+				.presentationPageBox .buttons .audioPlayer .audioButtons .changeAudio
+				{
+					background-image: url(../Images/changeAudio.png);
+					float: left;
+					height: 20px;
+					margin-right: 5px;
+					width: 20px;
+				}
+
+		.presentationPageBox .buttons .changePage
+		{
+			background-image: url(../Images/changePage.png);
+			float: left;
+			height: 39px;
+			width: 39px;
+		}
+
+		.presentationPageBox .buttons .deletePage
+		{
+			background-image: url(../Images/deletePage.png);
+			float: right;
+			height: 39px;
+			margin-right: 0px;
+			width: 39px;
 		}
 
 @media (max-width: 768px)

@@ -305,7 +305,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="image.ashx" />
     <Content Include="Images\aboutUs.png" />
+    <Content Include="Images\addAudio.png" />
+    <Content Include="Images\audioPlayer.png" />
     <Content Include="Images\bootstrap-social.png" />
+    <Content Include="Images\changeAudio.png" />
+    <Content Include="Images\changePage.png" />
+    <Content Include="Images\deleteAudio.png" />
+    <Content Include="Images\deletePage.png" />
     <Content Include="Images\dev.png" />
     <Content Include="Images\download.png" />
     <Content Include="Images\duplicate.png" />
@@ -781,6 +787,7 @@
     <Content Include="Views\Account - Copy\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account - Copy\SendCode.cshtml" />
     <Content Include="Views\Account - Copy\VerifyCode.cshtml" />
+    <Content Include="Views\Presentations\Preview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

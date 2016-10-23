@@ -1,18 +1,11 @@
 ﻿@model PresentationBuilder.Models.Presentation
+
 @{
-    Layout = "~/Views/Shared/Internal.cshtml";
+    Layout = (Request.QueryString.Get("ajax") == null ? "~/Views/Shared/Layout.cshtml" : "~/Views/Shared/LayoutAjax.cshtml");
 
-    ViewBag.Title = "Presentation Editor - " + Model.PresentationId;
+    ViewBag.Title = "Presentation";
 }
-
-@section topButtons
-{
-    <a href="@Url.Action("Index", "Presentations")" class="topButton"><div class="text">Library</div></a>
-    <div class="topButton selected"><div class="text">Create New</div></div>
-}
-
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
-
 <style type="text/css">
     ul.thumbnails {
         overflow: auto;
@@ -58,104 +51,92 @@
             }
 </style>
 
-@using (Html.BeginForm("AddPresentation", "Presentations", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("AddPresentation", "Presentation", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="form-group">
-        @Html.HiddenFor(m => m.PresentationId, new { @class = "form-control" })
+
         <div class="col-md-12">
             <h2>Presentation Name</h2>
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text" })
-                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-12">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                DESCRIPTION
-            </div>
+        <div class="col-md-12">
+            <h2>Presentation Description</h2>
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                @Html.TextAreaFor(m => m.Description, new { @class = "ckeditor", @id = "sampleEditor" })
-            </div>
+        <div class="col-md-12">
+            @Html.TextAreaFor(m => m.Description, new { @class = "ckeditor", @id = "sampleEditor" })
         </div>
     </div>
 
-<h2>PAGES</h2>
+}
+
+
+
+
+
 <div class="row">
-    <ul id="sortable" class="thumbnails" style="padding: 0px 15px;">
+
+    <ul id="sortable" class="thumbnails">
         @foreach (var presentation in @Model.PresentationPages.OrderBy(o => o.Order))
         {
             <id id="@(String.Format("presentationorder_{0}_{1}", presentation.PresentationPageId, presentation.Order))">
                 <li>
-                    <div class="presentationPageBox">
-                        <div class="pageImage">
-                            <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" style="cursor: move; height: inherit;" />
-                        </div>
+                    <div class="thumbnail selected">
+                        
+                        <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" style="cursor: move;" width="300" />
+                       
                         <div class="buttons">
-                            @{
-            if (presentation.SoundPath == null || presentation.SoundPath.Trim().Length == 0)
-            {
-                <div class="button addAudio"></div>
-            }
-            else
-            {
-                <div class="button audioPlayer" onclick="$('#sound@(presentation.PresentationPageId.ToString())')[0].play();">
-                    <div class="length">
-                        @presentation.SoundLength.Value.ToString("n0")  @(presentation.SoundLength.Value == 1 ? "second" : "seconds")
-                    </div>
-                    <div class="audioButtons">
-                        <div class="button changeAudio"></div>
-                        <div class="button deleteAudio"></div>
-                    </div>
-                </div>
-
-    <audio id="sound@(presentation.PresentationPageId.ToString())">
-        <source src="~/sound.ashx?Id=@presentation.PresentationPageId" type="audio" />
-    </audio>
-            }
-}
-                            <div class="button changePage"></div>
-                            <div class="button deletePage"></div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <a href="@Url.Action("Presentation", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">Edit</a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-sm" onclick="Presentations.download( @presentation.PresentationId); return false;">
+                                        <img src="~/Images/download.png" height="17" />
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <a href="@Url.Action("Duplicate", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">
+                                        <img src="~/Images/duplicate.png" height="17" />
+                                    </a>
+                                </div>
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <button type="button" class="btn btn-sm btn-del" onclick="Presentations.delete( @presentation.PresentationId); return false;">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </li>
-            </id>
+            </id>    
         }
     </ul>
 </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Save Changes" />
-        </div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" class="btn btn-default" value="Submit" />
     </div>
-
-}
-
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-        $('document').ready(function ()
-        {
+        $('document').ready(function () {
 
             $("#sortable").sortable({
                 revert: true,
-                stop: function (evt, ui)
-                {
+                stop: function (evt, ui) {
 
                     var newOrder = 1;
 
-                    $("id").each(function ()
-                    {
+                    $("id").each(function () {
 
                         var valueSplit = $(this).context.id.split("_");
 
-                        if (valueSplit.length == 3)
-                        {
+                        if (valueSplit.length == 3) {
                             var idOrder = valueSplit[1];
                             ChangeOrder(idOrder, newOrder++);
                         }
@@ -164,18 +145,20 @@
             });
         });
 
-        function ChangeOrder(presentationPageIdValue, newOrderValue) {
+
+        function ChangeOrder(presentationPageIdValue, newOrderValue)
+        {
             //var data = 'presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue; // { presentationPageId: presentationPageIdValue, newOrder: newOrderValue };
 
             //var newbaseUrl + 'Presentations/ChangeOrder',
 
-            var targeturl = '@Url.Action("ChangeOrder", "Presentations")?presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue;
+            var targeturl = '@Url.Action("ChangeOrder", "Presentations")?presentationPageId=' + presentationPageIdValue  + '&newOrder=' + newOrderValue;
 
             $.ajax({
                 type: "POST",
                 url: targeturl,
                 contentType: false,
-                processData: false,
+                processData: false,                
                 success: function (result) {
                     //result = jQuery.parseJSON(result);
 
@@ -188,8 +171,7 @@
                     //    alert('Erro: ' + result.message);
                     //}
                 },
-                error: function (xhr, status, p3, p4)
-                {
+                error: function (xhr, status, p3, p4) {
                     var err = "Error " + " " + status + " " + p3 + " " + p4;
                     if (xhr.responseText && xhr.responseText[0] == "{")
                         err = JSON.parse(xhr.responseText).Message;
