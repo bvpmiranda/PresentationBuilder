@@ -105,6 +105,36 @@ var Presentations = {
 		});
 	},
 
+	deletePage: function (id)
+	{
+		block();
+
+		$.ajax({
+			type: "POST",
+			url: baseUrl + "api/PresentationsAPI/deletePage/" + id,
+			cache: false,
+			contentType: 'application/json; charset=utf-8',
+		}).success(function (data, textStatus, jqXHR)
+		{
+			unblock();
+
+			if (data.isValid)
+			{
+				window.location.reload();
+			}
+			else
+			{
+				alert(data.messages[0]);
+			}
+
+		}).error(function (jqXHR, textStatus, errorThrown)
+		{
+			unblock();
+
+			alert('There was an error deleting the presentation');
+		});
+	},
+
 	upload: function (e)
 	{
 		$("#uploadZipForm").submit();
