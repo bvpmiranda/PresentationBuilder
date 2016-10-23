@@ -168,15 +168,10 @@ namespace PresentationBuilder.Controllers
                         bool isZipFile = false;
                         var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
-                        try
-                        {
-                            Ionic.Zip.ZipFile.Read(file.InputStream); //read the zip contents by passing the input stream
-                            isZipFile = true;
-                        }
-                        catch
-                        {
-                            isZipFile = false;
-                        }
+						if (file.ContentType == "application/x-zip-compressed")
+						{
+							isZipFile = true;
+						}
 
                         if (isZipFile)
                         {
@@ -185,11 +180,7 @@ namespace PresentationBuilder.Controllers
                             {
                                 var Presentation = Helpers.ZipHelper.unzipPresentation(file, UserId);
 
-                                uploadReturn.data = new Presentation
-                                {
-                                    PresentationId = Presentation.PresentationId,
-                                    Name = Presentation.Name
-                                };
+								return Json(new { Message = Presentation.PresentationId });
                             }
                             catch (Exception ex)
                             {
@@ -197,8 +188,7 @@ namespace PresentationBuilder.Controllers
                                 uploadReturn.message = ex.Message;
                             }
 
-                            return Json(uploadReturn, "text/plain");
-                        }
+						}
                         else
                         {
                             var fileNameUpload = Path.GetFileName(file.FileName);
