@@ -42,5 +42,26 @@ namespace PresentationBuilder.APIs
 			
 			return jsonReturn;
 		}
+
+		[HttpPost]
+		public Models.JsonReturn save(PresentationBuilder.Models.Presentation model)
+		{
+			var jsonReturn = new Models.JsonReturn();
+
+			if (ModelState.IsValid)
+			{
+				var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+				context.Entry(model).State = System.Data.Entity.EntityState.Modified;
+
+				context.SaveChanges();
+			}
+			else
+			{
+				jsonReturn.isValid = false;
+			}
+
+			return jsonReturn;
+		}
 	}
 }

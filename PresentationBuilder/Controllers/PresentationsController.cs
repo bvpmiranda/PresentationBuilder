@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace PresentationBuilder.Controllers
 {
@@ -54,6 +55,32 @@ namespace PresentationBuilder.Controllers
 
 		[Authorize]
 		public ActionResult Presentation(int id)
+		{
+			var context = new PresentationBuilderEntities();
+
+			var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
+
+			return View(presentation);
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult SavePresentation(PresentationBuilder.Models.Presentation model)
+		{
+			if (ModelState.IsValid)
+			{
+				var context = new PresentationBuilderEntities();
+
+				context.Entry(model).State = System.Data.Entity.EntityState.Modified;
+
+				context.SaveChanges();
+			}
+
+			return View(model);
+		}
+
+		[Authorize]
+		public ActionResult Preview(int id)
 		{
 			var context = new PresentationBuilderEntities();
 

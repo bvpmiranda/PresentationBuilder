@@ -130,6 +130,7 @@
 input[type=email], input[type=password], input[type=text]
 {
 	background-color: #1b2a3b !important;
+	border: #1b2a3b !important;
 	color: #fff !important;
 }
 
