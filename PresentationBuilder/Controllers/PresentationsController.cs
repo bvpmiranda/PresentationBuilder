@@ -10,243 +10,242 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace PresentationBuilder.Controllers
 {
-    public class PresentationsController : Controller
-    {
-        private ApplicationUserManager _userManager;
-
-        public PresentationsController()
-        {
-        }
-
-        public PresentationsController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        [Authorize]
-        public ActionResult Index()
-        {
-            var context = new PresentationBuilderEntities();
-
-            var viewModel = new PresentationViewModel();
+	public class PresentationsController : Controller
+	{
+		private ApplicationUserManager _userManager;
+
+		public PresentationsController()
+		{
+		}
+
+		public PresentationsController(ApplicationUserManager userManager)
+		{
+			UserManager = userManager;
+		}
+
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
+
+		[Authorize]
+		public ActionResult Index()
+		{
+			var context = new PresentationBuilderEntities();
+
+			var viewModel = new PresentationViewModel();
 
-            viewModel.Presentations = (from p in context.Presentations.Include("AspNetUser")
-                                       where p.AspNetUser.UserName == User.Identity.Name
-                                       orderby p.Name
-                                       select p).ToList();
+			viewModel.Presentations = (from p in context.Presentations.Include("AspNetUser")
+									   where p.AspNetUser.UserName == User.Identity.Name
+									   orderby p.Name
+									   select p).ToList();
 
-            viewModel.UserInfo = UserManager.FindById(User.Identity.GetUserId()) ?? new ApplicationUser { PasswordHash = null };
+			viewModel.UserInfo = UserManager.FindById(User.Identity.GetUserId()) ?? new ApplicationUser { PasswordHash = null };
+
+			return View(viewModel);
+		}
+
+		[Authorize]
+		public ActionResult Presentation(int id)
+		{
+			var context = new PresentationBuilderEntities();
+
+			var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
 
-            return View(viewModel);
-        }
-
-        [Authorize]
-        public ActionResult Presentation(int id)
-        {
-            var context = new PresentationBuilderEntities();
+			return View(presentation);
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult UploadZipAsync()
+		{
+			var uploadReturn = new UploadReturn();
+
+			var context = new PresentationBuilderEntities();
+
+			var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
+
+			try
+			{
+				var Presentation = Helpers.ZipHelper.unzipPresentation(Request.Files[0], UserId);
+
+				uploadReturn.data = new Presentation
+				{
+					PresentationId = Presentation.PresentationId,
+					Name = Presentation.Name
+				};
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
 
-            var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
+			return Json(uploadReturn, "text/plain");
+		}
 
+		[Authorize]
+		[HttpPost]
+		public ActionResult SaveUploadedFile()
+		{
+			var uploadReturn = new UploadReturn();
 
-            return View(presentation);
-        }
+			string fName = "";
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult UploadZipAsync()
-        {
-            var uploadReturn = new UploadReturn();
-
-            var context = new PresentationBuilderEntities();
+			try
+			{
+				foreach (string fileName in Request.Files)
+				{
+					HttpPostedFileBase file = Request.Files[fileName];
+					//Save file content goes here
+					fName = file.FileName;
+					if (file != null && file.ContentLength > 0)
+					{
+						var fileNameUpload = Path.GetFileName(file.FileName);
 
-            var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
+						//Create Presentation
+						var context = new PresentationBuilderEntities();
 
-            try
-            {
-                var Presentation = Helpers.ZipHelper.unzipPresentation(Request.Files[0], UserId);
+						var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
-                uploadReturn.data = new Presentation
-                {
-                    PresentationId = Presentation.PresentationId,
-                    Name = Presentation.Name
-                };
-            }
-            catch (Exception ex)
-            {
-                uploadReturn.uploadStatus = uploadStatus.Error;
-                uploadReturn.message = ex.Message;
-            }
+						Presentation presentation = new Presentation
+						{
+							UserId = UserId,
+							Date = DateTime.Now,
+							Name = "New Presentation",
+							Description = null
+						};
 
-            return Json(uploadReturn, "text/plain");
-        }
+						context.Presentations.Add(presentation);
+						context.SaveChanges();
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult SaveUploadedFile()
-        {
-            var uploadReturn = new UploadReturn();
+						uploadReturn.data = presentation;
 
-            string fName = "";
+						string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
 
-            try
-            {
-                foreach (string fileName in Request.Files)
-                {
-                    HttpPostedFileBase file = Request.Files[fileName];
-                    //Save file content goes here
-                    fName = file.FileName;
-                    if (file != null && file.ContentLength > 0)
-                    {
-                        var fileNameUpload = Path.GetFileName(file.FileName);
+						if (!Directory.Exists(pathWork))
+							Directory.CreateDirectory(pathWork);
 
-                        //Create Presentation
-                        var context = new PresentationBuilderEntities();
 
-                        var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
-                        Presentation presentation = new Presentation
-                        {
-                            UserId = UserId,
-                            Date = DateTime.Now,
-                            Name = "New Presentation",
-                            Description = null
-                        };
+						file.SaveAs(Path.Combine(pathWork, file.FileName));
 
-                        context.Presentations.Add(presentation);
-                        context.SaveChanges();
+						PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
 
-                        uploadReturn.data = presentation;
 
-                        string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
+						byte bOrder = 0;
 
-                        if (!Directory.Exists(pathWork))
-                            Directory.CreateDirectory(pathWork);
+						foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
+						{
+							presentation.PresentationPages.Add(new PresentationPage
+							{
+								Order = bOrder++,
+								ImagePath = Path.GetFileName(filePresentaion),
+								SoundPath = null,
+								SoundLength = null
+							});
+						}
 
+						context.SaveChanges();
 
+						System.IO.File.Delete(Path.Combine(pathWork, file.FileName));
 
-                        file.SaveAs(Path.Combine(pathWork, file.FileName));
+						return Json(new { Message = presentation.PresentationId });
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
 
-                        PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
 
+			return Json(uploadReturn, "text/plain");
+		}
 
-                        byte bOrder = 0;
+		public void DuplicatePresentation(int id)
+		{
 
-                        foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
-                        {
-                            presentation.PresentationPages.Add(new PresentationPage
-                            {
-                                Order = bOrder++,
-                                ImagePath = Path.GetFileName(filePresentaion),
-                                SoundPath = null,
-                                SoundLength = null
-                            });
-                        }
+			var context = new PresentationBuilderEntities();
 
-                        context.SaveChanges();
+			var currentPresentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
 
-                        System.IO.File.Delete(Path.Combine(pathWork, file.FileName));
+			var newPresentation = currentPresentation;
 
-                        return Json(new { Message = presentation.PresentationId });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                uploadReturn.uploadStatus = uploadStatus.Error;
-                uploadReturn.message = ex.Message;
-            }
+			newPresentation.PresentationId = 0;
 
+			context.Entry(newPresentation).State = System.Data.Entity.EntityState.Unchanged;
 
-            return Json(uploadReturn, "text/plain");
-        }
+			context.Presentations.Add(newPresentation);
 
-        public void DuplicatePresentation(int id)
-        {
+			context.SaveChanges();
 
-            var context = new PresentationBuilderEntities();
+			foreach (var oPresentationPage in currentPresentation.PresentationPages)
+			{
+				var newPresentationPage = oPresentationPage;
 
-            var currentPresentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
+				newPresentationPage.PresentationId = newPresentation.PresentationId;
 
-            var newPresentation = currentPresentation;
+				newPresentationPage.PresentationPageId = 0;
 
-            newPresentation.PresentationId = 0;
+				context.Entry(newPresentationPage).State = System.Data.Entity.EntityState.Unchanged;
 
-            context.Entry(newPresentation).State = System.Data.Entity.EntityState.Unchanged;
+				context.PresentationPages.Add(newPresentationPage);
+			}
 
-            context.Presentations.Add(newPresentation);
+			context.SaveChanges();
+		}
 
-            context.SaveChanges();
 
-            foreach (var oPresentationPage in currentPresentation.PresentationPages)
-            {
-                var newPresentationPage = oPresentationPage;
+		[Authorize]
+		[HttpPost]
+		public ActionResult ChangeOrder(string presentationPageId, string newOrder)
+		{
 
-                newPresentationPage.PresentationId = newPresentation.PresentationId;
+			var uploadReturn = new UploadReturn();
 
-                newPresentationPage.PresentationPageId = 0;
 
-                context.Entry(newPresentationPage).State = System.Data.Entity.EntityState.Unchanged;
+			try
+			{
 
-                context.PresentationPages.Add(newPresentationPage);
-            }
+				if (string.IsNullOrEmpty(presentationPageId))
+				{
+					uploadReturn.uploadStatus = uploadStatus.Error;
+					uploadReturn.message = "presentationPageId is null";
+				}
+				else
+				{
+					int intPresentationPageId = Convert.ToInt32(presentationPageId);
 
-            context.SaveChanges();
-        }
+					var context = new PresentationBuilderEntities();
 
+					var presentationPage = (from p in context.PresentationPages where p.PresentationPageId == intPresentationPageId select p).First();
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult ChangeOrder(string presentationPageId, string newOrder)
-        {
+					presentationPage.Order = Convert.ToByte(newOrder);
 
-            var uploadReturn = new UploadReturn();
+					context.SaveChanges();
 
+					return Json(new { Message = "Order Changed" });
+				}
 
-            try
-            {
 
-                if (string.IsNullOrEmpty(presentationPageId))
-                {
-                    uploadReturn.uploadStatus = uploadStatus.Error;
-                    uploadReturn.message = "presentationPageId is null";
-                }
-                else
-                {
-                    int intPresentationPageId = Convert.ToInt32(presentationPageId);
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
 
-                    var context = new PresentationBuilderEntities();
 
-                    var presentationPage = (from p in context.PresentationPages where p.PresentationPageId == intPresentationPageId select p).First();
-
-                    presentationPage.Order = Convert.ToByte(newOrder);
-
-                    context.SaveChanges();
-
-                    return Json(new { Message = "Order Changed" });
-                }
-
-             
-            }
-            catch (Exception ex)
-            {
-                uploadReturn.uploadStatus = uploadStatus.Error;
-                uploadReturn.message = ex.Message;
-            }
-
-
-            return Json(uploadReturn, "text/plain");
-        }
-    }
+			return Json(uploadReturn, "text/plain");
+		}
+	}
 }

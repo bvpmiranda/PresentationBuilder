@@ -8,40 +8,36 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div id="body" class="container-fluid body-content">
-        <div class="row">
-            <div class="col-sm-4 col-md-4 col-lg-4 leftColumn">
-                <div class="logo text-center">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="logo">
                     <img src="~/Images/presentationBuilder.png" />
                 </div>
-                <div class="title">
-                    <div class="col-sm-2 col-md-2 col-lg-2">
-                        <img src="~/Images/presentationBuilderSmall.png" />
-                    </div>
-                    <div class="col-sm-10 col-md-10 col-lg-10">
-                        Presentations
-                    </div>
-                </div>
-                <div class="new">
-                    <div class="col-sm-1 col-md-1 col-lg-1">
-                    </div>
-                    <div class="col-sm-11 col-md-11 col-lg-11">
-                        Create New
-                    </div>
-                </div>
-                <div class="library">
-                    <div class="col-sm-1 col-md-1 col-lg-1">
-                        <div class="border"></div>
-                    </div>
-                    <div class="col-sm-11 col-md-11 col-lg-11">
-                        Library
-                    </div>
-                </div>
             </div>
-            <div class="col-sm-8 col-md-8 col-lg-8">
-                @RenderBody()
+            <div class="nav navbar-nav" style="margin-left: 50px;">
+                @RenderSection("topButtons")
             </div>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="nav navbar-nav navbar-right">
+                    <div class="row" style="padding: 20px 20px 0 0;">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            @Html.ActionLink("Manage Account", "Index", "Manage", null, new { @class = "btn btn-account" })
+                        </div>
+                        <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1">
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-account">Log off</a>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
+    </div>
+
+    <div class="container-fluid body-content">
+        @RenderBody()
     </div>
 
     @Scripts.Render("~/bundles/jquery")
