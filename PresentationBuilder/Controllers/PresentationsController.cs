@@ -132,20 +132,9 @@ namespace PresentationBuilder.Controllers
             {
                 var context = new PresentationBuilderEntities();
 
-                //context.Entry(model).State = System.Data.Entity.EntityState.Modified;
-
-                //context.SaveChanges();
-
                 Presentation p = context.Presentations.FirstOrDefault(x => x.PresentationId == model.PresentationId);
                 p.Description = model.Description;
                 p.Name = model.Name;
-                //        f.Name = NewName;
-                //        public int PresentationId { get; set; }
-                //public string UserId { get; set; }
-                //public string Name { get; set; }
-                //public System.DateTime Date { get; set; }
-
-                //public string Description { get; set; }
 
                 context.SaveChanges();
 
@@ -265,43 +254,58 @@ namespace PresentationBuilder.Controllers
 				uploadReturn.message = ex.Message;
 			}
 
-
 			return Json(uploadReturn, "text/plain");
 		}
 
-		public void DuplicatePresentation(int id)
+        [Authorize]
+        
+		public ActionResult DuplicatePresentation(int id)
 		{
-
 			var context = new PresentationBuilderEntities();
 
-			var currentPresentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
+			var currentPresentation = (from p in context.Presentations.Include("PresentationPages")
+                                       where p.PresentationId == id select p).First();
 
-			var newPresentation = currentPresentation;
+            var newPresentation = new Presentation
+            {
+                //PresentationId = currentPresentation.PresentationId,
+                UserId = currentPresentation.UserId,
+                Name = currentPresentation.Name + " - Copy",
+                Date = DateTime.Now,
+                Description = currentPresentation.Description
+            };
 
-			newPresentation.PresentationId = 0;
-
-			context.Entry(newPresentation).State = System.Data.Entity.EntityState.Unchanged;
-
-			context.Presentations.Add(newPresentation);
-
+            context.Presentations.Add(newPresentation);
 			context.SaveChanges();
 
 			foreach (var oPresentationPage in currentPresentation.PresentationPages)
 			{
-				var newPresentationPage = oPresentationPage;
-
-				newPresentationPage.PresentationId = newPresentation.PresentationId;
-
-				newPresentationPage.PresentationPageId = 0;
-
-				context.Entry(newPresentationPage).State = System.Data.Entity.EntityState.Unchanged;
+                var newPresentationPage = new PresentationPage
+                {
+                    //PresentationPageId = oPresentationPage.PresentationPageId,
+                    PresentationId = newPresentation.PresentationId,
+                    ImagePath = oPresentationPage.ImagePath,
+                    SoundPath = oPresentationPage.SoundPath,
+                    SoundLength = oPresentationPage.SoundLength,
+                    Order = oPresentationPage.Order,
+                    Hidden = oPresentationPage.Hidden
+                };
 
 				context.PresentationPages.Add(newPresentationPage);
 			}
 
-			context.SaveChanges();
-		}
+            context.SaveChanges();
 
+            var currentPath = Path.Combine(PathHelper.path(), currentPresentation.PresentationId.ToString());
+            var newPath = Path.Combine(PathHelper.path(), newPresentation.PresentationId.ToString());
+
+            Directory.CreateDirectory(newPath);
+
+            foreach (string file in Directory.GetFiles(currentPath, "*.*", SearchOption.AllDirectories))
+                System.IO.File.Copy(file, file.Replace(currentPath, newPath), true);
+
+            return RedirectToAction("Presentation", new { id = newPresentation.PresentationId });
+        }
 
 		[Authorize]
 		[HttpPost]
