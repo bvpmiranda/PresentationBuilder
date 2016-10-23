@@ -156,7 +156,12 @@ namespace PresentationBuilder.Controllers
         {
             if (ModelState.IsValid)
             {
-				var user = new ApplicationUser { UserName = model.FirstName + " " + model.LastName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+				//var user = new ApplicationUser { UserName = model.FirstName + " " + model.LastName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -354,8 +359,7 @@ namespace PresentationBuilder.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel {
                         Email = loginInfo.Email,
                         FirstName = loginInfo.ExternalIdentity.Name.Substring(0, loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
-                        LastName = loginInfo.ExternalIdentity.Name.Substring(loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
-                        UserName = loginInfo.DefaultUserName
+                        LastName = loginInfo.ExternalIdentity.Name.Substring(loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim()
                     });
             }
         }
@@ -381,7 +385,7 @@ namespace PresentationBuilder.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser {
-                    UserName = model.UserName,
+                    UserName = model.Email,
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
