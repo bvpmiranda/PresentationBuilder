@@ -19,10 +19,16 @@
     </div>
 }
 
-@Html.Partial("_LoginPartial")
+<div class="row signButtons">
+    <div class="col-sm-4 col-md-6 col-lg-8"></div>
+    <div class="col-sm-8 col-md-6 col-lg-4">
+        @Html.ActionLink("My Presentations", "Index", "Presentations", null, new { @class = "btn btn-sign" })
+    </div>
+</div>
 
-<div class="row" style="background-color: yellow">
-    <p class="text-success">@ViewBag.StatusMessage</p>
+<br/>
+
+<div class="row">   
     <div>
         <h4>Change your account settings</h4>
         <hr />
@@ -46,4 +52,14 @@
             </dd>
         </dl>
     </div>
+
+    @if (@ViewBag.StatusMessage != "")
+    {
+    <div class="row">
+        <div class="col-lg-12 text-success">
+            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+            @ViewBag.StatusMessage
+        </div>
+    </div>
+    }
 </div>
