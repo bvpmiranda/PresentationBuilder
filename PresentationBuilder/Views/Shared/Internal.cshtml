@@ -3,17 +3,42 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/homeCss")
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/internalCss")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <div id="body" class="container-fluid body-content">
         <div class="row">
-            <div class="col-md-6 leftColumn">
-                @RenderSection("leftPane")
+            <div class="col-sm-4 col-md-4 col-lg-4 leftColumn">
+                <div class="logo text-center">
+                    <img src="~/Images/presentationBuilder.png" />
+                </div>
+                <div class="title">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <img src="~/Images/presentationBuilderSmall.png" />
+                    </div>
+                    <div class="col-sm-10 col-md-10 col-lg-10">
+                        Presentations
+                    </div>
+                </div>
+                <div class="new">
+                    <div class="col-sm-1 col-md-1 col-lg-1">
+                    </div>
+                    <div class="col-sm-11 col-md-11 col-lg-11">
+                        Create New
+                    </div>
+                </div>
+                <div class="library">
+                    <div class="col-sm-1 col-md-1 col-lg-1">
+                        <div class="border"></div>
+                    </div>
+                    <div class="col-sm-11 col-md-11 col-lg-11">
+                        Library
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 rightColumn">
+            <div class="col-sm-8 col-md-8 col-lg-8">
                 @RenderBody()
             </div>
         </div>
@@ -22,6 +47,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/scripts")
+    @RenderSection("scripts", required: false)
 
     <span id="AntiForgeryToken">@Html.AntiForgeryToken()</span>
 
@@ -31,7 +57,24 @@
 
         Navigation.div = $("#body");
         Navigation.baseUrl = baseUrl;
-        Navigation.title = "Application Name";
+        Navigation.title = "Presentation Builder";
+
+        $(function ()
+        {
+            $("#body").show();
+
+            adjustLayoutContent();
+        });
+
+        adjustLayoutContent = function ()
+        {
+            $("#body .library").children().matchHeight();
+
+            $("#body .leftColumn .library .border").height($("#body .leftColumn .library").height());
+
+            $("#body").height($("body").height());
+            $("#body .leftColumn").height($("body").height());
+        }
     </script>
 </body>
 </html>
