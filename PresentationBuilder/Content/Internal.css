@@ -1,0 +1,218 @@
+﻿html, body
+{
+	background: #1c2a3a; /* Standard syntax */
+	font-family: Myr, sans-serif;
+	height: 100%;
+	margin: 0px;
+	min-height: 100%;
+	min-width: 800px;
+	padding: 0px;
+}
+
+.leftColumn
+{
+	background: #1f2f41;
+	min-height: 100%;
+	height: 100%;
+	padding: 0px !important;
+}
+
+	.leftColumn .logo
+	{
+		background: #de7736; /* For browsers that do not support gradients */
+		background: -webkit-linear-gradient(left top, #de663c, #db8937); /* For Safari 5.1 to 6.0 */
+		background: -o-linear-gradient(bottom right, #de663c, #db8937); /* For Opera 11.1 to 12.0 */
+		background: -moz-linear-gradient(bottom right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
+		background: linear-gradient(to bottom right, #de663c, #db8937); /* Standard syntax */
+		height: 320px;
+		width: 100%;
+	}
+
+		.leftColumn .logo img
+		{
+			height: 300px;
+			margin: 10px 0px;
+		}
+
+	.leftColumn .title
+	{
+		color: #9f9f9f;
+		height: 46px;
+		font-size: 30px;
+	}
+
+	.leftColumn .new
+	{
+		background-color: #141e29;
+		color: #9f9f9f;
+		height: 46px;
+		font-size: 30px;
+	}
+
+	.leftColumn .library
+	{
+		background-color: #141e29;
+		color: #9f9f9f;
+		height: 46px;
+		font-size: 30px;
+	}
+
+		.leftColumn .library .border
+		{
+			background: #df673b;
+			height: 100%;
+			margin-left: -15px;
+			width: 7px;
+		}
+
+.btn-account
+{
+	background-color: #15202c;
+	border-color: #15202c;
+	border-radius: 0px;
+	color: #a1a1a1;
+	margin: 0px;
+}
+
+	.btn-account:hover
+	{
+		color: #fff;
+	}
+
+.title
+{
+	border-bottom: 2px solid #df673b;
+	color: #fff;
+	font-size: 34px;
+	text-decoration: none;
+}
+
+.importBox
+{
+	border: 1px dashed #df673b;
+	color: #df673b;
+	cursor: pointer;
+	float: left;
+	height: 270px;
+	margin-bottom: 20px;
+	text-align: center;
+	width: 220px;
+}
+
+	.importBox img
+	{
+		margin: 20px 68px;
+	}
+
+	.importBox .title
+	{
+		font-size: 18px;
+	}
+
+	.importBox .subTitle
+	{
+		font-size: 14px;
+	}
+
+.presentationBox
+{
+	background-color: #fff;
+	color: #df673b;
+	cursor: pointer;
+	float: left;
+	height: 270px;
+	margin-bottom: 20px;
+	width: 220px;
+}
+
+	.presentationBox .gradient
+	{
+		background: #de7736; /* For browsers that do not support gradients */
+		background: -webkit-linear-gradient(left top, #de663c, #db8937); /* For Safari 5.1 to 6.0 */
+		background: -o-linear-gradient(bottom right, #de663c, #db8937); /* For Opera 11.1 to 12.0 */
+		background: -moz-linear-gradient(bottom right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
+		background: linear-gradient(bottom right, #de663c, #db8937); /* Standard syntax */
+		height: 160px;
+		width: 100%;
+	}
+
+	.presentationBox .name
+	{
+		color: #1c2a3a;
+		text-align: left;
+		padding: 10px 10px;
+	}
+
+	.presentationBox .buttons
+	{
+		padding-left: 8px;
+		padding-right: 12px;
+	}
+
+	.presentationBox .buttons .btn
+	{
+		background-color: #fff;
+		border-color: #df673b;
+		color: #df673b;
+	}
+
+	.presentationBox .buttons .btn-del
+	{
+		background-color: #df673b;
+		border-color: #df673b;
+		color: #fff;
+	}
+
+@media (max-width: 768px)
+{
+	.leftColumn
+	{
+		font-size: 52px;
+	}
+
+		.leftColumn .logo
+		{
+			height: 270px;
+		}
+
+			.leftColumn .logo img
+			{
+				height: 250px;
+				margin: 10px 0px;
+			}
+}
+
+@media (min-width: 768px) and (max-width: 992px)
+{
+	.leftColumn
+	{
+		font-size: 52px;
+	}
+
+		.leftColumn .logo
+		{
+			height: 270px;
+		}
+
+			.leftColumn .logo img
+			{
+				height: 250px;
+				margin: 10px 0px;
+			}
+}
+
+@media (min-width: 992px) and (max-width: 1200px)
+{
+	.leftColumn
+	{
+		font-size: 52px;
+	}
+}
+
+@media (min-width: 1200px)
+{
+	.leftColumn
+	{
+		font-size: 52px;
+	}
+}
