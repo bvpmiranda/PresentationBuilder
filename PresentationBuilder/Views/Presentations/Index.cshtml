@@ -1,4 +1,4 @@
-﻿@model PresentationBuilder.Models.PresentationViewModel
+﻿@model List<PresentationBuilder.Models.Presentation>
 @{
     Layout = "~/Views/Shared/Internal.cshtml";
 
@@ -26,11 +26,25 @@
     <div class="col-sm-1 col-md-1 col-lg-1"></div>
 
     @{
-        foreach (var presentation in Model.Presentations)
+        foreach (var presentation in Model)
         {
             <div class="col-sm-3 col-md-3 col-lg-2">
                 <div class="presentationBox">
-                    <div class="gradient"></div>
+                    @{
+            if (presentation.PresentationPages.Count == 0)
+            {
+                <div class="gradient">
+                </div>
+            }
+            else
+            {
+                <div class="blue">
+                    <div class="img">
+                        <img src="~/image.ashx?Id=@presentation.PresentationPages.First().PresentationPageId" />
+                    </div>
+                </div>
+            }
+                    }
                     <div class="name">
                         @presentation.Name
                         <br />
@@ -103,53 +117,3 @@
 
     </script>
 }
-
-
-@*@section scripts{
-
-        <script type="text/javascript">
-
-            //File Upload response from the server
-            Dropzone.options.dropzoneForm = {
-                maxFiles: 1,
-                init: function () {
-                    this.on("maxfilesexceeded", function (data) {
-                        var res = eval('(' + data.xhr.responseText + ')');
-
-                    });
-                    this.on("complete", function (data) {
-
-                        var res = eval('(' + data.xhr.responseText + ')');
-
-                        alert(res.Message);
-
-                    });
-
-                    this.on("addedfile", function (file) {
-
-                        // Create the remove button
-                        var removeButton = Dropzone.createElement("<button>Remove file</button>");
-
-
-                        // Capture the Dropzone instance as closure.
-                        var _this = this;
-
-                        // Listen to the click event
-                        removeButton.addEventListener("click", function (e) {
-                            // Make sure the button click doesn't submit the form:
-                            e.preventDefault();
-                            e.stopPropagation();
-                            // Remove the file preview.
-                            _this.removeFile(file);
-                            // If you want to the delete the file on the server as well,
-                            // you can do the AJAX request here.
-                        });
-
-                        // Add the button to the file preview element.
-                        file.previewElement.appendChild(removeButton);
-                    });
-                }
-            };
-
-        </script>
-    }*@

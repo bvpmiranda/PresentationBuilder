@@ -12,7 +12,7 @@
 
 body
 {
-	padding: 144px 15px 20px 15px;
+	padding: 164px 15px 20px 15px;
 }
 
 input[type=email], input[type=password], input[type=text]
@@ -151,7 +151,29 @@ input[type=email], input[type=password], input[type=text]
 		background: -moz-linear-gradient(bottom right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
 		background: linear-gradient(bottom right, #de663c, #db8937); /* Standard syntax */
 		height: 160px;
+		text-align: center;
 		width: 100%;
+	}
+
+	.presentationBox .blue
+	{
+		background: #141e28;
+		display: table;
+		height: 160px;
+		text-align: center;
+		width: 100%;
+	}
+
+	.presentationBox .blue .img
+	{
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	.presentationBox .blue img
+	{
+		max-height: 160px;
+		max-width: 100%;
 	}
 
 	.presentationBox .name
