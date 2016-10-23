@@ -107,58 +107,92 @@ namespace PresentationBuilder.Controllers
                     HttpPostedFileBase file = Request.Files[fileName];
                     //Save file content goes here
                     fName = file.FileName;
+
+
+                    
                     if (file != null && file.ContentLength > 0)
                     {
-                        var fileNameUpload = Path.GetFileName(file.FileName);
-
-                        //Create Presentation
                         var context = new PresentationBuilderEntities();
-
+                        bool isZipFile = false;
                         var UserId = (from u in context.AspNetUsers where u.UserName == User.Identity.Name select u.Id).First();
 
-                        Presentation presentation = new Presentation
+                        try
                         {
-                            UserId = UserId,
-                            Date = DateTime.Now,
-                            Name = "New Presentation",
-                            Description = null
-                        };
-
-                        context.Presentations.Add(presentation);
-                        context.SaveChanges();
-
-                        uploadReturn.data = presentation;
-
-                        string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
-
-                        if (!Directory.Exists(pathWork))
-                            Directory.CreateDirectory(pathWork);
-
-
-
-                        file.SaveAs(Path.Combine(pathWork, file.FileName));
-
-                        PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
-
-
-                        byte bOrder = 0;
-
-                        foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
+                            Ionic.Zip.ZipFile.Read(file.InputStream); //read the zip contents by passing the input stream
+                            isZipFile = true;
+                        }
+                        catch
                         {
-                            presentation.PresentationPages.Add(new PresentationPage
-                            {
-                                Order = bOrder++,
-                                ImagePath = Path.GetFileName(filePresentaion),
-                                SoundPath = null,
-                                SoundLength = null
-                            });
+                            isZipFile = false;
                         }
 
-                        context.SaveChanges();
+                        if (isZipFile)
+                        {
 
-                        System.IO.File.Delete(Path.Combine(pathWork, file.FileName));
+                            try
+                            {
+                                var Presentation = Helpers.ZipHelper.unzipPresentation(file, UserId);
 
-                        return Json(new { Message = presentation.PresentationId });
+                                uploadReturn.data = new Presentation
+                                {
+                                    PresentationId = Presentation.PresentationId,
+                                    Name = Presentation.Name
+                                };
+                            }
+                            catch (Exception ex)
+                            {
+                                uploadReturn.uploadStatus = uploadStatus.Error;
+                                uploadReturn.message = ex.Message;
+                            }
+
+                            return Json(uploadReturn, "text/plain");
+                        }
+                        else
+                        {
+                            var fileNameUpload = Path.GetFileName(file.FileName);
+
+                            Presentation presentation = new Presentation
+                            {
+                                UserId = UserId,
+                                Date = DateTime.Now,
+                                Name = "New Presentation",
+                                Description = null
+                            };
+
+                            context.Presentations.Add(presentation);
+                            context.SaveChanges();
+
+                            uploadReturn.data = presentation;
+
+                            string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
+
+                            if (!Directory.Exists(pathWork))
+                                Directory.CreateDirectory(pathWork);
+
+                            file.SaveAs(Path.Combine(pathWork, file.FileName));
+
+                            PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
+
+
+                            byte bOrder = 0;
+
+                            foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
+                            {
+                                presentation.PresentationPages.Add(new PresentationPage
+                                {
+                                    Order = bOrder++,
+                                    ImagePath = Path.GetFileName(filePresentaion),
+                                    SoundPath = null,
+                                    SoundLength = null
+                                });
+                            }
+
+                            context.SaveChanges();
+
+                            System.IO.File.Delete(Path.Combine(pathWork, file.FileName));
+
+                            return Json(new { Message = presentation.PresentationId });
+                        }
                     }
                 }
             }
