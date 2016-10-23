@@ -1,13 +1,10 @@
 
 var Presentations = {
 
-
-
 	fileUpload: null,
 
 	bind: function ()
 	{
-
 		Presentations.fileUpload.on('change', function (e)
 		{
 			var files = e.target.files;
