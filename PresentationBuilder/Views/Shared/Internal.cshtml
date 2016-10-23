@@ -15,9 +15,8 @@
                     <img src="~/Images/presentationBuilder.png" />
                 </div>
             </div>
-            <div class="nav navbar-nav">
-                <div class="btn">Library</div>
-                @Html.ActionLink("New Presentation", "Presentation", "Presentations", new { id = 0 })
+            <div class="nav navbar-nav" style="margin-left: 50px;">
+                @RenderSection("topButtons")
             </div>
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {

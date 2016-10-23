@@ -55,18 +55,9 @@ namespace PresentationBuilder.Controllers
 		[Authorize]
 		public ActionResult Presentation(int id)
 		{
-			PresentationBuilder.Models.Presentation presentation;
+			var context = new PresentationBuilderEntities();
 
-			if (id > 0)
-			{
-				var context = new PresentationBuilderEntities();
-
-				presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
-			}
-			else
-			{
-				presentation = new PresentationBuilder.Models.Presentation();
-			}
+			var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
 
 			return View(presentation);
 		}
