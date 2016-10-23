@@ -2,6 +2,7 @@
 {
 	background: #1c2a3a; /* Standard syntax */
 	font-family: Myr, sans-serif;
+	color: #fff;
 	height: 100%;
 	margin: 0px;
 	min-height: 100%;
@@ -11,8 +12,14 @@
 
 body
 {
-	padding-top: 144px;
-	padding-bottom: 20px;
+	padding: 164px 15px 20px 15px;
+}
+
+input[type=email], input[type=password], input[type=text]
+{
+	background-color: #16202c !important;
+	border: #16202c !important;
+	color: #fff !important;
 }
 
 .navbar
@@ -44,12 +51,12 @@ body
 		border-bottom: 3px solid #e0673c;
 	}
 
-	.topButton.selected:hover
-	{
-		background-color: #141e28;
-		border-bottom: 3px solid #e0673c;
-	color: #fff;
-	}
+		.topButton.selected:hover
+		{
+			background-color: #141e28;
+			border-bottom: 3px solid #e0673c;
+			color: #fff;
+		}
 
 	.topButton .text
 	{
@@ -69,6 +76,29 @@ body
 
 	.btn-account:hover
 	{
+		color: #fff;
+	}
+
+.btn-save
+{
+	background: #e37535; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(top, #db8a36, #ea6234); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(bottom, #db8a36, #ea6234); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(bottom, #db8a36, #ea6234); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to bottom, #db8a36, #ea6234); /* Standard syntax */
+	border-color: #1b2a3b;
+	color: #fff;
+}
+
+	.btn-save:hover
+	{
+		color: #fff;
+	}
+
+	.btn-save:active
+	{
+		background-color: #ed6e19;
+		border-color: #ed6e19;
 		color: #fff;
 	}
 
@@ -148,6 +178,26 @@ body
 	width: 220px;
 }
 
+	.presentationBox .preview
+	{
+		height: 160px;
+		position: relative;
+		margin: -160px 0px 0px 0px;
+		width: 220px;
+	}
+	
+	.presentationBox .preview:hover img
+	{
+		display: block;
+	}
+
+	.presentationBox .preview img
+	{
+		display: none;
+		height: 160px;
+		width: 220px;
+	}
+
 	.presentationBox .gradient
 	{
 		background: #de7736; /* For browsers that do not support gradients */
@@ -156,8 +206,30 @@ body
 		background: -moz-linear-gradient(bottom right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
 		background: linear-gradient(bottom right, #de663c, #db8937); /* Standard syntax */
 		height: 160px;
+		text-align: center;
 		width: 100%;
 	}
+
+	.presentationBox .blue
+	{
+		background: #141e28;
+		display: table;
+		height: 160px;
+		text-align: center;
+		width: 100%;
+	}
+
+		.presentationBox .blue .img
+		{
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		.presentationBox .blue img
+		{
+			max-height: 160px;
+			max-width: 100%;
+		}
 
 	.presentationBox .name
 	{
@@ -184,6 +256,119 @@ body
 			background-color: #df673b;
 			border-color: #df673b;
 			color: #fff;
+		}
+
+.presentationDetails > .row
+{
+	margin-bottom: 20px;
+}
+
+.presentationPageBox
+{
+	height: 275px;
+	width: 376px;
+	margin-bottom: 20px;
+}
+
+	.presentationPageBox .pageImage
+	{
+		background-color: #141e28;
+		height: 220px;
+		text-align: center;
+		width: inherit;
+	}
+
+		.presentationPageBox .pageImage img
+		{
+			max-height: 220px;
+			max-width: 370px;
+		}
+
+	.presentationPageBox .buttons
+	{
+		margin-top: 12px;
+		width: inherit;
+	}
+
+		.presentationPageBox .buttons .button
+		{
+			cursor: pointer;
+			margin-right: 5px;
+		}
+
+		.presentationPageBox .buttons .addAudio
+		{
+			background-image: url(../Images/addAudio.png);
+			float: left;
+			height: 39px;
+			width: 39px;
+		}
+
+		.presentationPageBox .buttons .audioPlayer
+		{
+			background-image: url(../Images/audioPlayer.png);
+			cursor: default;
+			float: left;
+			height: 39px;
+			width: 287px;
+		}
+
+			.presentationPageBox .buttons .audioPlayer .length
+			{
+				color: #df673b;
+				height: 26px;
+				margin: 6px 0px 0px 39px;
+				padding-top: 3px;
+				text-align: center;
+				width: 240px;
+			}
+
+			.presentationPageBox .buttons .audioPlayer .audioButtons
+			{
+				background-color: green;
+				position: relative;
+				margin: -5px 0px 0px 245px;
+				width: 45px;
+			}
+
+				.presentationPageBox .buttons .audioPlayer .audioButtons .button
+				{
+					cursor: pointer;
+					margin-right: 0px;
+				}
+
+				.presentationPageBox .buttons .audioPlayer .audioButtons .deleteAudio
+				{
+					background-image: url(../Images/deleteAudio.png);
+					float: left;
+					height: 20px;
+					width: 20px;
+				}
+
+				.presentationPageBox .buttons .audioPlayer .audioButtons .changeAudio
+				{
+					background-image: url(../Images/changeAudio.png);
+					float: left;
+					height: 20px;
+					margin-right: 5px;
+					width: 20px;
+				}
+
+		.presentationPageBox .buttons .changePage
+		{
+			background-image: url(../Images/changePage.png);
+			float: left;
+			height: 39px;
+			width: 39px;
+		}
+
+		.presentationPageBox .buttons .deletePage
+		{
+			background-image: url(../Images/deletePage.png);
+			float: right;
+			height: 39px;
+			margin-right: 0px;
+			width: 39px;
 		}
 
 @media (max-width: 768px)

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using PresentationBuilder.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +11,31 @@ namespace PresentationBuilder.Controllers
 {
 	public class HomeController : Controller
 	{
-		public ActionResult Index()
+
+        private ApplicationUserManager _userManager;
+
+        public HomeController()
+        {
+        }
+
+        public HomeController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public ActionResult Index()
 		{
 			if (Request.IsAuthenticated)
 			{
@@ -24,7 +51,10 @@ namespace PresentationBuilder.Controllers
 		{
 			ViewBag.Message = "Your application description page.";
 
-			return View();
+            var info = new AboutViewModel();
+            info.UserInfo = UserManager.FindById(User.Identity.GetUserId()) ?? new ApplicationUser { Id = null };
+
+            return View(info);
 		}
 
 		public ActionResult Contact()

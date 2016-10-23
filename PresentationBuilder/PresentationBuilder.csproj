@@ -205,6 +205,7 @@
       <DependentUpon>image.ashx</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\AboutViewModel.cs" />
     <Compile Include="Models\PresentationViewModel.cs" />
     <Compile Include="sound.ashx.cs">
       <DependentUpon>sound.ashx</DependentUpon>
@@ -305,16 +306,27 @@
     <Content Include="Content\Site.css" />
     <Content Include="image.ashx" />
     <Content Include="Images\aboutUs.png" />
+    <Content Include="Images\addAudio.png" />
+    <Content Include="Images\audioPlayer.png" />
     <Content Include="Images\bootstrap-social.png" />
+    <Content Include="Images\changeAudio.png" />
+    <Content Include="Images\changePage.png" />
+    <Content Include="Images\deleteAudio.png" />
+    <Content Include="Images\deletePage.png" />
     <Content Include="Images\dev.png" />
+    <Content Include="Images\devBruno.png" />
+    <Content Include="Images\devHud.png" />
+    <Content Include="Images\devRafa.png" />
+    <Content Include="Images\devSamir.png" />
     <Content Include="Images\download.png" />
     <Content Include="Images\duplicate.png" />
     <Content Include="Images\login_facebook.png" />
     <Content Include="Images\login_google.png" />
     <Content Include="Images\login_twitter.png" />
-    <Content Include="Images\pdf.png" />
     <Content Include="Images\presentationBuilder.png" />
     <Content Include="Images\presentationBuilderSmall.png" />
+    <Content Include="Images\preview.png" />
+    <Content Include="Images\upload.png" />
     <Content Include="Ionic.Zip.xml" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />

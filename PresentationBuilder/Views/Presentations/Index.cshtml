@@ -1,4 +1,4 @@
-﻿@model PresentationBuilder.Models.PresentationViewModel
+﻿@model List<PresentationBuilder.Models.Presentation>
 @{
     Layout = "~/Views/Shared/Internal.cshtml";
 
@@ -26,11 +26,30 @@
     <div class="col-sm-1 col-md-1 col-lg-1"></div>
 
     @{
-        foreach (var presentation in Model.Presentations)
+        foreach (var presentation in Model)
         {
             <div class="col-sm-3 col-md-3 col-lg-2">
                 <div class="presentationBox">
-                    <div class="gradient"></div>
+                    @{
+            if (presentation.PresentationPages.Count == 0)
+            {
+                <div class="gradient">
+                </div>
+            }
+            else
+            {
+                <div class="blue">
+                    <div class="img">
+                        <img src="~/image.ashx?Id=@presentation.PresentationPages.First().PresentationPageId" />
+                    </div>
+                </div>
+            }
+                    }
+                    <a href="~/Presentations/Preview/@presentation.PresentationId">
+                        <div class="preview">
+                            <img src="~/Images/preview.png" />
+                        </div>
+                    </a>
                     <div class="name">
                         @presentation.Name
                         <br />
