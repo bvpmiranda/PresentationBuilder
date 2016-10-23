@@ -101,22 +101,22 @@
                                 @{
                 if (presentation.SoundPath == null || presentation.SoundPath.Trim().Length == 0)
                 {
-                    <div class="button addAudio"></div>
+                    <div class="button addAudio" onclick="changeAudio(@(presentation.PresentationPageId));"></div>
                 }
                 else
                 {
-                    <div class="button audioPlayer" onclick="$('#sound@(presentation.PresentationPageId.ToString())')[0].play();">
+                    <div class="button audioPlayer">
                         <div class="length">
                             @presentation.SoundLength.Value.ToString("n0")  @(presentation.SoundLength.Value == 1 ? "second" : "seconds")
                         </div>
                         <div class="audioButtons">
-                            <div class="button changeAudio"></div>
+                            <div class="button changeAudio" onclick="changeAudio(@(presentation.PresentationPageId));"></div>
                             <div class="button deleteAudio" onclick="Presentations.deleteAudio(@presentation.PresentationPageId);"></div>
                         </div>
                     </div>
                 }
                                 }
-                                <div class="button changePage"></div>
+                                <div class="button changePage" onclick="changePage(@(presentation.PresentationPageId))"></div>
                                 <div class="button deletePage" onclick="Presentations.deletePage(@presentation.PresentationPageId);"></div>
                             </div>
                         </div>
@@ -134,11 +134,9 @@
 
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $('document').ready(function ()
         {
-
             $("#sortable").sortable({
                 revert: true,
                 stop: function (evt, ui)
@@ -195,7 +193,86 @@
                     console.log(err);
                 }
             });
+
+        }
+
+        //File Upload response from the server
+        Dropzone.options.changeAudioForm = {
+            url: function ()
+            {
+                return baseUrl + "Presentations/ChangeAudio/" + Dropzone.options.changeAudioForm.id
+            },
+            uploadMultiple: false,
+            acceptedFiles: ".mp3,.wav",
+            maxFiles: 1,
+            init: function ()
+            {
+                this.on("maxfilesexceeded", function (data)
+                {
+                    var res = eval('(' + data.xhr.responseText + ')');
+                });
+                this.on("complete", function (data)
+                {
+                    if (data.xhr.responseText != undefined)
+                    {
+                        window.location.reload();
+                    }
+                });
+            }
+        };
+
+        //File Upload response from the server
+        Dropzone.options.changePageForm = {
+            url: function ()
+            {
+                return baseUrl + "Presentations/ChangePage/" + Dropzone.options.changePageForm.id
+            },
+            uploadMultiple: false,
+            acceptedFiles: ".jpg,.bmp,.png,.tiff,.jpeg",
+            maxFiles: 1,
+            init: function ()
+            {
+                this.on("maxfilesexceeded", function (data)
+                {
+                    var res = eval('(' + data.xhr.responseText + ')');
+                });
+                this.on("complete", function (data)
+                {
+                    if (data.xhr.responseText != undefined)
+                    {
+                        window.location.reload();
+                    }
+                });
+            }
+        };
+
+        function changeAudio(id)
+        {
+            Dropzone.options.changeAudioForm.id = id;
+
+            $("#changeAudioForm").click();
+        }
+
+        function changePage(id)
+        {
+            Dropzone.options.changePageForm.id = id;
+
+            $("#changePageForm").click();
         }
 
     </script>
 }
+
+<form action="~/Presentations/ChangePage" method="post" enctype="multipart/form-data" class="dropzone" id="changePageForm">
+    <div class="fallback">
+        <input name="file" type="file" multiple />
+        <input type="submit" value="Upload" />
+    </div>
+</form>
+
+<form action="~/Presentations/ChangeAudio" method="post" enctype="multipart/form-data" class="dropzone" id="changeAudioForm">
+    <div class="fallback">
+        <input name="file" type="file" multiple />
+        <input type="submit" value="Upload" />
+    </div>
+</form>

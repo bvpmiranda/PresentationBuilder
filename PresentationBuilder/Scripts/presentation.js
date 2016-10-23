@@ -170,5 +170,3 @@ var Presentations = {
 		$("#uploadZipForm").submit();
 	}
 }
-
-

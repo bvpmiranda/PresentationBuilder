@@ -41,16 +41,20 @@ namespace PresentationBuilder.Controllers
 		{
 			var context = new PresentationBuilderEntities();
 
-			var viewModel = new PresentationViewModel();
+			var presentations = (from p in context.Presentations.Include("AspNetUser")
+								 where p.AspNetUser.UserName == User.Identity.Name
+								 orderby p.Name
+								 select p).ToList();
 
-			viewModel.Presentations = (from p in context.Presentations.Include("AspNetUser")
-									   where p.AspNetUser.UserName == User.Identity.Name
-									   orderby p.Name
-									   select p).ToList();
+			foreach (var p in presentations)
+			{
+				p.PresentationPages = (from pg in context.PresentationPages
+									   where pg.PresentationId == p.PresentationId 
+									   orderby pg.Order
+									   select pg).Take(1).ToList();
+			}
 
-			viewModel.UserInfo = UserManager.FindById(User.Identity.GetUserId()) ?? new ApplicationUser { PasswordHash = null };
-
-			return View(viewModel);
+			return View(presentations);
 		}
 
 		[Authorize]
@@ -290,6 +294,64 @@ namespace PresentationBuilder.Controllers
 				}
 
 
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
+
+			return Json(uploadReturn, "text/plain");
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult ChangeAudio(int id)
+		{
+			var uploadReturn = new UploadReturn();
+
+			try
+			{
+				var context = new PresentationBuilderEntities();
+
+				var presentationPage = (from pg in context.PresentationPages where pg.PresentationPageId == id select pg).First();
+
+				presentationPage.SoundPath = Request.Files[0].FileName;
+
+				Request.Files[0].SaveAs(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), Request.Files[0].FileName));
+
+				context.SaveChanges();
+
+				return Json(new { Message = id });
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
+
+			return Json(uploadReturn, "text/plain");
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult ChangePage(int id)
+		{
+			var uploadReturn = new UploadReturn();
+
+			try
+			{
+				var context = new PresentationBuilderEntities();
+
+				var presentationPage = (from pg in context.PresentationPages where pg.PresentationPageId == id select pg).First();
+
+				presentationPage.ImagePath = Request.Files[0].FileName;
+
+				Request.Files[0].SaveAs(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), Request.Files[0].FileName));
+
+				context.SaveChanges();
+
+				return Json(new { Message = id });
 			}
 			catch (Exception ex)
 			{
