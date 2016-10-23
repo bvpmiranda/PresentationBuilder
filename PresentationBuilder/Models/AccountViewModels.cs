@@ -5,9 +5,9 @@ namespace PresentationBuilder.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
-        [Display(Name = "USER NAME")]
-        public string UserName { get; set; }
+        //[Required]
+        //[Display(Name = "USER NAME")]
+        //public string UserName { get; set; }
 
         [Required]
         [Display(Name = "E-MAIL")]
