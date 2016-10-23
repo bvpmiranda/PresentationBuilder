@@ -5,80 +5,113 @@
     ViewBag.Title = "Presentations Library";
 }
 
-
-<div class="text-center">
-    <span class="title">Library</span>
-</div>
-
-<br />
+@section topButtons
+{
+    <div class="topButton selected"><div class="text">Library</div></div>
+    <a href="javascript:document.getElementById('dropzoneForm').click()" class="topButton"><div class="text">Create New</div></a>
+}
 
 <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-3">
-            <div>
-                <form action="~/Presentations/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-                    <div class="fallback">
-                        <input name="file" type="file" multiple />
-                        <input type="submit" value="Upload" />
-                    </div>
-                </form>
-            </div>
+    <div class="col-sm-3 col-md-3 col-lg-2">
+        <div>
+            <form action="~/Presentations/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                    <input type="submit" value="Upload" />
+                </div>
+            </form>
         </div>
-    <div class="col-sm-2 col-md-1 col-lg-1"></div>
-        @{
-            foreach (var presentation in Model.Presentations)
-            {
-                <div class="col-sm-4 col-md-3 col-lg-3">
-                    <div class="presentationBox">
-                        <div class="gradient"></div>
-                        <div class="name">
-                            @presentation.Name
-                            <br />
-                            @presentation.Date.ToString("MM/dd/yyyy")
-                        </div>
-                        <div class="buttons">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <a href="@Url.Action("Presentation", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">Edit</a>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="btn btn-sm" onclick="Presentations.download( @presentation.PresentationId); return false;">
-                                        <img src="~/Images/download.png" height="17" />
-                                    </button>
-                                </div>
-                                <div class="col-sm-2 col-sm-offset-1">
-                                    <a href="@Url.Action("Duplicate", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">
-                                        <img src="~/Images/duplicate.png" height="17" />
-                                    </a>
-                                </div>
-                                <div class="col-sm-2 col-sm-offset-1">
-                                    <button type="button" class="btn btn-sm btn-del" onclick="Presentations.delete( @presentation.PresentationId); return false;">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
-                                </div>
+    </div>
+
+    <div class="col-sm-1 col-md-1 col-lg-1"></div>
+
+    @{
+        foreach (var presentation in Model.Presentations)
+        {
+            <div class="col-sm-3 col-md-3 col-lg-2">
+                <div class="presentationBox">
+                    <div class="gradient"></div>
+                    <div class="name">
+                        @presentation.Name
+                        <br />
+                        @presentation.Date.ToString("MM/dd/yyyy")
+                    </div>
+                    <div class="buttons">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <a href="@Url.Action("Presentation", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">Edit</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-sm" onclick="Presentations.download( @presentation.PresentationId); return false;">
+                                    <img src="~/Images/download.png" height="17" />
+                                </button>
+                            </div>
+                            <div class="col-sm-2 col-sm-offset-1">
+                                <a href="@Url.Action("Duplicate", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">
+                                    <img src="~/Images/duplicate.png" height="17" />
+                                </a>
+                            </div>
+                            <div class="col-sm-2 col-sm-offset-1">
+                                <button type="button" class="btn btn-sm btn-del" onclick="Presentations.delete( @presentation.PresentationId); return false;">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-sm-2 col-md-1 col-lg-1"></div>
-            }
+            <div class="col-sm-1 col-md-1 col-lg-1"></div>
         }
-    </div>
+    }
+</div>
 
 
-    @section scripts{
+@section scripts{
+
+    <script type="text/javascript">
+        //$("#dropzoneDiv").on('click', function (e) {
+        //    $("#dropzoneForm").click();
+        //});
+
+        //File Upload response from the server
+        Dropzone.options.dropzoneForm = {
+            uploadMultiple: false,
+            acceptedFiles: ".pdf, application/zip",
+            maxFiles: 1,
+            //previewTemplate: $("#dropzoneTemplate").html(),
+            init: function ()
+            {
+                this.on("maxfilesexceeded", function (data)
+                {
+                    var res = eval('(' + data.xhr.responseText + ')');
+
+                });
+                this.on("complete", function (data)
+                {
+
+                    if (data.xhr.responseText != undefined)
+                    {
+
+                        var PresentationId = JSON.parse(data.xhr.responseText)["Message"];
+
+                        window.location = baseUrl + "Presentations/Presentation/" + PresentationId;
+                    }
+                });
+            }
+        };
+
+    </script>
+}
+
+
+@*@section scripts{
 
         <script type="text/javascript">
-            //$("#dropzoneDiv").on('click', function (e) {
-            //    $("#dropzoneForm").click();
-            //});
 
             //File Upload response from the server
             Dropzone.options.dropzoneForm = {
-                uploadMultiple: false,
-                acceptedFiles: ".pdf, application/zip",
                 maxFiles: 1,
-                //previewTemplate: $("#dropzoneTemplate").html(),
                 init: function () {
                     this.on("maxfilesexceeded", function (data) {
                         var res = eval('(' + data.xhr.responseText + ')');
@@ -86,65 +119,37 @@
                     });
                     this.on("complete", function (data) {
 
-                        if (data.xhr.responseText != undefined) {
+                        var res = eval('(' + data.xhr.responseText + ')');
 
-                            var PresentationId = JSON.parse(data.xhr.responseText)["Message"];
+                        alert(res.Message);
 
-                            window.location = baseUrl + "Presentations/Presentation/" + PresentationId;
-                        }
+                    });
+
+                    this.on("addedfile", function (file) {
+
+                        // Create the remove button
+                        var removeButton = Dropzone.createElement("<button>Remove file</button>");
+
+
+                        // Capture the Dropzone instance as closure.
+                        var _this = this;
+
+                        // Listen to the click event
+                        removeButton.addEventListener("click", function (e) {
+                            // Make sure the button click doesn't submit the form:
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // Remove the file preview.
+                            _this.removeFile(file);
+                            // If you want to the delete the file on the server as well,
+                            // you can do the AJAX request here.
+                        });
+
+                        // Add the button to the file preview element.
+                        file.previewElement.appendChild(removeButton);
                     });
                 }
             };
 
         </script>
-    }
-
-
-    @*@section scripts{
-
-            <script type="text/javascript">
-
-                //File Upload response from the server
-                Dropzone.options.dropzoneForm = {
-                    maxFiles: 1,
-                    init: function () {
-                        this.on("maxfilesexceeded", function (data) {
-                            var res = eval('(' + data.xhr.responseText + ')');
-
-                        });
-                        this.on("complete", function (data) {
-
-                            var res = eval('(' + data.xhr.responseText + ')');
-
-                            alert(res.Message);
-
-                        });
-
-                        this.on("addedfile", function (file) {
-
-                            // Create the remove button
-                            var removeButton = Dropzone.createElement("<button>Remove file</button>");
-
-
-                            // Capture the Dropzone instance as closure.
-                            var _this = this;
-
-                            // Listen to the click event
-                            removeButton.addEventListener("click", function (e) {
-                                // Make sure the button click doesn't submit the form:
-                                e.preventDefault();
-                                e.stopPropagation();
-                                // Remove the file preview.
-                                _this.removeFile(file);
-                                // If you want to the delete the file on the server as well,
-                                // you can do the AJAX request here.
-                            });
-
-                            // Add the button to the file preview element.
-                            file.previewElement.appendChild(removeButton);
-                        });
-                    }
-                };
-
-            </script>
-        }*@
+    }*@
