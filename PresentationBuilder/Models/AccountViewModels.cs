@@ -18,6 +18,8 @@ namespace PresentationBuilder.Models
 
         [Display(Name = "LAST NAME")]
         public string LastName { get; set; }
+
+		public bool Registered { get; set; }
     }
 
     public class ExternalLoginListViewModel
