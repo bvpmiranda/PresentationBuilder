@@ -337,35 +337,6 @@ namespace PresentationBuilder.Controllers
 		[AllowAnonymous]
 		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
 		{
-			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-			if (loginInfo == null)
-			{
-				return RedirectToAction("Login");
-			}
-
-			// Sign in the user with this external login provider if the user already has a login
-			var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-			switch (result)
-			{
-				case SignInStatus.Success:
-					return RedirectToLocal(returnUrl);
-				case SignInStatus.LockedOut:
-					return View("Lockout");
-				case SignInStatus.RequiresVerification:
-					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-				case SignInStatus.Failure:
-				default:
-					// If the user does not have an account, then prompt the user to create an account
-					ViewBag.ReturnUrl = returnUrl;
-					ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-					return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
-					{
-						Email = loginInfo.Email,
-						FirstName = loginInfo.ExternalIdentity.Name.Substring(0, loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
-						LastName = loginInfo.ExternalIdentity.Name.Substring(loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim()
-					});
-			}
-	
 			//var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
 			//if (loginInfo == null)
 			//{
@@ -384,36 +355,65 @@ namespace PresentationBuilder.Controllers
 			//		return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
 			//	case SignInStatus.Failure:
 			//	default:
-			//		var context = new PresentationBuilderEntities();
-
-			//		var aspNetUser = (from u in context.AspNetUsers where u.UserName == loginInfo.Email select u).FirstOrDefault();
-
-			//		// If the user does not have an account, then prompt the user to create an account, otherwise posts back immediately to sync the account
+			//		// If the user does not have an account, then prompt the user to create an account
 			//		ViewBag.ReturnUrl = returnUrl;
 			//		ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-
-			//		if (aspNetUser == null)
+			//		return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
 			//		{
-			//			return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
-			//			{
-			//				Email = loginInfo.Email,
-			//				FirstName = loginInfo.ExternalIdentity.Name.Substring(0, loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
-			//				LastName = loginInfo.ExternalIdentity.Name.Substring(loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
-			//				Registered = false
-			//			});
-			//		}
-			//		else
-			//		{
-			//			return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
-			//			{
-			//				Email = loginInfo.Email,
-			//				FirstName = aspNetUser.FirstName,
-			//				LastName = aspNetUser.LastName,
-			//				Registered = true
-			//			});
-			//		}
-
+			//			Email = loginInfo.Email,
+			//			FirstName = loginInfo.ExternalIdentity.Name.Substring(0, loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
+			//			LastName = loginInfo.ExternalIdentity.Name.Substring(loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim()
+			//		});
 			//}
+
+			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+			if (loginInfo == null)
+			{
+				return RedirectToAction("Login");
+			}
+
+			// Sign in the user with this external login provider if the user already has a login
+			var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+			switch (result)
+			{
+				case SignInStatus.Success:
+					return RedirectToLocal(returnUrl);
+				case SignInStatus.LockedOut:
+					return View("Lockout");
+				case SignInStatus.RequiresVerification:
+					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+				case SignInStatus.Failure:
+				default:
+					var context = new PresentationBuilderEntities();
+
+					var aspNetUser = (from u in context.AspNetUsers where u.UserName == loginInfo.Email select u).FirstOrDefault();
+
+					// If the user does not have an account, then prompt the user to create an account, otherwise posts back immediately to sync the account
+					ViewBag.ReturnUrl = returnUrl;
+					ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+
+					if (aspNetUser == null)
+					{
+						return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
+						{
+							Email = loginInfo.Email,
+							FirstName = loginInfo.ExternalIdentity.Name.Substring(0, loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
+							LastName = loginInfo.ExternalIdentity.Name.Substring(loginInfo.ExternalIdentity.Name.LastIndexOf(" ")).Trim(),
+							Registered = false
+						});
+					}
+					else
+					{
+						return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
+						{
+							Email = loginInfo.Email,
+							FirstName = aspNetUser.FirstName,
+							LastName = aspNetUser.LastName,
+							Registered = true
+						});
+					}
+
+			}
 		}
 
 		//
