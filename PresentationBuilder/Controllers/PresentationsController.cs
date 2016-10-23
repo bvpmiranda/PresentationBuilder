@@ -356,7 +356,14 @@ namespace PresentationBuilder.Controllers
 
 				presentationPage.SoundPath = Request.Files[0].FileName;
 
-				Request.Files[0].SaveAs(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), Request.Files[0].FileName));
+				string path = System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), Request.Files[0].FileName);
+
+				Request.Files[0].SaveAs(path);
+
+				TagLib.File f = TagLib.File.Create(path, TagLib.ReadStyle.Average );
+				var duration = (int)f.Properties.Duration.TotalSeconds;
+
+				presentationPage.SoundLength = duration;
 
 				context.SaveChanges();
 
