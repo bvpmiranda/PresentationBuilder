@@ -95,6 +95,12 @@
 
 <form action="~/Presentations/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
     <div class="fallback">
+        <div class="dz-message" data-dz-message>
+            <img src="~/Images/pdf.png" />
+            <span class="title">Import a .pdf file</span>
+            <br />
+            <span class="subTitle">(up to 20 pages)</span>
+        </div>
         <input name="file" type="file" multiple />
         <input type="submit" value="Upload" />
     </div>
@@ -103,8 +109,7 @@
 @section scripts{
 
     <script type="text/javascript">
-        $("#dropzoneDiv").on('click', function (e)
-        {
+        $("#dropzoneDiv").on('click', function (e) {
             $("#dropzoneForm").click();
         });
 
@@ -114,18 +119,14 @@
             acceptedFiles: ".pdf",
             maxFiles: 1,
             previewTemplate: $("#dropzoneTemplate").html(),
-            init: function ()
-            {
-                this.on("maxfilesexceeded", function (data)
-                {
+            init: function () {
+                this.on("maxfilesexceeded", function (data) {
                     var res = eval('(' + data.xhr.responseText + ')');
 
                 });
-                this.on("complete", function (data)
-                {
+                this.on("complete", function (data) {
 
-                    if (data.xhr.responseText != undefined)
-                    {
+                    if (data.xhr.responseText != undefined) {
 
                         var PresentationId = JSON.parse(data.xhr.responseText)["Message"];
                         //  result = jQuery.parseJSON(result);
