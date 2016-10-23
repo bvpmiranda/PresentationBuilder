@@ -361,5 +361,40 @@ namespace PresentationBuilder.Controllers
 
 			return Json(uploadReturn, "text/plain");
 		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult AddPage(int id)
+		{
+			var uploadReturn = new UploadReturn();
+
+			try
+			{
+				var context = new PresentationBuilderEntities();
+
+				var presentationPage = (from pg in context.PresentationPages where pg.PresentationId == id orderby pg.Order descending select pg).FirstOrDefault();
+
+				var newPresentationPage = new PresentationPage { PresentationId = id,
+																 ImagePath = Request.Files[0].FileName,
+																 Order = (presentationPage == null ? Convert.ToByte(1) : ++presentationPage.Order),
+																 Hidden=false
+				};
+
+				context.PresentationPages.Add(newPresentationPage);
+
+				Request.Files[0].SaveAs(System.IO.Path.Combine(PathHelper.path(), id.ToString(), Request.Files[0].FileName));
+
+				context.SaveChanges();
+
+				return Json(new { Message = id });
+			}
+			catch (Exception ex)
+			{
+				uploadReturn.uploadStatus = uploadStatus.Error;
+				uploadReturn.message = ex.Message;
+			}
+
+			return Json(uploadReturn, "text/plain");
+		}
 	}
 }
