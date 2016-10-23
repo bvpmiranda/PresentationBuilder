@@ -257,8 +257,7 @@ namespace PresentationBuilder.Controllers
 			return Json(uploadReturn, "text/plain");
 		}
 
-        [Authorize]
-        
+        [Authorize]        
 		public ActionResult DuplicatePresentation(int id)
 		{
 			var context = new PresentationBuilderEntities();
