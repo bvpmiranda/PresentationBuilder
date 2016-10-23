@@ -1,27 +1,55 @@
 ﻿using PresentationBuilder.Helpers;
 using PresentationBuilder.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace PresentationBuilder.Controllers
 {
-	public class PresentationsController : Controller
+    public class PresentationsController : Controller
 	{
-		[Authorize]
+        private ApplicationUserManager _userManager;
+
+        public PresentationsController()
+        {
+        }
+
+        public PresentationsController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        [Authorize]
 		public ActionResult Index()
 		{
 			var context = new PresentationBuilderEntities();
 
-			var presentations = (from p in context.Presentations.Include("AspNetUser")
-								 where p.AspNetUser.UserName == User.Identity.Name
-								 orderby p.Name
-								 select p).ToList();
+            var viewModel = new PresentationViewModel();
 
-			return View(presentations);
+            viewModel.Presentations = (from p in context.Presentations.Include("AspNetUser")
+								       where p.AspNetUser.UserName == User.Identity.Name
+								       orderby p.Name
+								       select p).ToList();
+
+            viewModel.UserInfo = UserManager.FindById(User.Identity.GetUserId()) ?? new ApplicationUser { PasswordHash = null };
+
+            return View(viewModel);
 		}
 
 		[Authorize]
