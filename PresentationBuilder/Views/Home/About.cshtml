@@ -1,5 +1,5 @@
 ﻿@using PresentationBuilder.Models
-@model LoginViewModel
+@model AboutViewModel
 
 @{
     Layout = "~/Views/Shared/Home.cshtml";
@@ -16,6 +16,36 @@
         .imgDev:hover {
             -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
             filter: grayscale(0%);
+        }
+
+    .linkedIn {
+        color: white;
+        text-decoration: none;
+        font-weight: normal;
+    }
+
+        .linkedIn:link {
+            color: white;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .linkedIn:active {
+            color: white;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .linkedIn:visited {
+            color: white;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .linkedIn:hover {
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
         }
 </style>
 
@@ -39,8 +69,16 @@
 <div class="row signButtons">
     <div class="col-sm-4 col-md-6 col-lg-8"></div>
     <div class="col-sm-8 col-md-6 col-lg-4">
-        @Html.ActionLink("Sign In", "Login", "Account", null, new { @class = "btn btn-sign" })
-        @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "btn btn-sign" })
+        @{ if (Model != null && Model.UserInfo != null && Model.UserInfo.Id != null)
+            {
+                @Html.ActionLink("My Presentations", "Index", "Presentations", null, new { @class = "btn btn-sign" })
+            }
+            else
+            {
+                @Html.ActionLink("Sign In", "Login", "Account", null, new { @class = "btn btn-sign" })
+                @Html.ActionLink("Sign Up", "Register", "Account", null, new { @class = "btn btn-sign" })
+            }
+        }
     </div>
 </div>
 <div class="row txt">
@@ -50,33 +88,44 @@
 </div>
 <br />
 
-<p class="text-justify">
-    *** MUDAR ***
-    We are four guys with a common goal, move to Canada and looking for new challenges. We are friends, partners and co workers looking for new challenges in Canada
-</p>
+<div class="row">
+    You're seeing these four guys at the bottom? Probably you do not know them, but these four guys are passionate about what they do. Design, code, web applications or desktop, android or iOS does not matter, they do. And they do with love, dedication and enthusiasm. Did I mention that they love what they do?
+    These four boys are highly qualified, have years of experience in their fields and accept any challenge and will overcome it with a joyful and creative way.
+    <br /><br />
+    But who are these four men? These four boys are we, the creators of this amazing tool made with much love and fun in just 48 hours.
+    <br /><br />
+    We look forward to meet you at our next job interview. If I were you I would not waste time, other companies can be contacting us at that moment.
+    <br /><br />
+    Click on our names to see our profile on Linkedin and contact us. We are eager to accept their challenges there in Canada.
+    <br /><br />
+</div>
 
 <div class="row devs">
     <div class="col-sm-3 col-md-3 col-lg-3 text-center">
-        <img class="imgDev" src="~/Images/devHud.png" />
-        Hud Duque
+        <a class="linkedIn" target="_blank" href="https://br.linkedin.com/in/hud-duque-78837591">
+            <img class="imgDev" src="~/Images/devHud.png" />Hud Duque
+        </a>
         <br />
         <span class="det">UI Designer</span>
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3 text-center">
-        <img class="imgDev" src="~/Images/devBruno.png" />
-        Bruno Miranda
+        <a class="linkedIn" target="_blank" href="https://www.linkedin.com/in/bvpmiranda">
+            <img class="imgDev" src="~/Images/devBruno.png" />Bruno Miranda
+        </a>
         <br />
         <span class="det">Full Stack Developer and UX Designer</span>
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3 text-center">
-        <img class="imgDev" src="~/Images/devRafa.png" />
-        Rafael Passarela
+        <a class="linkedIn" target="_blank" href="https://ca.linkedin.com/in/rafaelpassarela">
+            <img class="imgDev" src="~/Images/devRafa.png" />Rafael Passarela
+        </a>
         <br />
         <span class="det">Full Stack Developer and Xamarin/Android</span>
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3 text-center">
-        <img class="imgDev" src="~/Images/devSamir.png" />
-        Samir Oliveira
+        <a class="linkedIn" target="_blank" href="https://www.linkedin.com/in/samir-miranda">
+            <img class="imgDev" src="~/Images/devSamir.png" />Samir Oliveira
+        </a>
         <br />
         <span class="det">Full Stack Developer and Xamarin/iOS</span>
     </div>
