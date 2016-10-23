@@ -58,7 +58,7 @@ namespace PresentationBuilder.APIs
 
 				System.IO.File.Delete(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), presentationPage.ImagePath));
 
-				if (presentationPage.SoundPath != null & presentationPage.SoundPath.Trim().Length > 0)
+				if (presentationPage.SoundPath != null && presentationPage.SoundPath.Trim().Length > 0)
 				{
 					System.IO.File.Delete(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), presentationPage.SoundPath));
 				}
