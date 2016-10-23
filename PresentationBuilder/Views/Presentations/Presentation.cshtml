@@ -4,17 +4,15 @@
 
     ViewBag.Title = "Presentation Editor - " + Model.PresentationId;
 }
-
 @section topButtons
 {
     <a href="@Url.Action("Index", "Presentations")" class="topButton"><div class="text">Library</div></a>
     <div class="topButton selected"><div class="text">Create New</div></div>
 }
-
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
-
 <style type="text/css">
-    ul.thumbnails {
+    ul.thumbnails
+    {
         overflow: auto;
         list-style-image: none;
         list-style-position: outside;
@@ -23,7 +21,8 @@
         margin: 0px;
     }
 
-        ul.thumbnails ul {
+        ul.thumbnails ul
+        {
             overflow: auto;
             list-style-image: none;
             list-style-position: outside;
@@ -32,16 +31,19 @@
             margin: 0px;
         }
 
-        ul.thumbnails li.group_title {
+        ul.thumbnails li.group_title
+        {
             float: none;
         }
 
-        ul.thumbnails id {
+        ul.thumbnails id
+        {
             margin: 0px 12px 12px 0px;
             float: left;
         }
 
-        ul.thumbnails li .thumbnail {
+        ul.thumbnails li .thumbnail
+        {
             padding: 6px;
             border: 1px solid #dddddd;
             -webkit-user-select: none;
@@ -49,15 +51,16 @@
             -ms-user-select: none;
         }
 
-            ul.thumbnails li .thumbnail img {
+            ul.thumbnails li .thumbnail img
+            {
                 -webkit-user-drag: none;
             }
 
-            ul.thumbnails li .thumbnail.selected {
+            ul.thumbnails li .thumbnail.selected
+            {
                 background: #0088cc;
             }
 </style>
-
 @using (Html.BeginForm("AddPresentation", "Presentations", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="form-group">
@@ -83,49 +86,45 @@
         </div>
     </div>
 
-<h2>PAGES</h2>
-<div class="row">
-    <ul id="sortable" class="thumbnails" style="padding: 0px 15px;">
-        @foreach (var presentation in @Model.PresentationPages.OrderBy(o => o.Order))
-        {
-            <id id="@(String.Format("presentationorder_{0}_{1}", presentation.PresentationPageId, presentation.Order))">
-                <li>
-                    <div class="presentationPageBox">
-                        <div class="pageImage">
-                            <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" style="cursor: move; height: inherit;" />
+    <h2>PAGES</h2>
+    <div class="row">
+        <ul id="sortable" class="thumbnails" style="padding: 0px 15px;">
+            @foreach (var presentation in @Model.PresentationPages.OrderBy(o => o.Order))
+            {
+                <id id="@(String.Format("presentationorder_{0}_{1}", presentation.PresentationPageId, presentation.Order))">
+                    <li>
+                        <div class="presentationPageBox">
+                            <div class="pageImage">
+                                <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" style="cursor: move; height: inherit;" />
+                            </div>
+                            <div class="buttons">
+                                @{
+                if (presentation.SoundPath == null || presentation.SoundPath.Trim().Length == 0)
+                {
+                    <div class="button addAudio"></div>
+                }
+                else
+                {
+                    <div class="button audioPlayer" onclick="$('#sound@(presentation.PresentationPageId.ToString())')[0].play();">
+                        <div class="length">
+                            @presentation.SoundLength.Value.ToString("n0")  @(presentation.SoundLength.Value == 1 ? "second" : "seconds")
                         </div>
-                        <div class="buttons">
-                            @{
-            if (presentation.SoundPath == null || presentation.SoundPath.Trim().Length == 0)
-            {
-                <div class="button addAudio"></div>
-            }
-            else
-            {
-                <div class="button audioPlayer" onclick="$('#sound@(presentation.PresentationPageId.ToString())')[0].play();">
-                    <div class="length">
-                        @presentation.SoundLength.Value.ToString("n0")  @(presentation.SoundLength.Value == 1 ? "second" : "seconds")
-                    </div>
-                    <div class="audioButtons">
-                        <div class="button changeAudio"></div>
-                        <div class="button deleteAudio"></div>
-                    </div>
-                </div>
-
-    <audio id="sound@(presentation.PresentationPageId.ToString())">
-        <source src="~/sound.ashx?Id=@presentation.PresentationPageId" type="audio" />
-    </audio>
-            }
-}
-                            <div class="button changePage"></div>
-                            <div class="button deletePage"></div>
+                        <div class="audioButtons">
+                            <div class="button changeAudio"></div>
+                            <div class="button deleteAudio" onclick="Presentations.deleteAudio(@presentation.PresentationPageId);"></div>
                         </div>
                     </div>
-                </li>
-            </id>
-        }
-    </ul>
-</div>
+                }
+                                }
+                                <div class="button changePage"></div>
+                                <div class="button deletePage" onclick="Presentations.deletePage(@presentation.PresentationPageId);"></div>
+                            </div>
+                        </div>
+                    </li>
+                </id>
+            }
+        </ul>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -134,10 +133,8 @@
     </div>
 
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
     <script type="text/javascript">
         $('document').ready(function ()
         {
@@ -164,7 +161,8 @@
             });
         });
 
-        function ChangeOrder(presentationPageIdValue, newOrderValue) {
+        function ChangeOrder(presentationPageIdValue, newOrderValue)
+        {
             //var data = 'presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue; // { presentationPageId: presentationPageIdValue, newOrder: newOrderValue };
 
             //var newbaseUrl + 'Presentations/ChangeOrder',
@@ -176,7 +174,8 @@
                 url: targeturl,
                 contentType: false,
                 processData: false,
-                success: function (result) {
+                success: function (result)
+                {
                     //result = jQuery.parseJSON(result);
 
                     //if (result.uploadStatus === uploadStatus.success) {
@@ -200,4 +199,3 @@
 
     </script>
 }
-

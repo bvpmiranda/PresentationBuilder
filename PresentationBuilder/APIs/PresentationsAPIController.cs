@@ -39,7 +39,64 @@ namespace PresentationBuilder.APIs
 				jsonReturn.isValid = false;
 				jsonReturn.messages.Add(ex.Message);
 			}
-			
+
+			return jsonReturn;
+		}
+
+		[HttpPost]
+		public Models.JsonReturn deletePage(int id)
+		{
+			var jsonReturn = new Models.JsonReturn();
+
+			try
+			{
+				var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+				var presentationPage = (from p in context.PresentationPages where p.PresentationPageId == id select p).First();
+
+				context.PresentationPages.Remove(presentationPage);
+
+				System.IO.File.Delete(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), presentationPage.ImagePath));
+
+				if (presentationPage.SoundPath != null & presentationPage.SoundPath.Trim().Length > 0)
+				{
+					System.IO.File.Delete(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), presentationPage.SoundPath));
+				}
+
+				context.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				jsonReturn.isValid = false;
+				jsonReturn.messages.Add(ex.Message);
+			}
+
+			return jsonReturn;
+		}
+
+		[HttpPost]
+		public Models.JsonReturn deleteAudio(int id)
+		{
+			var jsonReturn = new Models.JsonReturn();
+
+			try
+			{
+				var context = new PresentationBuilder.Models.PresentationBuilderEntities();
+
+				var presentationPage = (from p in context.PresentationPages where p.PresentationPageId == id select p).First();
+
+				System.IO.File.Delete(System.IO.Path.Combine(PathHelper.path(), presentationPage.PresentationId.ToString(), presentationPage.SoundPath));
+
+				presentationPage.SoundPath = null;
+
+				context.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				jsonReturn.isValid = false;
+				jsonReturn.messages.Add(ex.Message);
+			}
+
 			return jsonReturn;
 		}
 

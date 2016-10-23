@@ -230,6 +230,7 @@ input[type=email], input[type=password], input[type=text]
 		.presentationPageBox .buttons .audioPlayer
 		{
 			background-image: url(../Images/audioPlayer.png);
+			cursor: default;
 			float: left;
 			height: 39px;
 			width: 287px;
