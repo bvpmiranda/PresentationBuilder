@@ -1,0 +1,80 @@
+﻿@model PresentationBuilder.Models.Presentation
+
+@{
+    Layout = "~/Views/Shared/Internal.cshtml";
+
+    ViewBag.Title = "Preview";
+}
+
+<style type="text/css">
+    .center-block {
+        display: block !important;
+        margin: 0 auto !important;
+    }
+</style>
+
+@section topButtons
+{
+    <div class="topButton selected"><div class="text">Library</div></div>
+    <a href="javascript:document.getElementById('dropzoneForm').click()" class="topButton"><div class="text">Create New</div></a>
+}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+
+        <div class="titleInternal">@Model.Name</div>
+        <br />        
+        <div class="description">@Model.Description</div>
+        <br />
+        <br />
+    </div>
+</div>
+
+@{
+    foreach (var presentationPage in @Model.PresentationPages.OrderBy(o => o.Order))
+    {
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+                <img class="img-responsive center-block" src="~/image.ashx?Id=@presentationPage.PresentationPageId" alt="@presentationPage.ImagePath" />
+
+                @if (presentationPage.SoundPath != null)
+                {
+                    <br />
+                    <audio id="player2" src="~/sound.ashx?Id=@presentationPage.PresentationPageId" preload="true" type="audio/mp3" controls="controls">
+                        <br />
+                        <p>Your browser leaves much to be desired.</p>
+                    </audio>
+                }
+
+            </div>
+        </div>
+        <br />
+        <br />
+
+    }
+}
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/audio/js/me-namespace.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/me-utility.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/me-i18n.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/me-i18n-locale-en.js"></script>
+    <script src="~/Scripts/audio/js/me-plugindetector.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/me-featuredetection.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/me-mediaelements.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/me-shim.js" type="text/javascript"></script>
+
+    <script src="~/Scripts/audio/js/mep-library.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-player.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-playpause.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-progress.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-time.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-speed.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-tracks.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-volume.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-stop.js" type="text/javascript"></script>
+    <script src="~/Scripts/audio/js/mep-feature-fullscreen.js" type="text/javascript"></script>
+}

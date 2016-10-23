@@ -249,6 +249,8 @@
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\basic.css" />
     <Content Include="Content\basic.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dropzone.css" />
@@ -317,6 +319,75 @@
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\audio\css\background.png" />
+    <Content Include="Scripts\audio\css\bigplay.fw.png" />
+    <Content Include="Scripts\audio\css\bigplay.png" />
+    <Content Include="Scripts\audio\css\bigplay.svg" />
+    <Content Include="Scripts\audio\css\controls-ted.png" />
+    <Content Include="Scripts\audio\css\controls-wmp-bg.png" />
+    <Content Include="Scripts\audio\css\controls-wmp.png" />
+    <Content Include="Scripts\audio\css\controls.fw.png" />
+    <Content Include="Scripts\audio\css\controls.png" />
+    <Content Include="Scripts\audio\css\controls.svg" />
+    <Content Include="Scripts\audio\css\jumpforward.png" />
+    <Content Include="Scripts\audio\css\loading.gif" />
+    <Content Include="Scripts\audio\css\mediaelementplayer.css" />
+    <Content Include="Scripts\audio\css\mejs-skins.css" />
+    <Content Include="Scripts\audio\css\skipback.png" />
+    <Content Include="Scripts\audio\js\jeesh-extras.js" />
+    <Content Include="Scripts\audio\js\jeesh.js" />
+    <Content Include="Scripts\audio\js\me-featuredetection.js" />
+    <Content Include="Scripts\audio\js\me-header.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-cs.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-de.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-en.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-es.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-fr.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-hu.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-it.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-ja.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-ko.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-nl.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-pl.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-pt-br.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-pt.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-ro.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-ru.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-sk.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-zh-cn.js" />
+    <Content Include="Scripts\audio\js\me-i18n-locale-zh.js" />
+    <Content Include="Scripts\audio\js\me-i18n.js" />
+    <Content Include="Scripts\audio\js\me-mediaelements.js" />
+    <Content Include="Scripts\audio\js\me-namespace.js" />
+    <Content Include="Scripts\audio\js\me-plugindetector.js" />
+    <Content Include="Scripts\audio\js\me-shim.js" />
+    <Content Include="Scripts\audio\js\me-utility.js" />
+    <Content Include="Scripts\audio\js\mep-feature-ads-vast.js" />
+    <Content Include="Scripts\audio\js\mep-feature-ads.js" />
+    <Content Include="Scripts\audio\js\mep-feature-backlight.js" />
+    <Content Include="Scripts\audio\js\mep-feature-contextmenu.js" />
+    <Content Include="Scripts\audio\js\mep-feature-endedhtml.js" />
+    <Content Include="Scripts\audio\js\mep-feature-fullscreen.js" />
+    <Content Include="Scripts\audio\js\mep-feature-googleanalytics.js" />
+    <Content Include="Scripts\audio\js\mep-feature-jumpforward.js" />
+    <Content Include="Scripts\audio\js\mep-feature-loop.js" />
+    <Content Include="Scripts\audio\js\mep-feature-markers.js" />
+    <Content Include="Scripts\audio\js\mep-feature-playlist.js" />
+    <Content Include="Scripts\audio\js\mep-feature-playpause.js" />
+    <Content Include="Scripts\audio\js\mep-feature-postroll.js" />
+    <Content Include="Scripts\audio\js\mep-feature-progress.js" />
+    <Content Include="Scripts\audio\js\mep-feature-skipback.js" />
+    <Content Include="Scripts\audio\js\mep-feature-sourcechooser.js" />
+    <Content Include="Scripts\audio\js\mep-feature-speed.js" />
+    <Content Include="Scripts\audio\js\mep-feature-stop.js" />
+    <Content Include="Scripts\audio\js\mep-feature-time.js" />
+    <Content Include="Scripts\audio\js\mep-feature-tracks.js" />
+    <Content Include="Scripts\audio\js\mep-feature-universalgoogleanalytics.js" />
+    <Content Include="Scripts\audio\js\mep-feature-visualcontrols.js" />
+    <Content Include="Scripts\audio\js\mep-feature-volume.js" />
+    <Content Include="Scripts\audio\js\mep-header.js" />
+    <Content Include="Scripts\audio\js\mep-library.js" />
+    <Content Include="Scripts\audio\js\mep-player.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\PresentationBuilderModel.edmx">
@@ -337,6 +408,14 @@
       <LastGenOutput>PresentationBuilderModel.cs</LastGenOutput>
     </Content>
     <Content Include="Content\bootstrap-social.scss" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -771,14 +850,12 @@
     <Content Include="Views\Account - Copy\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account - Copy\SendCode.cshtml" />
     <Content Include="Views\Account - Copy\VerifyCode.cshtml" />
+    <Content Include="Views\Presentations\Preview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

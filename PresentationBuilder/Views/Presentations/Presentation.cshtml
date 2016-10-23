@@ -68,16 +68,12 @@
             @Html.TextAreaFor(m => m.Description, new { @class = "ckeditor", @id = "sampleEditor" })
         </div>
     </div>
-
 }
-
-
-
-
 
 <div class="row">
 
     <ul id="sortable" class="thumbnails">
+
         @foreach (var presentation in @Model.PresentationPages.OrderBy(o => o.Order))
         {
             <id id="@(String.Format("presentationorder_{0}_{1}", presentation.PresentationPageId, presentation.Order))">
@@ -121,6 +117,7 @@
     </div>
 </div>
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
@@ -148,10 +145,6 @@
 
         function ChangeOrder(presentationPageIdValue, newOrderValue)
         {
-            //var data = 'presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue; // { presentationPageId: presentationPageIdValue, newOrder: newOrderValue };
-
-            //var newbaseUrl + 'Presentations/ChangeOrder',
-
             var targeturl = '@Url.Action("ChangeOrder", "Presentations")?presentationPageId=' + presentationPageIdValue  + '&newOrder=' + newOrderValue;
 
             $.ajax({
@@ -160,16 +153,7 @@
                 contentType: false,
                 processData: false,                
                 success: function (result) {
-                    //result = jQuery.parseJSON(result);
-
-                    //if (result.uploadStatus === uploadStatus.success) {
-                    //    //Presentations.fileUpload = Presentations.fileUpload.replaceWith(Presentations.fileUpload.val('').clone(true));
-
-                    //    //Navigation.navigate('Presentations/Presentation/' + result.data.PresentationId, result.data.Name)
-                    //}
-                    //else {
-                    //    alert('Erro: ' + result.message);
-                    //}
+                  
                 },
                 error: function (xhr, status, p3, p4) {
                     var err = "Error " + " " + status + " " + p3 + " " + p4;

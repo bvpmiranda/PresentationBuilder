@@ -59,6 +59,15 @@ namespace PresentationBuilder.Controllers
 
             var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
 
+            return View(presentation);
+        }
+
+        [Authorize]
+        public ActionResult Preview(int id)
+        {
+            var context = new PresentationBuilderEntities();
+
+            var presentation = (from p in context.Presentations.Include("PresentationPages") where p.PresentationId == id select p).First();
 
             return View(presentation);
         }
@@ -151,50 +160,51 @@ namespace PresentationBuilder.Controllers
                         {
                             var fileNameUpload = Path.GetFileName(file.FileName);
 
-                            Presentation presentation = new Presentation
+                        Presentation presentation = new Presentation
+                        {
+                            UserId = UserId,
+                            Date = DateTime.Now,
+                            Name = "New Presentation",
+                            Description = null
+                        };
+
+                        context.Presentations.Add(presentation);
+                        context.SaveChanges();
+
+                        uploadReturn.data = presentation;
+
+                        string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
+
+                        if (!Directory.Exists(pathWork))
+                            Directory.CreateDirectory(pathWork);
+
+                        file.SaveAs(Path.Combine(pathWork, file.FileName));
+
+                        PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
+
+
+                        byte bOrder = 0;
+
+                        foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
+                        {
+
+                            presentation.PresentationPages.Add(new PresentationPage
                             {
-                                UserId = UserId,
-                                Date = DateTime.Now,
-                                Name = "New Presentation",
-                                Description = null
-                            };
-
-                            context.Presentations.Add(presentation);
-                            context.SaveChanges();
-
-                            uploadReturn.data = presentation;
-
-                            string pathWork = Path.Combine(ZipHelper.path(), presentation.PresentationId.ToString());
-
-                            if (!Directory.Exists(pathWork))
-                                Directory.CreateDirectory(pathWork);
-
-                            file.SaveAs(Path.Combine(pathWork, file.FileName));
-
-                            PdfHelper.splitToImages(Path.Combine(pathWork, file.FileName), pathWork);
-
-
-                            byte bOrder = 0;
-
-                            foreach (string filePresentaion in Directory.EnumerateFiles(pathWork, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".jpg")))
-                            {
-                                presentation.PresentationPages.Add(new PresentationPage
-                                {
-                                    Order = bOrder++,
-                                    ImagePath = Path.GetFileName(filePresentaion),
-                                    SoundPath = null,
-                                    SoundLength = null
-                                });
-                            }
-
-                            context.SaveChanges();
-
-                            System.IO.File.Delete(Path.Combine(pathWork, file.FileName));
-
-                            return Json(new { Message = presentation.PresentationId });
+                                Order = bOrder++,
+                                ImagePath = Path.GetFileName(filePresentaion),
+                                SoundPath = null,
+                                SoundLength = null
+                            });
                         }
+
+                        context.SaveChanges();
+
+                        System.IO.File.Delete(Path.Combine(pathWork, file.FileName));
+
+                        return Json(new { Message = presentation.PresentationId });
                     }
                 }
+            }
             }
             catch (Exception ex)
             {

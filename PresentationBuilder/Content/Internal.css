@@ -9,61 +9,54 @@
 	padding: 0px;
 }
 
-.leftColumn
+body
 {
-	background: #1f2f41;
-	min-height: 100%;
-	height: 100%;
-	padding: 0px !important;
+	padding-top: 144px;
+	padding-bottom: 20px;
 }
 
-	.leftColumn .logo
+.navbar
+{
+	box-shadow: 0px 0px 40px !important;
+}
+
+.topButton
+{
+	color: #fff;
+	display: table;
+	height: 124px;
+	float: left;
+	font-size: 30px;
+	padding: 0px 20px;
+	text-align: center;
+}
+
+	.topButton:hover
 	{
-		background: #de7736; /* For browsers that do not support gradients */
-		background: -webkit-linear-gradient(left top, #de663c, #db8937); /* For Safari 5.1 to 6.0 */
-		background: -o-linear-gradient(bottom right, #de663c, #db8937); /* For Opera 11.1 to 12.0 */
-		background: -moz-linear-gradient(bottom right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
-		background: linear-gradient(to bottom right, #de663c, #db8937); /* Standard syntax */
-		height: 320px;
-		width: 100%;
+		background-color: #e0673c;
+		color: #141e28;
+		text-decoration: none;
 	}
 
-		.leftColumn .logo img
-		{
-			height: 300px;
-			margin: 10px 0px;
-		}
-
-	.leftColumn .title
+	.topButton.selected
 	{
-		color: #9f9f9f;
-		height: 46px;
-		font-size: 30px;
+		background-color: #141e28;
+		border-bottom: 3px solid #e0673c;
 	}
 
-	.leftColumn .new
+	.topButton.selected:hover
 	{
-		background-color: #141e29;
-		color: #9f9f9f;
-		height: 46px;
-		font-size: 30px;
+		background-color: #141e28;
+		border-bottom: 3px solid #e0673c;
+	color: #fff;
 	}
 
-	.leftColumn .library
+	.topButton .text
 	{
-		background-color: #141e29;
-		color: #9f9f9f;
-		height: 46px;
-		font-size: 30px;
+		display: table-cell;
+		vertical-align: middle;
 	}
 
-		.leftColumn .library .border
-		{
-			background: #df673b;
-			height: 100%;
-			margin-left: -15px;
-			width: 7px;
-		}
 
 .btn-account
 {
@@ -71,7 +64,7 @@
 	border-color: #15202c;
 	border-radius: 0px;
 	color: #a1a1a1;
-	margin: 0px;
+	margin: 10px 0px 0px 0px;
 }
 
 	.btn-account:hover
@@ -79,12 +72,42 @@
 		color: #fff;
 	}
 
+.logo
+{
+	background: #de7736; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(left top, #de663c, #db8937); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(bottom right, #de663c, #db8937); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(bottom right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to bottom right, #de663c, #db8937); /* Standard syntax */
+	height: 124px;
+	width: 124px;
+}
+
+	.logo img
+	{
+		height: 100px;
+		margin: 12px;
+	}
+
+
 .title
 {
 	border-bottom: 2px solid #df673b;
 	color: #fff;
 	font-size: 34px;
 	text-decoration: none;
+}
+
+.titleInternal
+{	
+	color: #fff;
+	font-size: 34px;
+	text-decoration: none;
+}
+
+.description
+{	
+	color: #fff;
 }
 
 .importBox
@@ -149,19 +172,19 @@
 		padding-right: 12px;
 	}
 
-	.presentationBox .buttons .btn
-	{
-		background-color: #fff;
-		border-color: #df673b;
-		color: #df673b;
-	}
+		.presentationBox .buttons .btn
+		{
+			background-color: #fff;
+			border-color: #df673b;
+			color: #df673b;
+		}
 
-	.presentationBox .buttons .btn-del
-	{
-		background-color: #df673b;
-		border-color: #df673b;
-		color: #fff;
-	}
+		.presentationBox .buttons .btn-del
+		{
+			background-color: #df673b;
+			border-color: #df673b;
+			color: #fff;
+		}
 
 @media (max-width: 768px)
 {
