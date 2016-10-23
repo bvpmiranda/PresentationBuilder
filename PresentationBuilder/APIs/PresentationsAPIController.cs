@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Net;
+using System.IO;
 
 namespace PresentationBuilder.APIs
 {
@@ -30,8 +31,20 @@ namespace PresentationBuilder.APIs
 
 				context.Presentations.Remove(presentation);
 
-				System.IO.Directory.Delete(System.IO.Path.Combine(PathHelper.path(), presentation.PresentationId.ToString()));
+                var presentationPath = Path.Combine(PathHelper.path(), presentation.PresentationId.ToString());
+                
+                DirectoryInfo di = new DirectoryInfo( presentationPath );
 
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+                Directory.Delete(presentationPath);
+                
 				context.SaveChanges();
 			}
 			catch (Exception ex)
