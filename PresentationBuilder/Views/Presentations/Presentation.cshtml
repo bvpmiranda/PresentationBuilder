@@ -78,75 +78,43 @@
 <div class="row">
 
     <ul id="sortable" class="thumbnails">
-        @foreach (var presentation in @Model.PresentationPages)
+        @foreach (var presentation in @Model.PresentationPages.OrderBy(o => o.Order))
         {
-            <id id="output_0_1">
+            <id id="@(String.Format("presentationorder_{0}_{1}", presentation.PresentationPageId, presentation.Order))">
                 <li>
                     <div class="thumbnail selected">
-                        @presentation.PresentationPageId
-                        <img class="img-responsive" src="http://placehold.it/400x300" width="220" height="52">
-                    </div>
-                </li>
-            </id>
-            @*<id id="output_3_4">
-                    <li>
-                        <div class="thumbnail">
-
-                            <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" />
-
+                        
+                        <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" style="cursor: move;" width="300" />
+                       
+                        <div class="buttons">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <a>@Html.ActionLink("Log in", "Add Audio", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</a>
+                                <div class="col-sm-3">
+                                    <a href="@Url.Action("Presentation", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">Edit</a>
                                 </div>
-                                <div class="col-md-4">
-                                    <a>@Html.ActionLink("Log in", "Add Audio", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</a>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-sm" onclick="Presentations.download( @presentation.PresentationId); return false;">
+                                        <img src="~/Images/download.png" height="17" />
+                                    </button>
                                 </div>
-                                <div class="col-md-4">
-                                    <a>@Html.ActionLink("Log in", "Add Audio", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</a>
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <a href="@Url.Action("Duplicate", "Presentations", new { id = @presentation.PresentationId })" class="btn btn-sm">
+                                        <img src="~/Images/duplicate.png" height="17" />
+                                    </a>
+                                </div>
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <button type="button" class="btn btn-sm btn-del" onclick="Presentations.delete( @presentation.PresentationId); return false;">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </id>*@
+                    </div>
+                </li>
+            </id>    
         }
     </ul>
-    @*@foreach (var presentation in @Model.PresentationPages)
-        {
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img src="~/image.ashx?Id=@presentation.PresentationPageId" alt="@presentation.ImagePath" />
-
-                </a>
-                <div class="row">
-                    <div class="col-md-4">
-                        <a>@Html.ActionLink("Log in", "Add Audio", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</a>
-                    </div>
-                    <div class="col-md-4">
-                        <a>@Html.ActionLink("Log in", "Add Audio", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</a>
-                    </div>
-                    <div class="col-md-4">
-                        <a>@Html.ActionLink("Log in", "Add Audio", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</a>
-                    </div>
-                </div>
-            </div>
-        }*@
-
-    
 </div>
 
-@*<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-    <div class="jumbotron">
-        <form action="~/Presentations/SaveUploadedFileImage" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-            <div class="dz-message" data-dz-message>
-                <span>Upload a new image</span>
-            </div>
-            <div class="fallback">
-                <input name="file" type="file" multiple />
-                <input type="submit" value="Upload" />
-            </div>
-        </form>
-    </div>
-</div>*@
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
         <input type="submit" class="btn btn-default" value="Submit" />
@@ -162,19 +130,56 @@
                 revert: true,
                 stop: function (evt, ui) {
 
+                    var newOrder = 1;
+
                     $("id").each(function () {
 
                         var valueSplit = $(this).context.id.split("_");
 
                         if (valueSplit.length == 3) {
                             var idOrder = valueSplit[1];
-                            var order = valueSplit[2];
+                            ChangeOrder(idOrder, newOrder++);
                         }
-
                     });
                 }
             });
         });
+
+
+        function ChangeOrder(presentationPageIdValue, newOrderValue)
+        {
+            //var data = 'presentationPageId=' + presentationPageIdValue + '&newOrder=' + newOrderValue; // { presentationPageId: presentationPageIdValue, newOrder: newOrderValue };
+
+            //var newbaseUrl + 'Presentations/ChangeOrder',
+
+            var targeturl = '@Url.Action("ChangeOrder", "Presentations")?presentationPageId=' + presentationPageIdValue  + '&newOrder=' + newOrderValue;
+
+            $.ajax({
+                type: "POST",
+                url: targeturl,
+                contentType: false,
+                processData: false,                
+                success: function (result) {
+                    //result = jQuery.parseJSON(result);
+
+                    //if (result.uploadStatus === uploadStatus.success) {
+                    //    //Presentations.fileUpload = Presentations.fileUpload.replaceWith(Presentations.fileUpload.val('').clone(true));
+
+                    //    //Navigation.navigate('Presentations/Presentation/' + result.data.PresentationId, result.data.Name)
+                    //}
+                    //else {
+                    //    alert('Erro: ' + result.message);
+                    //}
+                },
+                error: function (xhr, status, p3, p4) {
+                    var err = "Error " + " " + status + " " + p3 + " " + p4;
+                    if (xhr.responseText && xhr.responseText[0] == "{")
+                        err = JSON.parse(xhr.responseText).Message;
+                    console.log(err);
+                }
+            });
+        }
+
     </script>
 }
 

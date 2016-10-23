@@ -38,7 +38,7 @@ namespace PresentationBuilder
 					  "~/Scripts/scripts.js",
 					  "~/Scripts/presentation.js",
                       "~/Scripts/pdf.js",
-                        "~/Scripts/dropzone/dropzone.js"));
+                      "~/Scripts/dropzone/dropzone.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

@@ -32,7 +32,7 @@ namespace PresentationBuilder.Helpers
         /// <returns></returns>
         public static void splitToImages(string path, string outputPath)
         {
-            splitToImages(path, outputPath, "OUTPUT%d.jpg", 3);
+            splitToImages(path, outputPath, "IMG_OUTPUT%d.jpg", 20);
         }
 
 
@@ -44,7 +44,7 @@ namespace PresentationBuilder.Helpers
         /// <param name="filename">File pattern name OUTPUT{0}.jpg</param>
         /// <param name="multipleFilePageCount">Total Page to export to image</param>
         /// <returns></returns>
-        public static void splitToImages(string path, string outputPath, string filename = "OUTPUT%d.jpg", int multipleFilePageCount = 100)
+        public static void splitToImages(string path, string outputPath, string filename = "IMG_OUTPUT%d.jpg", int multipleFilePageCount = 100)
         {
             try
             {

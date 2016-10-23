@@ -1,15 +1,24 @@
-﻿@model List<PresentationBuilder.Models.Presentation>
+﻿@model PresentationBuilder.Models.PresentationViewModel
 @{
     Layout = "~/Views/Shared/Internal.cshtml";
 
-    ViewBag.Title = "Presentations";
+    ViewBag.Title = "Presentations Library";
 }
 
 <div class="row">
 
     <div class="col-sm-1 col-md-3 col-lg-5"></div>
     <div class="col-sm-4 col-md-3 col-lg-2">
-        @Html.ActionLink("Change Password", "ChangePassword", "Manage", null, new { @class = "btn btn-block btn-account" })
+        @if (Model.UserInfo != null && Model.UserInfo.PasswordHash != null)
+        {
+            // @Html.ActionLink("Change your password", "ChangePassword")
+            @Html.ActionLink("Change Password", "ChangePassword", "Manage", null, new { @class = "btn btn-block btn-account" })
+        }
+        else
+        {
+            //@Html.ActionLink("Create", "SetPassword")
+            @Html.ActionLink("Create Password", "SetPassword", "Manage", null, new { @class = "btn btn-block btn-account" })
+        }
     </div>
     <div class="col-sm-5 col-md-4 col-lg-3">
         @Html.ActionLink("Manage External Logins", "ManageLogins", "Manage", null, new { @class = "btn btn-block btn-account" })
@@ -53,7 +62,7 @@
     <div class="col-sm-2 col-md-1 col-lg-1"></div>
 
     @{
-        foreach (var presentation in Model)
+        foreach (var presentation in Model.Presentations)
         {
             <div class="col-sm-4 col-md-3 col-lg-3">
                 <div class="presentationBox">
@@ -94,13 +103,7 @@
 </div>
 
 <form action="~/Presentations/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-    <div class="fallback">
-        <div class="dz-message" data-dz-message>
-            <img src="~/Images/pdf.png" />
-            <span class="title">Import a .pdf file</span>
-            <br />
-            <span class="subTitle">(up to 20 pages)</span>
-        </div>
+    <div class="fallback">       
         <input name="file" type="file" multiple />
         <input type="submit" value="Upload" />
     </div>
@@ -109,16 +112,16 @@
 @section scripts{
 
     <script type="text/javascript">
-        $("#dropzoneDiv").on('click', function (e) {
-            $("#dropzoneForm").click();
-        });
+        //$("#dropzoneDiv").on('click', function (e) {
+        //    $("#dropzoneForm").click();
+        //});
 
         //File Upload response from the server
         Dropzone.options.dropzoneForm = {
             uploadMultiple: false,
             acceptedFiles: ".pdf",
             maxFiles: 1,
-            previewTemplate: $("#dropzoneTemplate").html(),
+            //previewTemplate: $("#dropzoneTemplate").html(),
             init: function () {
                 this.on("maxfilesexceeded", function (data) {
                     var res = eval('(' + data.xhr.responseText + ')');

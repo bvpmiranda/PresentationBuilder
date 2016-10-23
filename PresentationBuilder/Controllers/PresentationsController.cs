@@ -1,27 +1,55 @@
 ﻿using PresentationBuilder.Helpers;
 using PresentationBuilder.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace PresentationBuilder.Controllers
 {
     public class PresentationsController : Controller
     {
+        private ApplicationUserManager _userManager;
+
+        public PresentationsController()
+        {
+        }
+
+        public PresentationsController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         [Authorize]
         public ActionResult Index()
         {
             var context = new PresentationBuilderEntities();
 
-            var presentations = (from p in context.Presentations.Include("AspNetUser")
-                                 where p.AspNetUser.UserName == User.Identity.Name
-                                 orderby p.Name
-                                 select p).ToList();
+            var viewModel = new PresentationViewModel();
 
-            return View(presentations);
+            viewModel.Presentations = (from p in context.Presentations.Include("AspNetUser")
+                                       where p.AspNetUser.UserName == User.Identity.Name
+                                       orderby p.Name
+                                       select p).ToList();
+
+            viewModel.UserInfo = UserManager.FindById(User.Identity.GetUserId()) ?? new ApplicationUser { PasswordHash = null };
+
+            return View(viewModel);
         }
 
         [Authorize]
@@ -128,6 +156,8 @@ namespace PresentationBuilder.Controllers
 
                         context.SaveChanges();
 
+                        System.IO.File.Delete(Path.Combine(pathWork, file.FileName));
+
                         return Json(new { Message = presentation.PresentationId });
                     }
                 }
@@ -165,12 +195,58 @@ namespace PresentationBuilder.Controllers
 
                 newPresentationPage.PresentationId = newPresentation.PresentationId;
 
+                newPresentationPage.PresentationPageId = 0;
+
                 context.Entry(newPresentationPage).State = System.Data.Entity.EntityState.Unchanged;
 
                 context.PresentationPages.Add(newPresentationPage);
             }
 
             context.SaveChanges();
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangeOrder(string presentationPageId, string newOrder)
+        {
+
+            var uploadReturn = new UploadReturn();
+
+
+            try
+            {
+
+                if (string.IsNullOrEmpty(presentationPageId))
+                {
+                    uploadReturn.uploadStatus = uploadStatus.Error;
+                    uploadReturn.message = "presentationPageId is null";
+                }
+                else
+                {
+                    int intPresentationPageId = Convert.ToInt32(presentationPageId);
+
+                    var context = new PresentationBuilderEntities();
+
+                    var presentationPage = (from p in context.PresentationPages where p.PresentationPageId == intPresentationPageId select p).First();
+
+                    presentationPage.Order = Convert.ToByte(newOrder);
+
+                    context.SaveChanges();
+
+                    return Json(new { Message = "Order Changed" });
+                }
+
+             
+            }
+            catch (Exception ex)
+            {
+                uploadReturn.uploadStatus = uploadStatus.Error;
+                uploadReturn.message = ex.Message;
+            }
+
+
+            return Json(uploadReturn, "text/plain");
         }
     }
 }
