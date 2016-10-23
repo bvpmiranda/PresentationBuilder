@@ -1,8 +1,46 @@
 ﻿@{
+    Layout = "~/Views/Shared/Home.cshtml";
+
     ViewBag.Title = "Login Failure";
 }
 
+@section leftPane
+{
+    <div class="row signUp">
+        <div class="col-sm-12 col-md-12  col-lg-12">
+            <a href="@Url.Action("About", "Home")"><img src="~/Images/aboutUs.png" class="about" /></a>
+        </div>
+        <div class="col-sm-12 col-md-12  col-lg-12 text-center">
+            There was an error logging you in.
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <img src="~/Images/presentationBuilder.png" />
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <span class="navigationOn"></span>
+            <span class="navigationOff"></span>
+            <span class="navigationOn"></span>
+        </div>
+    </div>
+}
+
+<div class="row signButtons">
+    <div class="col-sm-4 col-md-6 col-lg-8"></div>
+    <div class="col-sm-8 col-md-6 col-lg-4">
+        @Html.ActionLink("Sign In", "Login", "Account", null, new { @class = "btn btn-sign" })
+        <input type="button" class="btn btn-sign selected" onclick="return false;" value="Sign Up" />
+    </div>
+</div>
+<div class="row txt">
+    <div class="col-xs-12">
+        @Html.ActionLink("Sign In", "Login", "Account", null, new { @class = "txt-Sign" })
+        or
+        <a href="#" class="txt-Sign selected" onclick="return false;">Sign Up</a>
+    </div>
+</div>
+<br />
+
 <hgroup>
-    <h2>@ViewBag.Title.</h2>
     <h3 class="text-danger">Unsuccessful login with service.</h3>
+    @ViewBag.Message
 </hgroup>

@@ -20,6 +20,7 @@
 	background: -o-linear-gradient(right, #de663c, #db8937); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(right, #de663c, #db8937); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(to right, #de663c, #db8937); /* Standard syntax */
+	padding: 30px !important;
 	color: #fff;
 }
 
@@ -36,6 +37,12 @@
 	box-shadow: 0px 0px 40px;
 }
 
+.btn-del
+{
+	background-color: #df673b;
+	border-color: #df673b;
+	color: #fff;
+}
 
 .btn-sign
 {
@@ -53,6 +60,8 @@
 
 	.btn-sign:active
 	{
+		background-color: #ed6e19;
+		border-color: #ed6e19;
 		color: #a1a1a1;
 	}
 
@@ -75,6 +84,18 @@
 	border-color: #1b2a3b;
 	color: #fff;
 }
+
+	.btn-signIn:hover
+	{
+		color: #fff;
+	}
+
+	.btn-signIn:active
+	{
+		background-color: #ed6e19;
+		border-color: #ed6e19;
+		color: #fff;
+	}
 
 .txt
 {
@@ -140,10 +161,10 @@ input[type=email], input[type=password], input[type=text]
 		font-size: 10px;
 	}
 
-	.devs img
-	{
-		height: 60px;
-	}
+		.devs img
+		{
+			height: 60px;
+		}
 
 	.signButtons
 	{
@@ -166,11 +187,11 @@ input[type=email], input[type=password], input[type=text]
 		font-size: 22px;
 	}
 
-	.leftColumn.signUp
-	{
-		font-size: 22px;
-	}
-	
+		.leftColumn.signUp
+		{
+			font-size: 22px;
+		}
+
 		.leftColumn img
 		{
 			height: 59px;
@@ -189,10 +210,10 @@ input[type=email], input[type=password], input[type=text]
 		font-size: 10px;
 	}
 
-	.devs img
-	{
-		height: 60px;
-	}
+		.devs img
+		{
+			height: 60px;
+		}
 
 	.signButtons
 	{
@@ -216,10 +237,10 @@ input[type=email], input[type=password], input[type=text]
 		font-size: 32px;
 	}
 
-	.leftColumn .signUp
-	{
-		font-size: 19px;
-	}
+		.leftColumn .signUp
+		{
+			font-size: 19px;
+		}
 
 		.leftColumn img
 		{
@@ -242,13 +263,13 @@ input[type=email], input[type=password], input[type=text]
 		.devs .det
 		{
 			color: #a1a1a1;
-		font-size: 10px;
+			font-size: 10px;
 		}
 
-	.devs img
-	{
-		height: 80px;
-	}
+		.devs img
+		{
+			height: 80px;
+		}
 
 	.signButtons
 	{
@@ -272,10 +293,10 @@ input[type=email], input[type=password], input[type=text]
 		font-size: 42px;
 	}
 
-	.leftColumn .signUp
-	{
-		font-size: 22px;
-	}
+		.leftColumn .signUp
+		{
+			font-size: 22px;
+		}
 
 		.leftColumn img
 		{
@@ -298,14 +319,19 @@ input[type=email], input[type=password], input[type=text]
 		.devs .det
 		{
 			color: #a1a1a1;
-		font-size: 10px;
+			font-size: 10px;
 		}
 
-	.devs img
+		.devs img
+		{
+			height: 100px;
+		}
+		
+	.aboutButton
 	{
-		height: 100px;
+		display: block;
+		/*text-align: right;*/
 	}
-
 	.signButtons
 	{
 		display: block;
@@ -328,10 +354,10 @@ input[type=email], input[type=password], input[type=text]
 		font-size: 52px;
 	}
 
-	.leftColumn .signUp
-	{
-		font-size: 22px;
-	}
+		.leftColumn .signUp
+		{
+			font-size: 22px;
+		}
 
 		.leftColumn img
 		{
